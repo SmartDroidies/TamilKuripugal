@@ -1,19 +1,52 @@
 package droid.smart.com.tamilkuripugal
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import droid.smart.com.tamilkuripugal.ui.main.MainFragment
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
+import droid.smart.com.tamilkuripugal.databinding.MainActivityBinding
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var navController: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_activity)
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance())
-                .commitNow()
-        }
+
+        val binding: MainActivityBinding = DataBindingUtil.setContentView(this, R.layout.main_activity)
+
+        drawerLayout = binding.drawerLayout
+
+        navController = Navigation.findNavController(this, R.id.kuripugal_nav_fragment)
+        appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
+
+
+        // Set up ActionBar
+        setSupportActionBar(binding.toolbar)
+        setupActionBarWithNavController(navController, appBarConfiguration)
+
+        // Set up navigation menu
+        binding.navigationView.setupWithNavController(navController)
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    override fun onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
+    }
 }

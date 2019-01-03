@@ -6,6 +6,9 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 28
+    dataBinding {
+        enabled = true
+    }
     defaultConfig {
         applicationId "droid.smart.com.tamilkuripugal"
         minSdkVersion 21
@@ -32,7 +35,11 @@ dependencies {
     //Material Design Components
     implementation 'com.android.support:design:28.0.0'
 
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0-alpha1'
+    // Navigation
+    implementation "android.arch.navigation:navigation-fragment-ktx:$rootProject.navigationVersion"
+    implementation "android.arch.navigation:navigation-ui-ktx:$rootProject.navigationVersion"
+
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'

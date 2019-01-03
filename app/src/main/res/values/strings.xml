@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TamilKuripugal</string>
+    <string name="category_title">Home</string>
+    <string name="new_tips_title">New Tips</string>
+    <string name="favourite_tips_title">Favourite Tips</string>
+    <string name="navigation_drawer_header_title">Navigation Drawer Header Title</string>
+    <string name="navigation_drawer_header_content_description">Navigation Drawer Header Logo</string>
 </resources>
