@@ -1,4 +1,4 @@
-package droid.smart.com.tamilkuripugal.data
+package droid.smart.com.tamilkuripugal.vo
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
