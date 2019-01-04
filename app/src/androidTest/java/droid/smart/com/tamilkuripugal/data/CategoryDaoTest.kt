@@ -17,7 +17,7 @@ class CategoryDaoTest : DbTest() {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Test
-    fun insertAndReadAll() {
+    fun insertAndRead() {
         val category = TestUtil.createCategory("1", "BEAUTY", "Beauty Tips");
         db.categoryDao().insert(category)
 
@@ -28,5 +28,19 @@ class CategoryDaoTest : DbTest() {
         MatcherAssert.assertThat(loaded.image, CoreMatchers.notNullValue())
         MatcherAssert.assertThat(loaded.category, CoreMatchers.`is`(22))
     }
+
+    @Test
+    fun insertAndReadAll() {
+        val category = TestUtil.createCategory("1", "BEAUTY", "Beauty Tips");
+        db.categoryDao().insert(category)
+
+        val category1 = TestUtil.createCategory("2", "HEALTH", "Health Tips");
+        db.categoryDao().insert(category1)
+
+        val loadedAll = db.categoryDao().loadCategories()
+        MatcherAssert.assertThat(loadedAll, CoreMatchers.notNullValue())
+        MatcherAssert.assertThat(getValue(loadedAll).size, CoreMatchers.`is`(2))
+    }
+
 
 }
