@@ -7,7 +7,7 @@ import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
-import droid.smart.com.tamilkuripugal.R
+import com.smart.droid.tamil.tips.R
 import droid.smart.com.tamilkuripugal.binding.FragmentBindingAdapters
 import droid.smart.com.tamilkuripugal.testing.SingleFragmentActivity
 import droid.smart.com.tamilkuripugal.util.CountingAppExecutorsRule

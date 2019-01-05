@@ -7,6 +7,7 @@ import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.contrib.DrawerMatchers
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.rule.ActivityTestRule
+import com.smart.droid.tamil.tips.R
 import droid.smart.com.tamilkuripugal.utilities.getToolbarNavigationContentDescription
 import org.junit.Rule
 import org.junit.Test
