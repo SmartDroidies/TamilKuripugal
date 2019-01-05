@@ -1,32 +1,57 @@
 package droid.smart.com.tamilkuripugal.ui.main
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingComponent
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import droid.smart.com.tamilkuripugal.AppExecutors
 import droid.smart.com.tamilkuripugal.R
+import droid.smart.com.tamilkuripugal.binding.FragmentDataBindingComponent
+import droid.smart.com.tamilkuripugal.databinding.MainFragmentBinding
+import droid.smart.com.tamilkuripugal.di.Injectable
+import droid.smart.com.tamilkuripugal.testing.OpenForTesting
+import droid.smart.com.tamilkuripugal.util.autoCleared
+import javax.inject.Inject
 
-class MainFragment : androidx.fragment.app.Fragment() {
+@OpenForTesting
+class MainFragment : Fragment(), Injectable {
 
-    companion object {
-        fun newInstance() = MainFragment()
-    }
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private lateinit var viewModel: MainViewModel
+    @Inject
+    lateinit var appExecutors: AppExecutors
+
+    var binding by autoCleared<MainFragmentBinding>()
+    var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
+
+    private lateinit var mainViewModel: MainViewModel
+    //private var adapter by autoCleared<CategoryListAdapter>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.main_fragment, container, false)
+    ): View? {
+        val dataBinding = DataBindingUtil.inflate<MainFragmentBinding>(
+            inflater,
+            R.layout.main_fragment,
+            container,
+            false,
+            dataBindingComponent
+        )
+
+        binding = dataBinding
+        return dataBinding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
+    /**
+     * Created to be able to override in tests
+     */
+    fun navController() = findNavController()
 
 }

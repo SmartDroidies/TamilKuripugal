@@ -3,6 +3,13 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+apply plugin: 'kotlin-allopen'
+apply plugin: 'androidx.navigation.safeargs'
+
+allOpen {
+    // allows mocking for classes w/o directly opening them for release builds
+    annotation 'droid.smart.com.tamilkuripugal.testing.OpenClass'
+}
 android {
     compileSdkVersion 28
     dataBinding {
@@ -14,7 +21,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "droid.smart.com.tamilkuripugal.util.KuripugalTestRunner"
     }
     buildTypes {
         release {
@@ -32,13 +39,17 @@ dependencies {
     //implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"
+    kapt "androidx.lifecycle:lifecycle-compiler:$rootProject.lifecycleVersion"
     kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0-alpha01'
+
+    implementation "androidx.lifecycle:lifecycle-runtime:$rootProject.lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$rootProject.lifecycleVersion"
 
     //Dagger
     implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
@@ -80,5 +91,9 @@ dependencies {
     androidTestImplementation "androidx.test.uiautomator:uiautomator:$rootProject.uiAutomatorVersion"
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+    androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
+    androidTestImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
+    androidTestImplementation "org.mockito:mockito-android:$rootProject.mockitoAndroidVersion"
 
 }
