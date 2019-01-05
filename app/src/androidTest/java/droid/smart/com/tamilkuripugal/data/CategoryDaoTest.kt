@@ -18,7 +18,7 @@ class CategoryDaoTest : DbTest() {
 
     @Test
     fun insertAndRead() {
-        val category = TestUtil.createCategory("1", "BEAUTY", "Beauty Tips");
+        val category = TestUtil.createCategory("1", "BEAUTY", "Beauty Tips")
         db.categoryDao().insert(category)
 
         val loaded = getValue(db.categoryDao().load("BEAUTY"))
