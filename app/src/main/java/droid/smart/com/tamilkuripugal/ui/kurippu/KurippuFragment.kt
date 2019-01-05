@@ -1,13 +1,13 @@
 package droid.smart.com.tamilkuripugal.ui.kurippu
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
+import com.smart.droid.tamil.tips.R
 
-import droid.smart.com.tamilkuripugal.R
 
 class KurippuFragment : Fragment() {
 

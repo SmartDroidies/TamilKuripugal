@@ -11,7 +11,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import droid.smart.com.tamilkuripugal.databinding.MainActivityBinding
+import com.smart.droid.tamil.tips.R
+import com.smart.droid.tamil.tips.databinding.MainActivityBinding
 
 class MainActivity : AppCompatActivity() {
 

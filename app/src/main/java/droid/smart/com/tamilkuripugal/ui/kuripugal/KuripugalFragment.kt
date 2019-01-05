@@ -1,12 +1,12 @@
 package droid.smart.com.tamilkuripugal.ui.kuripugal
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import droid.smart.com.tamilkuripugal.R
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
+import com.smart.droid.tamil.tips.R
 
 
 class KuripugalFragment : Fragment() {

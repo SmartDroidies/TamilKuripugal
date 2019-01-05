@@ -16,7 +16,7 @@ android {
         enabled = true
     }
     defaultConfig {
-        applicationId "droid.smart.com.tamilkuripugal"
+        applicationId "com.smart.droid.tamil.tips"
         minSdkVersion 14
         targetSdkVersion 28
         versionCode 1

@@ -21,7 +21,8 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import droid.smart.com.tamilkuripugal.R
+import com.smart.droid.tamil.tips.R
+
 
 /**
  * Used for testing fragments inside a fake activity.

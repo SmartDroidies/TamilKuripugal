@@ -9,10 +9,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.smart.droid.tamil.tips.R
+import com.smart.droid.tamil.tips.databinding.MainFragmentBinding
 import droid.smart.com.tamilkuripugal.AppExecutors
-import droid.smart.com.tamilkuripugal.R
 import droid.smart.com.tamilkuripugal.binding.FragmentDataBindingComponent
-import droid.smart.com.tamilkuripugal.databinding.MainFragmentBinding
 import droid.smart.com.tamilkuripugal.di.Injectable
 import droid.smart.com.tamilkuripugal.testing.OpenForTesting
 import droid.smart.com.tamilkuripugal.util.autoCleared
