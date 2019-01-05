@@ -5,4 +5,6 @@
     <string name="favourite_tips_title">Favourite Tips</string>
     <string name="navigation_drawer_header_title">Navigation Drawer Header Title</string>
     <string name="navigation_drawer_header_content_description">Navigation Drawer Header Logo</string>
+    <string name="retry">Retry</string>
+    <string name="unknown_error">Unknown Error occured</string>
 </resources>
