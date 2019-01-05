@@ -2,13 +2,14 @@ package droid.smart.com.tamilkuripugal.ui.main
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import droid.smart.com.tamilkuripugal.repo.CategoryRepository
+import droid.smart.com.tamilkuripugal.util.mock
 import org.hamcrest.CoreMatchers
-import org.hamcrest.MatcherAssert
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.mockito.Mockito.mock
+import org.mockito.Mockito.*
 
 @RunWith(JUnit4::class)
 class MainViewModelTest {
@@ -22,14 +23,27 @@ class MainViewModelTest {
 
     @Test
     fun testNull() {
-        MatcherAssert.assertThat(mainViewModel.categories, CoreMatchers.notNullValue())
-        //Mockito.verify(userRepository, Mockito.never()).loadUser(Mockito.anyString())
-        //userViewModel.setLogin("foo")
-        //Mockito.verify(userRepository, Mockito.never()).loadUser(Mockito.anyString())
-        //FIXME - Check why mocking is not available for Repository
+        assertThat(mainViewModel.categories, CoreMatchers.notNullValue())
+        verify(categoryRepository, never()).loadCategories()
+        mainViewModel.setUser("sakthi")
+        verify(categoryRepository, never()).loadCategories()
     }
 
     @Test
-    fun getCategories() {
+    fun loadCategories() {
+        mainViewModel.categories.observeForever(mock())
+        verifyNoMoreInteractions(categoryRepository)
+        mainViewModel.setUser("sakthi")
+        verify(categoryRepository).loadCategories()
+        reset(categoryRepository)
+        mainViewModel.setUser("meenakshi")
+        verify(categoryRepository).loadCategories()
+        verifyNoMoreInteractions(categoryRepository)
     }
+
+    //FIXME - Send Results to UI
+    //FIXME - Retury
+    //FIXME - Null Category List
+    //FIXME - Dont Refresh on Same Data
+    //FIXME - No Retry without user
 }

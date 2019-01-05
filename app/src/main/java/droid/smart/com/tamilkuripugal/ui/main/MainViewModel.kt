@@ -26,7 +26,7 @@ class MainViewModel @Inject constructor(categoryRepository: CategoryRepository) 
     }
 
     fun setUser(user: String?) {
-        if (_user.value != null) {
+        if (_user.value != user) {
             _user.value = user
         }
     }
