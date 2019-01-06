@@ -17,6 +17,7 @@ import droid.smart.com.tamilkuripugal.AppExecutors
 import droid.smart.com.tamilkuripugal.binding.FragmentDataBindingComponent
 import droid.smart.com.tamilkuripugal.di.Injectable
 import droid.smart.com.tamilkuripugal.testing.OpenForTesting
+import droid.smart.com.tamilkuripugal.ui.common.CategoryListAdapter
 import droid.smart.com.tamilkuripugal.ui.common.RetryCallback
 import droid.smart.com.tamilkuripugal.util.autoCleared
 import javax.inject.Inject
@@ -34,7 +35,7 @@ class MainFragment : Fragment(), Injectable {
     var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
 
     private lateinit var mainViewModel: MainViewModel
-    //private var adapter by autoCleared<CategoryListAdapter>()
+    private var adapter by autoCleared<CategoryListAdapter>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -80,11 +81,9 @@ class MainFragment : Fragment(), Injectable {
 
 
     private fun initCategories() {
-        /*
         mainViewModel.categories.observe(viewLifecycleOwner, Observer { categories ->
-            binding.categories = categories;
+            adapter.submitList(categories?.data)
         })
-        */
     }
 
     /**
