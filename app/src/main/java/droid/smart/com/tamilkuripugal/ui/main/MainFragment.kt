@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.MainFragmentBinding
@@ -15,6 +17,7 @@ import droid.smart.com.tamilkuripugal.AppExecutors
 import droid.smart.com.tamilkuripugal.binding.FragmentDataBindingComponent
 import droid.smart.com.tamilkuripugal.di.Injectable
 import droid.smart.com.tamilkuripugal.testing.OpenForTesting
+import droid.smart.com.tamilkuripugal.ui.common.RetryCallback
 import droid.smart.com.tamilkuripugal.util.autoCleared
 import javax.inject.Inject
 
@@ -44,9 +47,44 @@ class MainFragment : Fragment(), Injectable {
             false,
             dataBindingComponent
         )
-
+        dataBinding.retryCallback = object : RetryCallback {
+            override fun retry() {
+                mainViewModel.retry()
+            }
+        }
         binding = dataBinding
         return dataBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        mainViewModel = ViewModelProviders.of(this, viewModelFactory)
+            .get(MainViewModel::class.java)
+//        val params = UserFragmentArgs.fromBundle(arguments!!)
+//        userViewModel.setLogin(params.login)
+//        binding.user = userViewModel.user
+
+        binding.categories = mainViewModel.categories
+
+//        binding.setLifecycleOwner(viewLifecycleOwner)
+//        val rvAdapter = RepoListAdapter(
+//            dataBindingComponent = dataBindingComponent,
+//            appExecutors = appExecutors,
+//            showFullName = false
+//        ) { repo ->
+//            navController().navigate(UserFragmentDirections.showRepo(repo.owner.login, repo.name))
+//        }
+//        binding.repoList.adapter = rvAdapter
+//        this.adapter = rvAdapter
+        initCategories()
+    }
+
+
+    private fun initCategories() {
+        /*
+        mainViewModel.categories.observe(viewLifecycleOwner, Observer { categories ->
+            binding.categories = categories;
+        })
+        */
     }
 
     /**

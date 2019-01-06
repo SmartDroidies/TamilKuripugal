@@ -28,6 +28,10 @@
                 name="categories"
                 type="LiveData&lt;Resource&lt;List&lt;Category>>>"/>
 
+        <variable
+                name="retryCallback"
+                type="droid.smart.com.tamilkuripugal.ui.common.RetryCallback"/>
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,8 +51,8 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintTop_toTopOf="parent"/>
 
-                <!--app:resource="@{(Resource) categories}"-->
-                <!--app:callback="@{() -> retryCallback.retry()}"-->
+        <!--app:resource="@{(Resource) categories}"-->
+        <!--app:callback="@{() -> retryCallback.retry()}"-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
