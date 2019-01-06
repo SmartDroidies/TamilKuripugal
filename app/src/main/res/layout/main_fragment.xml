@@ -14,7 +14,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -34,20 +34,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <!--<include-->
-                <!--layout="@layout/loading_state"-->
+        <include
+                layout="@layout/loading_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toTopOf="parent"/>
+
                 <!--app:resource="@{(Resource) categories}"-->
                 <!--app:callback="@{() -> retryCallback.retry()}"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--app:layout_constraintStart_toStartOf="parent"-->
-                <!--android:layout_marginStart="8dp"-->
-                <!--app:layout_constraintEnd_toEndOf="parent"-->
-                <!--android:layout_marginEnd="8dp"-->
-                <!--app:layout_constraintBottom_toBottomOf="parent"-->
-                <!--android:layout_marginBottom="8dp"-->
-                <!--android:layout_marginTop="8dp"-->
-                <!--app:layout_constraintTop_toTopOf="parent"/>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

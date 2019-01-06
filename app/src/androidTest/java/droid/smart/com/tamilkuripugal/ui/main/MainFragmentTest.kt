@@ -1,5 +1,6 @@
 package droid.smart.com.tamilkuripugal.ui.main
 
+import androidx.databinding.DataBindingComponent
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import androidx.test.espresso.Espresso
@@ -10,16 +11,16 @@ import androidx.test.runner.AndroidJUnit4
 import com.smart.droid.tamil.tips.R
 import droid.smart.com.tamilkuripugal.binding.FragmentBindingAdapters
 import droid.smart.com.tamilkuripugal.testing.SingleFragmentActivity
-import droid.smart.com.tamilkuripugal.util.CountingAppExecutorsRule
-import droid.smart.com.tamilkuripugal.util.DataBindingIdlingResourceRule
-import droid.smart.com.tamilkuripugal.util.TaskExecutorWithIdlingResourceRule
-import droid.smart.com.tamilkuripugal.util.mock
+import droid.smart.com.tamilkuripugal.util.*
 import droid.smart.com.tamilkuripugal.vo.Category
 import droid.smart.com.tamilkuripugal.vo.Resource
 import org.hamcrest.CoreMatchers
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.ArgumentMatchers
+import org.mockito.Mockito.*
 
 @RunWith(AndroidJUnit4::class)
 class MainFragmentTest {
@@ -45,6 +46,27 @@ class MainFragmentTest {
         //arguments = UserFragmentArgs.Builder("foo").build().toBundle()
     }
 
+    @Before
+    fun init() {
+        viewModel = mock(MainViewModel::class.java)
+        `when`(viewModel.categories).thenReturn(categoryListData)
+        doNothing().`when`(viewModel).setUser(ArgumentMatchers.anyString())
+        mockBindingAdapter = mock(FragmentBindingAdapters::class.java)
+
+        testFragment.appExecutors = countingAppExecutors.appExecutors
+        testFragment.viewModelFactory = ViewModelUtil.createFor(viewModel)
+        testFragment.dataBindingComponent = object : DataBindingComponent {
+            override fun getFragmentBindingAdapters(): FragmentBindingAdapters {
+                return mockBindingAdapter
+            }
+        }
+        activityRule.activity.setFragment(testFragment)
+        activityRule.runOnUiThread {
+            //testFragment.binding.repoList.itemAnimator = null
+        }
+
+        EspressoTestUtil.disableProgressBarAnimations(activityRule)
+    }
 
     @Test
     fun loading() {
