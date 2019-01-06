@@ -39,13 +39,35 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layout_editor_absoluteX="154dp"
+                android:id="@+id/header"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints">
+
+            <TextView
+                    android:text="@{categories.status.toString()}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/name"
+                    android:layout_marginStart="@dimen/default_margin"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="@dimen/default_margin"
+                    tools:text="albert einstein"
+                    android:layout_marginLeft="@dimen/default_margin" />
+        </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="8dp"
-                android:id="@+id/repo_list"
+                android:id="@+id/category_list"
                 app:layoutManager="LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/header"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginBottom="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -53,6 +75,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="8dp"
                 tools:listitem="@layout/category_item"/>
+                <!--app:visibleGone="@{resource.categories == Status.LOADING}"/>-->
 
         <include
                 layout="@layout/loading_state"

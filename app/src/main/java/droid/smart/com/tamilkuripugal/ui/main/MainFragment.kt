@@ -25,6 +25,8 @@ import javax.inject.Inject
 @OpenForTesting
 class MainFragment : Fragment(), Injectable {
 
+    val paramUser = "user"
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -61,21 +63,20 @@ class MainFragment : Fragment(), Injectable {
         mainViewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(MainViewModel::class.java)
 //        val params = UserFragmentArgs.fromBundle(arguments!!)
-//        userViewModel.setLogin(params.login)
+        mainViewModel.setUser(paramUser)
 //        binding.user = userViewModel.user
 
         binding.categories = mainViewModel.categories
 
-//        binding.setLifecycleOwner(viewLifecycleOwner)
-//        val rvAdapter = RepoListAdapter(
-//            dataBindingComponent = dataBindingComponent,
-//            appExecutors = appExecutors,
-//            showFullName = false
-//        ) { repo ->
-//            navController().navigate(UserFragmentDirections.showRepo(repo.owner.login, repo.name))
-//        }
-//        binding.repoList.adapter = rvAdapter
-//        this.adapter = rvAdapter
+        binding.setLifecycleOwner(viewLifecycleOwner)
+        val rvAdapter = CategoryListAdapter(
+            dataBindingComponent = dataBindingComponent,
+            appExecutors = appExecutors
+        ) {
+            navController().navigate(MainFragmentDirections.kuripugalList())
+        }
+        binding.categoryList.adapter = rvAdapter
+        this.adapter = rvAdapter
         initCategories()
     }
 
