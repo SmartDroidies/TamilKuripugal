@@ -40,7 +40,6 @@ class AppModule {
             .addCallAdapterFactory(LiveDataCallAdapterFactory())
             .build()
             .create(KuripugalService::class.java)
-
         //FIXME - Update the rest endpoint
     }
 
@@ -50,8 +49,21 @@ class AppModule {
         return Room
             .databaseBuilder(app, KuripugalDb::class.java, "kuripugal.db")
             .fallbackToDestructiveMigration()
+            //FIXME - Pre Populate Data here
+            //.addCallback(PrePopulateData(app.applicationContext))
+//            .addCallback(object : RoomDatabase.Callback() {
+//                override fun onCreate(db: SupportSQLiteDatabase) {
+//                    super.onCreate(db)
+//                    ioThread {
+//                        prepopulate(app)
+//
+//                    }
+//                    //db.categoryDao()
+//                }
+//            })
             .build()
     }
+
 
     @Singleton
     @Provides

@@ -57,8 +57,17 @@
                     android:layout_marginStart="@dimen/default_margin"
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_marginTop="@dimen/default_margin"
-                    tools:text="albert einstein"
-                    android:layout_marginLeft="@dimen/default_margin" />
+                    android:layout_marginLeft="@dimen/default_margin"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/size"
+                    app:layout_constraintStart_toEndOf="@+id/name"
+                    android:layout_marginStart="@dimen/default_margin"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_marginLeft="@dimen/default_margin"/>
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -74,8 +83,8 @@
                 android:layout_marginEnd="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="8dp"
-                tools:listitem="@layout/category_item"/>
-                <!--app:visibleGone="@{resource.categories == Status.LOADING}"/>-->
+                tools:listitem="@layout/category_item"
+                app:visibleGone="@{categories.data.size() > 0}"/>
 
         <include
                 layout="@layout/loading_state"

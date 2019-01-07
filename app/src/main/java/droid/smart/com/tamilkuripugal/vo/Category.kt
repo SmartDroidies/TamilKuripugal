@@ -11,8 +11,8 @@ data class Category(
     val description: String,
     val order: Int,
     val category: Int,
-    val image: String,
-    val defaultImage: String?,
+    val image: String?,
+    val defaultImage: Int,
     val topic: String
 ) {
     override fun toString() = code

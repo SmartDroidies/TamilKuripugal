@@ -67,7 +67,6 @@ class MainFragment : Fragment(), Injectable {
 //        binding.user = userViewModel.user
 
         binding.categories = mainViewModel.categories
-
         binding.setLifecycleOwner(viewLifecycleOwner)
         val rvAdapter = CategoryListAdapter(
             dataBindingComponent = dataBindingComponent,
