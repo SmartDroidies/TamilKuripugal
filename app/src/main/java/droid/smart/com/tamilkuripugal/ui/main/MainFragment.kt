@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.MainFragmentBinding
 import droid.smart.com.tamilkuripugal.AppExecutors
@@ -21,6 +22,7 @@ import droid.smart.com.tamilkuripugal.ui.common.CategoryListAdapter
 import droid.smart.com.tamilkuripugal.ui.common.RetryCallback
 import droid.smart.com.tamilkuripugal.util.autoCleared
 import javax.inject.Inject
+
 
 @OpenForTesting
 class MainFragment : Fragment(), Injectable {
@@ -74,6 +76,9 @@ class MainFragment : Fragment(), Injectable {
         ) {
             navController().navigate(MainFragmentDirections.kuripugalList())
         }
+
+        val layoutManager = GridLayoutManager(context, 2)
+        binding.categoryList.layoutManager = layoutManager
         binding.categoryList.adapter = rvAdapter
         this.adapter = rvAdapter
         initCategories()

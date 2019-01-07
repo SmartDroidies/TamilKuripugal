@@ -21,7 +21,8 @@ class PrePopulateData(applicationContext: Context) : RoomDatabase.Callback() {
 
     val PREPOPULATE_DATA = listOf(
         Category("CTGRY01", "HEALTH", "Health Tips", 1, 5, null, R.drawable.arokiyam, "health"),
-        Category("CTGRY02", "BEAUTY", "Beauty Tips", 2, 6, null, R.drawable.azagu, "beauty")
+        Category("CTGRY02", "BEAUTY", "Beauty Tips", 2, 6, null, R.drawable.azagu, "beauty"),
+        Category("CTGRY03", "TREATMENT", "Home Remedies", 3, 10, null, R.drawable.azagu, "home-remedies")
     )
 
     override fun onCreate(db: SupportSQLiteDatabase) {
