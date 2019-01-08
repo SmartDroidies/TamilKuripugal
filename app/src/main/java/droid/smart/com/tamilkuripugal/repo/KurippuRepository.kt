@@ -25,13 +25,12 @@ class KurippuRepository @Inject constructor(
             }
 
             override fun shouldFetch(data: List<Kurippu>?): Boolean {
-                return data == null || data.isEmpty() || kurippuListRateLimit.shouldFetch("kuripugal")
+                return data == null || data.isEmpty() || kurippuListRateLimit.shouldFetch("kuripugal-" + categoryId)
             }
 
             override fun loadFromDb() = kurippuDao.loadKuripugal(categoryId)
 
-            /*override fun createCall() = kuripugalService.getKuripugal(categoryId, "y")*/
-            override fun createCall() = kuripugalService.getKuripugal("health")
+            override fun createCall() = kuripugalService.getKuripugal(categoryId)
         }.asLiveData()
     }
 }

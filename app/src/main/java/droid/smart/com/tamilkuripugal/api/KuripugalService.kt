@@ -30,7 +30,7 @@ interface KuripugalService {
     fun getCategories(): LiveData<ApiResponse<List<Category>>>
 
     @GET("rest")
-    fun getKuripugal(@Query("ct") category: String): LiveData<ApiResponse<List<Kurippu>>>
+    fun getKuripugal(@Query("ct") category: Int): LiveData<ApiResponse<List<Kurippu>>>
 
     //http://tamil.tips2stayhealthy.com/?json2=y&ct=health - Service to collect data from
 
