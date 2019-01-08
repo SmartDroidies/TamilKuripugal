@@ -8,11 +8,11 @@ import androidx.room.PrimaryKey
 data class Kurippu(
     @PrimaryKey @ColumnInfo(name = "kurippu_id") val kurippuId: String,
     val title: String,
-    val image: String,
+    val image: String?,
     val category: Int,
     val postDate: Long,
     val updatedDate: Long,
     val status: String,
-    val content: String
+    val content: String?
 ) {
 }

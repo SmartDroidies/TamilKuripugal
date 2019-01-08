@@ -19,6 +19,6 @@ abstract class KurippuDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertKuripugal(item: List<Kurippu>)
 
-    @Query("SELECT * FROM kurippu WHERE kurippu_id = :categoryId ORDER BY updatedDate, postDate DESC")
+    @Query("SELECT * FROM kurippu WHERE category = :categoryId ORDER BY updatedDate, postDate DESC")
     abstract fun loadKuripugal(categoryId: Int): LiveData<List<Kurippu>>
 }

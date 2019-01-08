@@ -31,7 +31,7 @@ class KurippuRepository @Inject constructor(
             override fun loadFromDb() = kurippuDao.loadKuripugal(categoryId)
 
             /*override fun createCall() = kuripugalService.getKuripugal(categoryId, "y")*/
-            override fun createCall() = kuripugalService.getKuripugal("y", "health"\)
+            override fun createCall() = kuripugalService.getKuripugal("health")
         }.asLiveData()
     }
 }
