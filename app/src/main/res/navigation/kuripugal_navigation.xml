@@ -25,11 +25,23 @@
                 android:name="category"
                 app:argType="integer"/>
 
-        <action android:id="@+id/action_kuripugalFragment_to_kurippuFragment"
-                app:destination="@id/kurippu_fragment"/>
+        <action android:id="@+id/kurippu"
+                app:destination="@id/kurippu_fragment"
+                app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right"/>
+
+        <!-- FIXME - Use a better animation -->
     </fragment>
 
     <fragment android:id="@+id/kurippu_fragment"
               android:name="droid.smart.com.tamilkuripugal.ui.kurippu.KurippuFragment"
-              android:label="@string/app_name" tools:layout="@layout/kurippu_fragment"/>
+              android:label="@string/app_name"
+              tools:layout="@layout/kurippu_fragment">
+        <!--argument
+                android:name="kurippuId"
+                app:argType="String"/-->
+
+    </fragment>
 </navigation>

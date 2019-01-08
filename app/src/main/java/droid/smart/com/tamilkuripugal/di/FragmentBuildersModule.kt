@@ -18,6 +18,7 @@ package droid.smart.com.tamilkuripugal.di
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import droid.smart.com.tamilkuripugal.ui.kuripugal.KuripugalFragment
 import droid.smart.com.tamilkuripugal.ui.main.MainFragment
 
 @Suppress("unused")
@@ -25,5 +26,8 @@ import droid.smart.com.tamilkuripugal.ui.main.MainFragment
 abstract class FragmentBuildersModule {
     @ContributesAndroidInjector
     abstract fun contributeMainFragment(): MainFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeKuripugalFragment(): KuripugalFragment
 
 }

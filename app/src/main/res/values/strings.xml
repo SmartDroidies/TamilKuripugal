@@ -7,4 +7,5 @@
     <string name="navigation_drawer_header_content_description">Navigation Drawer Header Logo</string>
     <string name="retry">Retry</string>
     <string name="unknown_error">Unknown Error occured</string>
+    <string name="kurippu_image">Kurippu Image</string>
 </resources>

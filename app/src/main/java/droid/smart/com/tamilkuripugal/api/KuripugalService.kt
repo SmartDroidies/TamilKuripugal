@@ -18,7 +18,9 @@ package droid.smart.com.tamilkuripugal.api
 
 import androidx.lifecycle.LiveData
 import droid.smart.com.tamilkuripugal.vo.Category
+import droid.smart.com.tamilkuripugal.vo.Kurippu
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 /**
  * REST API access points
@@ -26,6 +28,11 @@ import retrofit2.http.GET
 interface KuripugalService {
     @GET("category/list")
     fun getCategories(): LiveData<ApiResponse<List<Category>>>
+
+    @GET(".")
+    fun getKuripugal(@Query("json2") json: String, @Query("ct") category: String): LiveData<ApiResponse<List<Kurippu>>>
+
+    //http://tamil.tips2stayhealthy.com/?json2=y&ct=health - Service to collect data from
 
 //    @GET("users/{login}/repos")
 //    fun getRepos(@Path("login") login: String): LiveData<ApiResponse<List<Repo>>>

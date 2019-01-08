@@ -22,10 +22,14 @@ import dagger.Module
 import dagger.Provides
 import droid.smart.com.tamilkuripugal.api.KuripugalService
 import droid.smart.com.tamilkuripugal.data.CategoryDao
+import droid.smart.com.tamilkuripugal.data.KurippuDao
 import droid.smart.com.tamilkuripugal.data.KuripugalDb
 import droid.smart.com.tamilkuripugal.util.LiveDataCallAdapterFactory
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import timber.log.Timber
 import javax.inject.Singleton
 
 @Module(includes = [ViewModelModule::class])
@@ -33,15 +37,27 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideKuripugalService(): KuripugalService {
+    fun provideOkhttpClient(): OkHttpClient {
+
+        val interceptor =  HttpLoggingInterceptor {message -> Timber.d(message) }
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
+        return OkHttpClient.Builder()
+            .addInterceptor(interceptor)
+            .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideKuripugalService(okHttpClient: OkHttpClient): KuripugalService {
         return Retrofit.Builder()
-            .baseUrl("https://api.github.com/")
+            .baseUrl("http://tamil.tips2stayhealthy.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(LiveDataCallAdapterFactory())
+            .client(okHttpClient)
             .build()
             .create(KuripugalService::class.java)
-        //FIXME - Update the rest endpoint
     }
+
 
     @Singleton
     @Provides
@@ -71,10 +87,10 @@ class AppModule {
         return db.categoryDao()
     }
 
-//    @Singleton
-//    @Provides
-//    fun provideRepoDao(db: GithubDb): RepoDao {
-//        return db.repoDao()
-//    }
+    @Singleton
+    @Provides
+    fun provideKurippuDao(db: KuripugalDb): KurippuDao {
+        return db.kurippuDao()
+    }
 
 }

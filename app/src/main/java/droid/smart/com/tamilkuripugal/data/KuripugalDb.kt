@@ -17,6 +17,6 @@ abstract class KuripugalDb : RoomDatabase() {
 
     abstract fun categoryDao(): CategoryDao
 
-    abstract fun KurippuDao(): KurippuDao
+    abstract fun kurippuDao(): KurippuDao
 
 }

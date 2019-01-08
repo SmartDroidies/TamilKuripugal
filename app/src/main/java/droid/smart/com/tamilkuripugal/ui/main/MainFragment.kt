@@ -64,9 +64,7 @@ class MainFragment : Fragment(), Injectable {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mainViewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(MainViewModel::class.java)
-//        val params = UserFragmentArgs.fromBundle(arguments!!)
         mainViewModel.setUser(paramUser)
-//        binding.user = userViewModel.user
 
         binding.categories = mainViewModel.categories
         binding.setLifecycleOwner(viewLifecycleOwner)
