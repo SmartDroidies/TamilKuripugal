@@ -39,9 +39,9 @@
               android:name="droid.smart.com.tamilkuripugal.ui.kurippu.KurippuFragment"
               android:label="@string/app_name"
               tools:layout="@layout/kurippu_fragment">
-        <!--argument
+        <argument
                 android:name="kurippuId"
-                app:argType="String"/-->
+                app:argType="string"/>
 
     </fragment>
 </navigation>

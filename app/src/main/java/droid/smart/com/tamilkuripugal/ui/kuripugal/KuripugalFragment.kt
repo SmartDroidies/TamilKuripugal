@@ -67,7 +67,7 @@ class KuripugalFragment : Fragment(), Injectable {
 
         val adapter = KuripugalAdapter(dataBindingComponent, appExecutors) { kurippu ->
             navController().navigate(
-                KuripugalFragmentDirections.kurippu()
+                KuripugalFragmentDirections.kurippu(kurippu.kurippuId)
             )
         }
         this.adapter = adapter

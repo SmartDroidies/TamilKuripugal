@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.kurippu.KurippuFragment">
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Hello"/>
+    <data>
 
-</FrameLayout>
+        <import type="droid.smart.com.tamilkuripugal.vo.Kurippu"/>
+
+        <import type="droid.smart.com.tamilkuripugal.vo.Status"/>
+        <import type="droid.smart.com.tamilkuripugal.vo.Resource"/>
+        <import type="androidx.lifecycle.LiveData"/>
+
+        <variable
+                name="kurippu"
+                type="LiveData&lt;Resource&lt;Kurippu>>"/>
+
+        <variable
+                name="retryCallback"
+                type="droid.smart.com.tamilkuripugal.ui.common.RetryCallback"/>
+    </data>
+
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <TextView
+                android:id="@+id/kurippuId"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Dummy Kurippu"/>
+
+    </LinearLayout>
+
+
+</layout>

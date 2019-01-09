@@ -18,6 +18,7 @@ package droid.smart.com.tamilkuripugal.di
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import droid.smart.com.tamilkuripugal.ui.kurippu.KurippuFragment
 import droid.smart.com.tamilkuripugal.ui.kuripugal.KuripugalFragment
 import droid.smart.com.tamilkuripugal.ui.main.MainFragment
 
@@ -29,5 +30,8 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeKuripugalFragment(): KuripugalFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeKurippuFragment(): KurippuFragment
 
 }

@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
+import droid.smart.com.tamilkuripugal.ui.kurippu.KurippuViewModel
 import droid.smart.com.tamilkuripugal.ui.kuripugal.KuripugalViewModel
 import droid.smart.com.tamilkuripugal.ui.main.MainViewModel
 import droid.smart.com.tamilkuripugal.viewmodel.KuripugalViewModelFactory
@@ -38,6 +39,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(KuripugalViewModel::class)
     abstract fun bindKuripugalViewModel(kuripugalViewModel: KuripugalViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(KurippuViewModel::class)
+    abstract fun bindKurippuViewModel(kurippuViewModel: KurippuViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: KuripugalViewModelFactory): ViewModelProvider.Factory
