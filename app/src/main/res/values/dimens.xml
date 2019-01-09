@@ -5,4 +5,5 @@
     <dimen name="navigation_drawer_image_width">100dp</dimen>
     <dimen name="default_margin">8dp</dimen>
     <dimen name="photo_size">70</dimen>
+    <dimen name="category_image_height">80dp</dimen>
 </resources>

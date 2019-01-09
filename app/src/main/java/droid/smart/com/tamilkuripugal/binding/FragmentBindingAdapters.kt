@@ -16,11 +16,14 @@
 
 package droid.smart.com.tamilkuripugal.binding
 
+import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import droid.smart.com.tamilkuripugal.testing.OpenForTesting
+import droid.smart.com.tamilkuripugal.ui.util.Helper
 import javax.inject.Inject
 
 /**
@@ -32,4 +35,15 @@ class FragmentBindingAdapters @Inject constructor(val fragment: Fragment) {
     fun bindImage(imageView: ImageView, url: String?) {
         Glide.with(fragment).load(url).into(imageView)
     }
+
+    @BindingAdapter("localeText")
+    fun localeText(view: TextView, text: String?) {
+        if (fragment.context != null) {
+            view.text = Helper.localeText(fragment.context!!, text)
+        } else {
+            view.text = text
+        }
+    }
+
+
 }

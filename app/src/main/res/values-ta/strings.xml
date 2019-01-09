@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">"\\u0ba4\\u0bae\\u0bbf\\u0bb4\\u0bcd
+        \\u0b95\\u0bc1\\u0bb1\\u0bbf\\u0baa\\u0bcd\\u0baa\\u0bc1\\u0b95\\u0bb3\\u0bcd\n "
+    </string>
+    <string name="title_categories">\u0BAA\u0BBF\u0BB0\u0BBF\u0BB5\u0BC1\u0B95\u0BB3\u0BCD</string>
+    <string name="title_new_kuripugal">\u0BAA\u0BC1\u0BA4\u0BBF\u0BAF\u0BB5\u0BC8</string>
+    <string name="title_featured_kuripugal">\u0B9A\u0BBF\u0BB1\u0BA8\u0BCD\u0BA4\u0BB5\u0BC8</string>
+    <string name="title_favourite_kuripugal">\u0BAA\u0BBF\u0B9F\u0BBF\u0BA4\u0BCD\u0BA4\u0BB5\u0BC8</string>
+
+    <string name="navigation_drawer_header_title">Navigation Drawer Header Title</string>
+    <string name="navigation_drawer_header_content_description">Navigation Drawer Header Logo</string>
+    <string name="retry">Retry</string>
+    <string name="unknown_error">Unknown Error occured</string>
+    <string name="kurippu_image">Kurippu Image</string>
+
+    <!-- Categories -->
+    <string name="HEALTH">\u0B86\u0BB0\u0BC7\u0BBE\u0B95\u0BCD\u0B95\u0BBF\u0BAF \u0B95\u0BC1\u0BB1\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1</string>
+    <string name="BEAUTY">\u0B85\u0BB4\u0B95\u0BC1 \u0B95\u0BC1\u0BB1\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1</string>
+    <string name="TREATMENT">\u0ba8\u0bbe\u0b9f\u0bcd\u0b9f\u0bc1 \u0bb5\u0bc8\u0ba4\u0bcd\u0ba4\u0bbf\u0baf\u0bae\u0bcd</string>
+    <string name="COOKING">\u0B9A\u0BAE\u0BC8\u0BAF\u0BB2\u0BCD \u0B95\u0BC1\u0BB1\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1</string>
+    <string name="VETTU">\u0bb5\u0bc0\u0b9f\u0bcd\u0b9f\u0bc1 \u0b95\u0bc1\u0bb1\u0bbf\u0baa\u0bcd\u0baa\u0bc1</string>
+    <string name="MARUTHUVAM">\u0bae\u0bb0\u0bc1\u0ba4\u0bcd\u0ba4\u0bc1\u0bb5 \u0b95\u0bc1\u0bb1\u0bbf\u0baa\u0bcd\u0baa\u0bc1</string>
+    <string name="AANMEEGAM">\u0B86\u0BA9\u0BCD\u0BAE\u0BC0\u0B95 \u0B95\u0BC1\u0BB1\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1</string>
+    <string name="GENERAL">\u0baa\u0bca\u0ba4\u0bc1 \u0b95\u0bc1\u0bb1\u0bbf\u0baa\u0bcd\u0baa\u0bc1</string>
+    <string name="AGRICULTURE">\u0BB5\u0BC7\u0BB3\u0BBE\u0BA3\u0BCD\u0BAE\u0BC8 \u0B95\u0BC1\u0BB1\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1</string>
+
+</resources>

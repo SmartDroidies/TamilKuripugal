@@ -6,7 +6,7 @@
 
     <fragment android:id="@+id/main_fragment"
               android:name="droid.smart.com.tamilkuripugal.ui.main.MainFragment"
-              android:label="@string/category_title"
+              android:label="@string/title_categories"
               tools:layout="@layout/main_fragment">
         <action android:id="@+id/kuripugalList"
                 app:destination="@id/kuripugalFragment"

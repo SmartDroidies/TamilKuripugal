@@ -22,7 +22,7 @@
             <ImageView
                     android:id="@+id/category_image"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="@dimen/category_image_height"
                     app:layout_constraintTop_toTopOf="parent"
                     app:imageSrc="@{category.defaultImage}"
                     android:contentDescription="@{category.description}"
@@ -30,7 +30,7 @@
                     android:scaleType="centerCrop"/>
 
             <TextView
-                    android:text="@{category.description}"
+                    app:localeText="@{category.code}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/category_name"

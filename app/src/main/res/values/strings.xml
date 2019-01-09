@@ -1,11 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Tamil Kuripugal</string>
-    <string name="category_title">Home</string>
-    <string name="new_tips_title">New Tips</string>
-    <string name="favourite_tips_title">Favourite Tips</string>
+
+    <string name="title_categories">Categories</string>
+    <string name="title_new_kuripugal">New Kuripugal</string>
+    <string name="title_featured_kuripugal">Featured Tips</string>
+
     <string name="navigation_drawer_header_title">Navigation Drawer Header Title</string>
     <string name="navigation_drawer_header_content_description">Navigation Drawer Header Logo</string>
     <string name="retry">Retry</string>
     <string name="unknown_error">Unknown Error occured</string>
     <string name="kurippu_image">Kurippu Image</string>
+    <string name="title_favourite_kuripugal">Favourite Tips</string>
+
+    <!-- Categories -->
+    <string name="HEALTH">Health tips</string>
+    <string name="BEAUTY">Beauty tips</string>
+    <string name="TREATMENT">Home Remedies</string>
+    <string name="COOKING">Cooking tips</string>
+    <string name="VETTU">Housekeeping tips</string>
+    <string name="MARUTHUVAM">Medical tips</string>
+    <string name="AANMEEGAM">Divine tips</string>
+    <string name="GENERAL">General tips</string>
+    <string name="AGRICULTURE">Agriculture tips</string>
 </resources>

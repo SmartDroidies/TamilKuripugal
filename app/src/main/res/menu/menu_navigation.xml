@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-            android:id="@+id/main_fragment"
-            android:title="@string/category_title"/>
-    <item
-            android:id="@+id/new_fragment"
-            android:title="@string/new_tips_title"/>
-    <item
-            android:id="@+id/favourites_fragment"
-            android:title="@string/favourite_tips_title"/>
-
-    <item
-            android:id="@+id/kurippu_fragment"
-            android:title="Kurippu For Testing"/>
-
-
+    <group>
+        <item
+                android:id="@+id/main_fragment"
+                android:title="@string/title_categories"/>
+        <item
+                android:id="@+id/new_fragment"
+                android:title="@string/title_new_kuripugal"/>
+        <item
+                android:id="@+id/featured_fragment"
+                android:title="@string/title_featured_kuripugal"/>
+        <item
+                android:id="@+id/favourite_fragment"
+                android:title="@string/title_favourite_kuripugal"/>
+    </group>
 </menu>
