@@ -11,12 +11,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.KuripugalFragmentBinding
 import droid.smart.com.tamilkuripugal.AppExecutors
 import droid.smart.com.tamilkuripugal.binding.FragmentDataBindingComponent
 import droid.smart.com.tamilkuripugal.di.Injectable
 import droid.smart.com.tamilkuripugal.testing.OpenForTesting
+import droid.smart.com.tamilkuripugal.ui.common.DividerItemDecoration
 import droid.smart.com.tamilkuripugal.ui.common.KuripugalAdapter
 import droid.smart.com.tamilkuripugal.ui.common.RetryCallback
 import droid.smart.com.tamilkuripugal.util.autoCleared
@@ -72,6 +74,11 @@ class KuripugalFragment : Fragment(), Injectable {
         }
         this.adapter = adapter
         binding.kuripugalList.adapter = adapter
+        val mLayoutManager = LinearLayoutManager(context)
+        binding.kuripugalList.layoutManager = mLayoutManager
+        val itemDecor = DividerItemDecoration(context!!)
+        binding.kuripugalList.addItemDecoration(itemDecor)
+
         initKuripugalList(kuripugalViewModel)
     }
 

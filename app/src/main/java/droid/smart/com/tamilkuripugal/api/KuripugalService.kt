@@ -32,6 +32,9 @@ interface KuripugalService {
     @GET("rest")
     fun getKuripugal(@Query("ct") category: Int): LiveData<ApiResponse<List<Kurippu>>>
 
+    @GET("json")
+    fun getKurippu(@Query("id") kurippuId: String): LiveData<ApiResponse<Kurippu>>
+
     //http://tamil.tips2stayhealthy.com/?json2=y&ct=health - Service to collect data from
 
 //    @GET("users/{login}/repos")

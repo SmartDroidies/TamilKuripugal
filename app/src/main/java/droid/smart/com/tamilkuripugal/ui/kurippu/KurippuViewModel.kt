@@ -16,12 +16,12 @@ class KurippuViewModel @Inject constructor(kurippuRepository: KurippuRepository)
 
     private val _kurippuId: MutableLiveData<String> = MutableLiveData()
 
-    val repo: LiveData<Resource<Kurippu>> = Transformations
+    val kurippu: LiveData<Resource<Kurippu>> = Transformations
         .switchMap(_kurippuId) { kurippu ->
             if (kurippu == null) {
                 AbsentLiveData.create()
             } else {
-                kurippuRepository.loadKurippu(_kurippuId)
+                kurippuRepository.loadKurippu(kurippu)
             }
         }
 

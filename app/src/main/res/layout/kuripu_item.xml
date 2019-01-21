@@ -10,43 +10,33 @@
                 type="droid.smart.com.tamilkuripugal.vo.Kurippu"/>
     </data>
 
-    <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
+
+    <RelativeLayout
             android:layout_height="wrap_content"
-            app:cardUseCompatPadding="true">
+            android:layout_width="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ImageView
+                android:id="@+id/imageView"
+                android:contentDescription="@string/kurippu_image"
+                android:layout_width="@dimen/photo_width"
+                android:layout_height="@dimen/photo_height"
+                android:adjustViewBounds="false"
+                android:layout_margin="@dimen/default_margin"
+                android:cropToPadding="false"
+                android:scaleType="centerCrop"
+                app:visibleGone="@{kurippu.image != null}"
+                app:imageUrl="@{kurippu.image}"/>
+
+        <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_width="match_parent">
-
-            <!--ImageView
-                    android:id="@+id/imageView"
-                    android:contentDescription="@string/kurippu_image"
-                    android:layout_width="@dimen/photo_size"
-                    android:layout_height="@dimen/photo_size"
-                    android:adjustViewBounds="false"
-                    android:cropToPadding="false"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@android:drawable/btn_star"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginTop="@dimen/default_margin"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="@dimen/default_margin"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginLeft="@dimen/default_margin" /-->
-
-            <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{kurippu.title}"
-                    tools:text="Kurippu Title"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="@dimen/default_margin"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginLeft="@dimen/default_margin"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+                android:text="@{kurippu.title}"
+                android:layout_toRightOf="@id/imageView"
+                tools:text="Kurippu Title"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:layout_toEndOf="@id/imageView"/>
+    </RelativeLayout>
 </layout>
+
+

@@ -62,7 +62,7 @@ class KurippuFragment : Fragment(), Injectable {
         val params = KurippuFragmentArgs.fromBundle(arguments!!)
         Timber.i("Display Kurippu details for : " + params.kurippuId)
         kurippuViewModel.setKurippuId(params.kurippuId)
-        //repoViewModel.setId(params.owner, params.name)
+        binding.kurippu = kurippuViewModel.kurippu
     }
 
     /**

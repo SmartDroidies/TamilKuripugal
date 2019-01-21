@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">"\\u0ba4\\u0bae\\u0bbf\\u0bb4\\u0bcd
-        \\u0b95\\u0bc1\\u0bb1\\u0bbf\\u0baa\\u0bcd\\u0baa\\u0bc1\\u0b95\\u0bb3\\u0bcd\n "
+    <string name="app_name">"\u0ba4\u0bae\u0bbf\u0bb4\u0bcd \u0b95\u0bc1\u0bb1\u0bbf\u0baa\u0bcd\u0baa\u0bc1\u0b95\u0bb3\u0bcd"
     </string>
     <string name="title_categories">\u0BAA\u0BBF\u0BB0\u0BBF\u0BB5\u0BC1\u0B95\u0BB3\u0BCD</string>
     <string name="title_new_kuripugal">\u0BAA\u0BC1\u0BA4\u0BBF\u0BAF\u0BB5\u0BC8</string>

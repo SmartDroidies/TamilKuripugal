@@ -1,7 +1,6 @@
 package droid.smart.com.tamilkuripugal.repo
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import droid.smart.com.tamilkuripugal.AppExecutors
 import droid.smart.com.tamilkuripugal.api.ApiResponse
 import droid.smart.com.tamilkuripugal.api.KuripugalService
@@ -20,6 +19,8 @@ class KurippuRepository @Inject constructor(
 
     private val kurippuListRateLimit = RateLimiter<String>(30, TimeUnit.MINUTES)
 
+    private val kurippuRateLimit = RateLimiter<String>(30, TimeUnit.MINUTES)
+
     fun loadKuripugal(categoryId: Int): LiveData<Resource<List<Kurippu>>> {
         return object : NetworkBoundResource<List<Kurippu>, List<Kurippu>>(appExecutors) {
             override fun saveCallResult(item: List<Kurippu>) {
@@ -36,22 +37,20 @@ class KurippuRepository @Inject constructor(
         }.asLiveData()
     }
 
-    fun loadKurippu(kurippuId: MutableLiveData<String>): LiveData<Resource<Kurippu>> {
+    fun loadKurippu(kurippuId: String): LiveData<Resource<Kurippu>> {
         return object : NetworkBoundResource<Kurippu, Kurippu>(appExecutors) {
-            override fun saveCallResult(item: Kurippu) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            override fun saveCallResult(kurippu: Kurippu) {
+                kurippuDao.insert(kurippu)
             }
 
             override fun shouldFetch(data: Kurippu?): Boolean {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                return data == null || data.content == null || kurippuListRateLimit.shouldFetch("kuripu-" + kurippuId)
             }
 
-            override fun loadFromDb(): LiveData<Kurippu> {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
+            override fun loadFromDb() = kurippuDao.loadKurippu(kurippuId)
 
             override fun createCall(): LiveData<ApiResponse<Kurippu>> {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                return kuripugalService.getKurippu(kurippuId);
             }
         }.asLiveData()
     }

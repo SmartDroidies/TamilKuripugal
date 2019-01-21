@@ -21,4 +21,8 @@ abstract class KurippuDao {
 
     @Query("SELECT * FROM kurippu WHERE category = :categoryId ORDER BY updatedDate, postDate DESC")
     abstract fun loadKuripugal(categoryId: Int): LiveData<List<Kurippu>>
+
+    @Query("SELECT * FROM kurippu WHERE kurippu_id = :kurippuId")
+    abstract fun loadKurippu(kurippuId: String): LiveData<Kurippu>
+
 }
