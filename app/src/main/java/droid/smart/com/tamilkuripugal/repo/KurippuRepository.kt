@@ -19,7 +19,7 @@ class KurippuRepository @Inject constructor(
 
     private val kurippuListRateLimit = RateLimiter<String>(30, TimeUnit.MINUTES)
 
-    private val kurippuRateLimit = RateLimiter<String>(30, TimeUnit.MINUTES)
+    private val kurippuRateLimit = RateLimiter<String>(120, TimeUnit.MINUTES)
 
     fun loadKuripugal(categoryId: Int): LiveData<Resource<List<Kurippu>>> {
         return object : NetworkBoundResource<List<Kurippu>, List<Kurippu>>(appExecutors) {
@@ -44,14 +44,16 @@ class KurippuRepository @Inject constructor(
             }
 
             override fun shouldFetch(data: Kurippu?): Boolean {
-                return data == null || data.content == null || kurippuListRateLimit.shouldFetch("kuripu-" + kurippuId)
+                return data == null || data.content == null || kurippuRateLimit.shouldFetch("kuripu-" + kurippuId)
             }
 
             override fun loadFromDb() = kurippuDao.loadKurippu(kurippuId)
 
             override fun createCall(): LiveData<ApiResponse<Kurippu>> {
-                return kuripugalService.getKurippu(kurippuId);
+                return kuripugalService.getKurippu("y", kurippuId);
             }
         }.asLiveData()
     }
 }
+
+

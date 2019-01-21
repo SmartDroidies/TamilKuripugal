@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
-import com.google.android.material.snackbar.Snackbar
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.CategoryItemBinding
 import droid.smart.com.tamilkuripugal.AppExecutors
@@ -46,7 +45,6 @@ class CategoryListAdapter(
             dataBindingComponent
         )
         binding.root.setOnClickListener {
-            Snackbar.make(it, "Get into the category", Snackbar.LENGTH_LONG).show()
             binding.category?.let {
                 repoClickCallback?.invoke(it)
             }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -27,7 +27,7 @@
 
         <LinearLayout
                 app:visibleGone="@{kurippu.data != null}"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/tip_content"
@@ -37,22 +37,25 @@
             <TextView
                     android:id="@+id/kurippu_title"
                     android:layout_width="match_parent"
-                    app:layout_constraintTop_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="@{kurippu.data.title}"
+                    android:layout_margin="@dimen/default_margin"
+                    tools:text="Tip Title"
+                    android:gravity="center_horizontal"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:layout_height="wrap_content"/>
 
-            <ImageView android:id="@+id/kurippu_image"
-                       android:layout_width="match_parent"
-                       android:layout_height="@dimen/kurippu_image_height"
-                       app:layout_constraintTop_toBottomOf="@id/kurippu_title"
-                       app:layout_constraintStart_toStartOf="parent"
-                       app:layout_constraintEnd_toEndOf="parent"/>
+            <!--
+                        <ImageView android:id="@+id/kurippu_image"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="@dimen/kurippu_image_height"
+                                   app:visibleGone="@{kurippu.data.image != null}"
+                                   app:imageUrl="@{kurippu.data.image}"/>
+            -->
 
             <WebView android:id="@+id/kurippu_detail"
-                     app:layout_constraintTop_toBottomOf="@id/kurippu_image"
-                     app:layout_constraintStart_toStartOf="parent"
-                     app:layout_constraintEnd_toEndOf="parent"
+                     app:layout_constraintTop_toBottomOf="@id/kurippu_title"
+                     app:webData="@{kurippu.data}"
+                     android:gravity="center_horizontal"
                      android:layout_width="match_parent"
                      android:layout_height="match_parent"/>
         </LinearLayout>

@@ -38,3 +38,7 @@ class KurippuViewModel @Inject constructor(kurippuRepository: KurippuRepository)
         }
     }
 }
+
+
+
+

@@ -37,8 +37,7 @@
             android:layout_width="wrap_content"
             android:gravity="center"
             android:padding="@dimen/default_margin"
-            android:layout_height="wrap_content"
-            app:visibleGone="@{resource.data == null}">
+            android:layout_height="wrap_content">
 
         <ProgressBar
                 style="?android:attr/progressBarStyle"

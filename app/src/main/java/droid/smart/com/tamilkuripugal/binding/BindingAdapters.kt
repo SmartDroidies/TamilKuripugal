@@ -17,9 +17,10 @@
 package droid.smart.com.tamilkuripugal.binding
 
 import android.view.View
+import android.webkit.WebView
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import com.smart.droid.tamil.tips.R
+import droid.smart.com.tamilkuripugal.vo.Kurippu
 
 /**
  * Data Binding adapters specific to the app.
@@ -38,3 +39,7 @@ object BindingAdapters {
     }
 
 }
+
+
+
+

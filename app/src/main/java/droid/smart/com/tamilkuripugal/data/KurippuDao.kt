@@ -14,7 +14,7 @@ abstract class KurippuDao {
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insert(vararg kurippu: Kurippu)
+    abstract fun insert(kurippu: Kurippu)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertKuripugal(item: List<Kurippu>)

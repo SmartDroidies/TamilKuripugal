@@ -44,7 +44,8 @@ class KurippuFragment : Fragment(), Injectable {
             inflater,
             R.layout.kurippu_fragment,
             container,
-            false
+            false,
+            dataBindingComponent
         )
         dataBinding.retryCallback = object : RetryCallback {
             override fun retry() {
@@ -62,6 +63,7 @@ class KurippuFragment : Fragment(), Injectable {
         val params = KurippuFragmentArgs.fromBundle(arguments!!)
         Timber.i("Display Kurippu details for : " + params.kurippuId)
         kurippuViewModel.setKurippuId(params.kurippuId)
+        binding.setLifecycleOwner(viewLifecycleOwner)
         binding.kurippu = kurippuViewModel.kurippu
     }
 
