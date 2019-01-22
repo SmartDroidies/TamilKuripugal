@@ -17,6 +17,9 @@ buildscript {
         roomVersion = '2.1.0-alpha03'
         timberVersion = '4.7.1'
         uiAutomatorVersion = '2.2.0-alpha4'
+
+        versionCode = 10100
+        versionName = "1.1.0"
     }
     repositories {
         google()

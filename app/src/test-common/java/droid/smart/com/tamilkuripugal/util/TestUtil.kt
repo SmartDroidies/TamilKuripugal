@@ -26,7 +26,7 @@ object TestUtil {
         order = 1,
         category = 22,
         image = "something",
-        defaultImage = null,
+        defaultImage = 3423,
         topic = "general"
     )
 
