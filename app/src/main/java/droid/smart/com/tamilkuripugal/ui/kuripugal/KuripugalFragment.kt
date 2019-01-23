@@ -66,6 +66,7 @@ class KuripugalFragment : Fragment(), Injectable {
         val params = KuripugalFragmentArgs.fromBundle(arguments!!)
         kuripugalViewModel.setCategoryId(params.category)
         binding.setLifecycleOwner(viewLifecycleOwner)
+        binding.kurippugal = kuripugalViewModel.kuripugal
 
         val adapter = KuripugalAdapter(dataBindingComponent, appExecutors) { kurippu ->
             navController().navigate(
@@ -84,8 +85,6 @@ class KuripugalFragment : Fragment(), Injectable {
 
     private fun initKuripugalList(viewModel: KuripugalViewModel) {
         viewModel.kuripugal.observe(viewLifecycleOwner, Observer { listResource ->
-            // we don't need any null checks here for the adapter since LiveData guarantees that
-            // it won't call us if fragment is stopped or not started.
             if (listResource?.data != null) {
                 adapter.submitList(listResource.data)
             } else {

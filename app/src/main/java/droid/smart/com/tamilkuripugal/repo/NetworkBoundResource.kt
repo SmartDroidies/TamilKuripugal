@@ -16,16 +16,17 @@
 
 package droid.smart.com.tamilkuripugal.repo
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import droid.smart.com.tamilkuripugal.AppExecutors
 import droid.smart.com.tamilkuripugal.api.ApiEmptyResponse
 import droid.smart.com.tamilkuripugal.api.ApiErrorResponse
 import droid.smart.com.tamilkuripugal.api.ApiResponse
 import droid.smart.com.tamilkuripugal.api.ApiSuccessResponse
 import droid.smart.com.tamilkuripugal.vo.Resource
+import timber.log.Timber
 
 /**
  * A generic class that can provide a resource backed by both the sqlite database and the network.
@@ -97,6 +98,7 @@ abstract class NetworkBoundResource<ResultType, RequestType>
                 }
                 is ApiErrorResponse -> {
                     onFetchFailed()
+                    Timber.e("API Call Error : %s", response.errorMessage)
                     result.addSource(dbSource) { newData ->
                         setValue(Resource.error(response.errorMessage, newData))
                     }

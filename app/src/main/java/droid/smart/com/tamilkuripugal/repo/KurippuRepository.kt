@@ -8,6 +8,7 @@ import droid.smart.com.tamilkuripugal.data.KurippuDao
 import droid.smart.com.tamilkuripugal.util.RateLimiter
 import droid.smart.com.tamilkuripugal.vo.Kurippu
 import droid.smart.com.tamilkuripugal.vo.Resource
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -34,6 +35,11 @@ class KurippuRepository @Inject constructor(
             override fun loadFromDb() = kurippuDao.loadKuripugal(categoryId)
 
             override fun createCall() = kuripugalService.getKuripugal(categoryId)
+
+            override fun onFetchFailed() {
+                Timber.w("Error is collecting latest data from server for Kuripugal by Category")
+                super.onFetchFailed()
+            }
         }.asLiveData()
     }
 
