@@ -5,6 +5,7 @@ apply plugin: 'kotlin-kapt'
 
 apply plugin: 'kotlin-allopen'
 apply plugin: 'androidx.navigation.safeargs'
+apply plugin: 'com.google.gms.google-services'
 
 allOpen {
     // allows mocking for classes w/o directly opening them for release builds
@@ -21,11 +22,16 @@ android {
         targetSdkVersion 28
         versionCode rootProject.versionCode
         versionName rootProject.versionName
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath false
+            }
+        }
         testInstrumentationRunner "droid.smart.com.tamilkuripugal.util.KuripugalTestRunner"
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -42,10 +48,10 @@ android {
 dependencies {
     //implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    kapt "androidx.room:room-compiler:$rootProject.roomVersion"
-    kapt "androidx.lifecycle:lifecycle-compiler:$rootProject.lifecycleVersion"
     kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
+    kapt "androidx.room:room-compiler:$rootProject.roomVersion"
+    kapt "androidx.lifecycle:lifecycle-compiler:$rootProject.lifecycleVersion"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
@@ -81,6 +87,9 @@ dependencies {
     //Timber
     implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    implementation 'com.google.firebase:firebase-core:16.0.6'
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
 
 
     testImplementation "junit:junit:$rootProject.junitVersion"

@@ -16,6 +16,7 @@ import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.MainActivityBinding
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
+import timber.log.Timber
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
@@ -38,13 +39,21 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         navController = Navigation.findNavController(this, R.id.kuripugal_nav_fragment)
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
 
-
         // Set up ActionBar
         setSupportActionBar(binding.toolbar)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         // Set up navigation menu
         binding.navigationView.setupWithNavController(navController)
+
+        if (intent.extras != null && !intent.extras.isEmpty) {
+            if (intent.extras.containsKey("id")) {
+                Timber.d("Extras : %s ", intent.extras.get("id"))
+                val kurippuId = intent.extras.get("id") as String
+                val bundle = Bundle().also { it.putString("kurippuId", kurippuId) }
+                navController.navigate(R.id.kurippu_fragment, bundle)
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -60,5 +69,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     }
 
     override fun supportFragmentInjector() = dispatchingAndroidInjector
+
 
 }

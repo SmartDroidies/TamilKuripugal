@@ -89,6 +89,13 @@ Runs lint on just the fatal issues in the release build.
 ### ./gradlew lintVitalRelease
 ```
 
+### Assemble Release Build
+
+Assembles all Release builds.
+```
+### ./gradlew assembleRelease
+```
+
 
 ### Packaging
 
