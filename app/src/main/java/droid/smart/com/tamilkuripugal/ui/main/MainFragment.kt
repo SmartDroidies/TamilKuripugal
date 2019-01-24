@@ -82,7 +82,7 @@ class MainFragment : Fragment(), Injectable {
             navController().navigate(MainFragmentDirections.kuripugalList(category.category))
         }
 
-        val layoutManager = GridLayoutManager(context, 2)
+        val layoutManager = GridLayoutManager(context, 3)
         binding.categoryList.layoutManager = layoutManager
         binding.categoryList.adapter = rvAdapter
         this.adapter = rvAdapter

@@ -17,6 +17,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.ads.MobileAds
+import com.smart.droid.tamil.tips.BuildConfig
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.MainActivityBinding
 import dagger.android.DispatchingAndroidInjector
@@ -27,9 +28,10 @@ import javax.inject.Inject
 
 /**
  * FIXME - Based on existing app capability
- *  Share Menu Link
- *  Feedback Menu Link
+ *  Share Menu Link  - Share an image
+ *  Change the theme to Blue
  *  Settings Menu Link
+ *  Add Agriculture Tips
  */
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
@@ -91,10 +93,32 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                 return true
             }
             R.id.action_share -> {
+                //FIXME - Check for permission before this share
+/*
+                var imageUri: Uri? = null
+                try {
+                    imageUri = Uri.parse(
+                        MediaStore.Images.Media.insertImage(
+                            this.contentResolver,
+                            BitmapFactory.decodeResource(resources, R.drawable.banner), null, null
+                        )
+                    )
+                } catch (e: NullPointerException) {
+                    Timber.e("Failed to load share app image")
+                }
+*/
                 val shareIntent = Intent()
                 shareIntent.action = Intent.ACTION_SEND
                 shareIntent.type = "text/plain"
-                shareIntent.putExtra(Intent.EXTRA_TEXT, "Share me app");
+//                shareIntent.type = "image/*"
+//                shareIntent.putExtra(
+//                    Intent.EXTRA_STREAM,
+//                    imageUri
+//                )
+                shareIntent.putExtra(
+                    Intent.EXTRA_TEXT,
+                    "Try this great Tamil App - https://play.google.com/store/apps/details?id=" + this.packageName
+                );
                 startActivity(Intent.createChooser(shareIntent, getString(R.string.action_share)))
                 return true
             }
@@ -117,7 +141,12 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                 return true
             }
             R.id.action_feedback -> {
-                Timber.w("Open Mail for Feedback")
+                val intent = Intent(Intent.ACTION_SENDTO)
+                intent.data = Uri.parse("mailto:careerwrap@gmail.com") // only email apps should handle this
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback on Tamil Kuripugal - " + BuildConfig.VERSION_NAME)
+                if (intent.resolveActivity(this.packageManager) != null) {
+                    startActivity(intent)
+                }
                 return true
             }
         }

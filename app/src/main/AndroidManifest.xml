@@ -3,6 +3,8 @@
           package="com.smart.droid.tamil.tips">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
             android:name="droid.smart.com.tamilkuripugal.KuripugalApp"
             android:allowBackup="false"
