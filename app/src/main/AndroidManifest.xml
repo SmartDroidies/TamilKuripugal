@@ -18,7 +18,11 @@
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_color"
                 android:resource="@color/colorAccent"/>
-        
+
+        <meta-data
+                android:name="com.google.android.gms.ads.APPLICATION_ID"
+                android:value="ca-app-pub-8439744074965483~7727700457"/>
+
         <activity android:name="droid.smart.com.tamilkuripugal.MainActivity"
                   android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

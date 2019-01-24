@@ -12,6 +12,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.MainActivityBinding
 import dagger.android.DispatchingAndroidInjector
@@ -28,6 +31,10 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
+    @Inject
+    lateinit var adRequest: AdRequest
+
+    lateinit var mAdView: AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +61,14 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                 navController.navigate(R.id.kurippu_fragment, bundle)
             }
         }
+
+        // Kuripugal Ad initialization
+        MobileAds.initialize(this, "ca-app-pub-8439744074965483~7727700457")
+
+        mAdView = binding.adView
+        //val adRequest = AdRequest.Builder().build()  //FIXME - Create a dagger injection
+        mAdView.loadAd(adRequest)
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

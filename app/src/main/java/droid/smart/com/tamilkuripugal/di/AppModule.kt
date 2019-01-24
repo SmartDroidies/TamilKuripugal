@@ -18,6 +18,7 @@ package droid.smart.com.tamilkuripugal.di
 
 import android.app.Application
 import androidx.room.Room
+import com.google.android.gms.ads.AdRequest
 import dagger.Module
 import dagger.Provides
 import droid.smart.com.tamilkuripugal.api.KuripugalService
@@ -57,6 +58,14 @@ class AppModule {
             .create(KuripugalService::class.java)
     }
 
+
+    @Singleton
+    @Provides
+    fun provideAdRequest(/*app: Application*/): AdRequest {
+        return AdRequest.Builder()
+            .addTestDevice("CA6CFF7065AD2A4A8636710F5DE45760")
+            .build()
+    }
 
     @Singleton
     @Provides
