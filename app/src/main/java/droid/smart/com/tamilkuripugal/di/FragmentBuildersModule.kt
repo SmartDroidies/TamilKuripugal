@@ -21,6 +21,7 @@ import dagger.android.ContributesAndroidInjector
 import droid.smart.com.tamilkuripugal.ui.kurippu.KurippuFragment
 import droid.smart.com.tamilkuripugal.ui.kuripugal.KuripugalFragment
 import droid.smart.com.tamilkuripugal.ui.main.MainFragment
+import droid.smart.com.tamilkuripugal.ui.policy.PrivacyFragment
 
 @Suppress("unused")
 @Module
@@ -33,5 +34,8 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeKurippuFragment(): KurippuFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributePrivacyFragment(): PrivacyFragment
 
 }

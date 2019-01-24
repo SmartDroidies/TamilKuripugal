@@ -1,6 +1,7 @@
 package droid.smart.com.tamilkuripugal
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
@@ -22,6 +23,14 @@ import dagger.android.support.HasSupportFragmentInjector
 import timber.log.Timber
 import javax.inject.Inject
 
+/**
+ * FIXME - Based on existing app capability
+ *  Share Menu Link
+ *  Rate Me Menu Link
+ *  Feedback Menu Link
+ *  Settings Menu Link
+ *  Privacy Policy Menu Link
+ */
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     private lateinit var drawerLayout: DrawerLayout
@@ -30,11 +39,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
-
-    @Inject
-    lateinit var adRequest: AdRequest
-
-    lateinit var mAdView: AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,11 +68,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
         // Kuripugal Ad initialization
         MobileAds.initialize(this, "ca-app-pub-8439744074965483~7727700457")
-
-        mAdView = binding.adView
-        //val adRequest = AdRequest.Builder().build()  //FIXME - Create a dagger injection
-        mAdView.loadAd(adRequest)
-
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -85,5 +84,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     override fun supportFragmentInjector() = dispatchingAndroidInjector
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        Timber.i("Menu item selected : %s", item!!.itemId);
+        return super.onOptionsItemSelected(item)
+    }
 
 }

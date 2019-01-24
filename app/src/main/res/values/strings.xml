@@ -5,6 +5,11 @@
     <string name="title_categories">Categories</string>
     <string name="title_new_kuripugal">New Kuripugal</string>
     <string name="title_featured_kuripugal">Featured Tips</string>
+    <string name="title_privacy">Privacy Policy</string>
+
+    <string name="action_share">Share</string>
+    <string name="action_feedback">Feedback</string>
+    <string name="action_rateme">Rate Me</string>
 
     <string name="navigation_drawer_header_title">Navigation Drawer Header Title</string>
     <string name="navigation_drawer_header_content_description">Navigation Drawer Header Logo</string>
@@ -23,4 +28,9 @@
     <string name="AANMEEGAM">Divine tips</string>
     <string name="GENERAL">General tips</string>
     <string name="AGRICULTURE">Agriculture tips</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="disclaimer_text">Disclaimer goes here</string>
+
 </resources>

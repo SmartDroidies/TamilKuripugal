@@ -12,6 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.MainFragmentBinding
 import droid.smart.com.tamilkuripugal.AppExecutors
@@ -40,6 +42,11 @@ class MainFragment : Fragment(), Injectable {
 
     private lateinit var mainViewModel: MainViewModel
     private var adapter by autoCleared<CategoryListAdapter>()
+
+    @Inject
+    lateinit var adRequest: AdRequest
+
+    lateinit var mAdView: AdView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,7 +78,7 @@ class MainFragment : Fragment(), Injectable {
         val rvAdapter = CategoryListAdapter(
             dataBindingComponent = dataBindingComponent,
             appExecutors = appExecutors
-        ) {category->
+        ) { category ->
             navController().navigate(MainFragmentDirections.kuripugalList(category.category))
         }
 
@@ -80,6 +87,10 @@ class MainFragment : Fragment(), Injectable {
         binding.categoryList.adapter = rvAdapter
         this.adapter = rvAdapter
         initCategories()
+
+        mAdView = binding.adView
+        mAdView.loadAd(adRequest)
+
     }
 
 
