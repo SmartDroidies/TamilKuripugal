@@ -1,6 +1,7 @@
 package droid.smart.com.tamilkuripugal
 
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -13,8 +14,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.MainActivityBinding
@@ -29,7 +28,6 @@ import javax.inject.Inject
  *  Rate Me Menu Link
  *  Feedback Menu Link
  *  Settings Menu Link
- *  Privacy Policy Menu Link
  */
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
@@ -87,6 +85,12 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         Timber.i("Menu item selected : %s", item!!.itemId);
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.overflow_menu, menu)
+        return true
     }
 
 }
