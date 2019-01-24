@@ -1,5 +1,7 @@
 package droid.smart.com.tamilkuripugal
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -22,10 +24,10 @@ import dagger.android.support.HasSupportFragmentInjector
 import timber.log.Timber
 import javax.inject.Inject
 
+
 /**
  * FIXME - Based on existing app capability
  *  Share Menu Link
- *  Rate Me Menu Link
  *  Feedback Menu Link
  *  Settings Menu Link
  */
@@ -83,7 +85,42 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     override fun supportFragmentInjector() = dispatchingAndroidInjector
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        Timber.i("Menu item selected : %s", item!!.itemId);
+        when (item!!.itemId) {
+            R.id.action_exit -> {
+                finish();
+                return true
+            }
+            R.id.action_share -> {
+                val shareIntent = Intent()
+                shareIntent.action = Intent.ACTION_SEND
+                shareIntent.type = "text/plain"
+                shareIntent.putExtra(Intent.EXTRA_TEXT, "Share me app");
+                startActivity(Intent.createChooser(shareIntent, getString(R.string.action_share)))
+                return true
+            }
+            R.id.action_rateme -> {
+                try {
+                    startActivity(
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("market://details?id=" + this.packageName)
+                        )
+                    )
+                } catch (e: android.content.ActivityNotFoundException) {
+                    startActivity(
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("http://play.google.com/store/apps/details?id=" + this.packageName)
+                        )
+                    )
+                }
+                return true
+            }
+            R.id.action_feedback -> {
+                Timber.w("Open Mail for Feedback")
+                return true
+            }
+        }
         return super.onOptionsItemSelected(item)
     }
 
