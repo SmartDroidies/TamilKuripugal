@@ -22,6 +22,7 @@ android {
         targetSdkVersion 28
         versionCode rootProject.versionCode
         versionName rootProject.versionName
+        multiDexEnabled true
         javaCompileOptions {
             annotationProcessorOptions {
                 includeCompileClasspath false
