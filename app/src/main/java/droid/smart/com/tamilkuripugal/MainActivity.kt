@@ -29,7 +29,6 @@ import javax.inject.Inject
 /**
  * FIXME - Based on existing app capability
  *  Share Menu Link  - Share an image
- *  Change the theme to Blue
  *  Settings Menu Link
  *  Add Agriculture Tips
  */
