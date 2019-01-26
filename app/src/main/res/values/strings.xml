@@ -31,8 +31,10 @@
     <string name="GENERAL">General tips</string>
     <string name="AGRICULTURE">Agriculture tips</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="disclaimer_text">Disclaimer goes here</string>
+    <string name="write_storage_permission_available">FIXME - Write Storage permission avilable</string>
+    <string name="storage_permission_required">//FIXME - Storage permission required</string>
+    <string name="ok">Ok</string>
+    <string name="storage_permission_not_available">//FIXME - Storage permission not available</string>
 
 </resources>
