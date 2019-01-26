@@ -35,6 +35,7 @@ import droid.smart.com.tamilkuripugal.extensions.checkSelfPermissionCompat
 import droid.smart.com.tamilkuripugal.extensions.requestPermissionsCompat
 import droid.smart.com.tamilkuripugal.extensions.shouldShowRequestPermissionRationaleCompat
 import droid.smart.com.tamilkuripugal.extensions.showSnackbar
+import droid.smart.com.tamilkuripugal.ui.main.MainFragmentDirections
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -147,6 +148,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                 }
                 return true
             }
+            R.id.action_settings -> {
+                navController.navigate(MainFragmentDirections.settings())
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -227,6 +231,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         menuInflater.inflate(R.menu.overflow_menu, menu)
         return true
     }
+
 
 }
 

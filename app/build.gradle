@@ -91,6 +91,8 @@ dependencies {
     implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
+    implementation "androidx.preference:preference:1.0.0"
+
     //Multidex
     implementation "com.android.support:multidex:$rootProject.multidexVersion" /*:*/
 
