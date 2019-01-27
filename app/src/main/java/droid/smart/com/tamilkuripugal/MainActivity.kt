@@ -42,6 +42,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 const val PERMISSION_EXTERNAL_WRITE = 0
+const val PERMISSION_EXTERNAL_WRITE_KURIPPU = 5
 const val PREFKEY_UPDATE_VERSION = "pref_update_version"
 
 /**
@@ -177,7 +178,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
      * a SnackBar that includes additional information.
      */
     @TargetApi(Build.VERSION_CODES.M)
-    private fun requestExternalWritePermission() {
+    fun requestExternalWritePermission() {
         // Permission has not been granted and must be requested.
         if (shouldShowRequestPermissionRationaleCompat(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             layout.showSnackbar(

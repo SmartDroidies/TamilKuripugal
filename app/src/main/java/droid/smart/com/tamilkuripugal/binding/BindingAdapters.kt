@@ -17,10 +17,8 @@
 package droid.smart.com.tamilkuripugal.binding
 
 import android.view.View
-import android.webkit.WebView
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import droid.smart.com.tamilkuripugal.vo.Kurippu
 
 /**
  * Data Binding adapters specific to the app.
@@ -36,6 +34,12 @@ object BindingAdapters {
     @BindingAdapter("imageSrc")
     fun showImageSrc(view: ImageView, imageSrc: Int) {
         view.setImageResource(imageSrc)
+    }
+
+    @JvmStatic
+    @BindingAdapter("touchListener")
+    fun attachTouchListener(view: View, touchLister: View.OnTouchListener) {
+        view.setOnTouchListener(touchLister)
     }
 
 }

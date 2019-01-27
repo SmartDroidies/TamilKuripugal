@@ -10,6 +10,11 @@
         <import type="droid.smart.com.tamilkuripugal.vo.Status"/>
         <import type="droid.smart.com.tamilkuripugal.vo.Resource"/>
         <import type="androidx.lifecycle.LiveData"/>
+        <import type="android.view.View.OnTouchListener"/>
+
+        <variable
+                name="touchListener"
+                type="OnTouchListener" />
 
         <variable
                 name="kurippu"
@@ -25,10 +30,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/tip_content"
                 app:visibleGone="@{kurippu.data != null}"
-                android:layout_marginBottom="@dimen/ad_height"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -68,7 +73,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <include
                 layout="@layout/loading_state"
                 app:resource="@{(Resource) kurippu}"
@@ -78,7 +82,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/default_margin"/>
 
-        <com.google.android.gms.ads.AdView
+     <!--   <com.google.android.gms.ads.AdView
                 xmlns:ads="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/adView"
                 android:layout_width="wrap_content"
@@ -87,7 +91,7 @@
                 ads:adSize="SMART_BANNER"
                 ads:layout_constraintBottom_toBottomOf="parent"
                 ads:layout_constraintStart_toStartOf="parent"
-                ads:adUnitId="ca-app-pub-8439744074965483/4634633253"/>
+                ads:adUnitId="ca-app-pub-8439744074965483/4634633253"/>-->
 
     </LinearLayout>
 
