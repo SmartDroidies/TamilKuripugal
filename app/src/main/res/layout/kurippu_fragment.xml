@@ -21,18 +21,16 @@
     </data>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        <LinearLayout
-                app:visibleGone="@{kurippu.data != null}"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/tip_content"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toTopOf="parent">
+                app:visibleGone="@{kurippu.data != null}"
+                android:layout_marginBottom="@dimen/ad_height"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
             <TextView
                     android:id="@+id/kurippu_title"
@@ -40,27 +38,30 @@
                     android:text="@{kurippu.data.title}"
                     android:layout_margin="@dimen/default_margin"
                     tools:text="Tip Title"
+                    app:layout_constraintTop_toTopOf="parent"
                     android:gravity="center_horizontal"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:layout_height="wrap_content"/>
-
-            <!--
-                        <ImageView android:id="@+id/kurippu_image"
-                                   android:layout_width="wrap_content"
-                                   android:layout_height="@dimen/kurippu_image_height"
-                                   app:visibleGone="@{kurippu.data.image != null}"
-                                   app:imageUrl="@{kurippu.data.image}"/>
-            -->
 
             <WebView android:id="@+id/kurippu_detail"
                      app:layout_constraintTop_toBottomOf="@id/kurippu_title"
                      app:webData="@{kurippu.data}"
                      android:gravity="center_horizontal"
                      android:layout_width="match_parent"
-                     android:layout_height="match_parent"/>
+                     android:layout_height="wrap_content"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_margin"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:src="@drawable/ic_share_black"/>
 
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <include
                 layout="@layout/loading_state"
@@ -68,17 +69,21 @@
                 app:callback="@{() -> retryCallback.retry()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/default_margin"/>
 
+        <com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                ads:adSize="SMART_BANNER"
+                ads:layout_constraintBottom_toBottomOf="parent"
+                ads:layout_constraintStart_toStartOf="parent"
+                ads:adUnitId="ca-app-pub-8439744074965483/4634633253"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 
 </layout>

@@ -1,9 +1,7 @@
 package droid.smart.com.tamilkuripugal.ui.main
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -52,6 +50,7 @@ class MainFragment : Fragment(), Injectable {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(true)
         val dataBinding = DataBindingUtil.inflate<MainFragmentBinding>(
             inflater,
             R.layout.main_fragment,
@@ -98,6 +97,11 @@ class MainFragment : Fragment(), Injectable {
         mainViewModel.categories.observe(viewLifecycleOwner, Observer { categories ->
             adapter.submitList(categories?.data)
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, menuInflater)
+        menuInflater.inflate(R.menu.overflow_menu, menu)
     }
 
     /**

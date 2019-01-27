@@ -1,15 +1,15 @@
 package droid.smart.com.tamilkuripugal.ui.kurippu
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.KurippuFragmentBinding
 import droid.smart.com.tamilkuripugal.AppExecutors
@@ -36,10 +36,16 @@ class KurippuFragment : Fragment(), Injectable {
     var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
     var binding by autoCleared<KurippuFragmentBinding>()
 
+    @Inject
+    lateinit var adRequest: AdRequest
+
+    lateinit var mAdView: AdView
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(true)
         val dataBinding = DataBindingUtil.inflate<KurippuFragmentBinding>(
             inflater,
             R.layout.kurippu_fragment,
@@ -65,6 +71,14 @@ class KurippuFragment : Fragment(), Injectable {
         kurippuViewModel.setKurippuId(params.kurippuId)
         binding.setLifecycleOwner(viewLifecycleOwner)
         binding.kurippu = kurippuViewModel.kurippu
+
+        mAdView = binding.adView
+        mAdView.loadAd(adRequest)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
+        //super.onCreateOptionsMenu(menu, menuInflater)
+        menuInflater.inflate(R.menu.kurippu_overflow_menu, menu)
     }
 
     /**

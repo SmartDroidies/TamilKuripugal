@@ -10,7 +10,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -47,7 +46,6 @@ const val PREFKEY_UPDATE_VERSION = "pref_update_version"
 
 /**
  * FIXME - Based on existing app capability
- *  Timber Tree for Crashanalitics
  */
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
@@ -231,12 +229,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
             }
         }
         startActivity(Intent.createChooser(shareIntent, getString(R.string.action_share)))
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        super.onCreateOptionsMenu(menu)
-        menuInflater.inflate(R.menu.overflow_menu, menu)
-        return true
     }
 
 
