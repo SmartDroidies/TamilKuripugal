@@ -24,8 +24,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.preference.PreferenceManager
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.messaging.FirebaseMessaging
 import com.smart.droid.tamil.tips.BuildConfig
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.MainActivityBinding
@@ -36,14 +38,16 @@ import droid.smart.com.tamilkuripugal.extensions.requestPermissionsCompat
 import droid.smart.com.tamilkuripugal.extensions.shouldShowRequestPermissionRationaleCompat
 import droid.smart.com.tamilkuripugal.extensions.showSnackbar
 import droid.smart.com.tamilkuripugal.ui.main.MainFragmentDirections
+import droid.smart.com.tamilkuripugal.ui.main.MainViewModel
 import timber.log.Timber
 import javax.inject.Inject
 
 const val PERMISSION_EXTERNAL_WRITE = 0
+const val PREFKEY_UPDATE_VERSION = "pref_update_version"
 
 /**
  * FIXME - Based on existing app capability
- *  Settings Menu Link
+ *  Timber Tree for Crashanalitics
  */
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
@@ -65,7 +69,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         navController = Navigation.findNavController(this, R.id.kuripugal_nav_fragment)
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
 
-        layout = binding.drawerLayout //Fixme - Change to mail layout
+        layout = binding.mainLayout
 
         // Set up ActionBar
         setSupportActionBar(binding.toolbar)
@@ -73,6 +77,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
         // Set up navigation menu
         binding.navigationView.setupWithNavController(navController)
+
+        //Init pref on first start
+        initOnFirstStart()
 
         if (intent.extras != null && !intent.extras.isEmpty) {
             if (intent.extras.containsKey("id")) {
@@ -104,7 +111,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
             R.id.action_exit -> {
-                finish();
+                finish()
                 return true
             }
             R.id.action_share -> {
@@ -214,7 +221,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
             "Try this great Tamil App - https://play.google.com/store/apps/details?id=" + this.packageName
         )
         if (indBanner) {
-            var imageUri = collectShareImage()
+            val imageUri = collectShareImage()
             shareIntent.type = "image/*"
             if (imageUri != null) {
                 shareIntent.putExtra(
@@ -232,6 +239,28 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         return true
     }
 
+
+    private fun initOnFirstStart() {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        if (!sharedPreferences.contains(PREFKEY_UPDATE_VERSION)) {
+            val categories = MainViewModel.CATEGORY_DATA
+            val editor = sharedPreferences.edit()
+            for (category in categories) {
+                Timber.d("Initialize preference for category : %s", category)
+                FirebaseMessaging.getInstance().subscribeToTopic(category.topic)
+                    .addOnCompleteListener { task ->
+                        if (!task.isSuccessful) {
+                            Timber.w("InitOnFirstStart - Subscription failed for topic : %s", category.topic)
+                            Timber.e(task.exception)
+                        } else {
+                            editor.putBoolean(category.topic, true)
+                        }
+                    }
+            }
+            editor.putInt(PREFKEY_UPDATE_VERSION, BuildConfig.VERSION_CODE)
+            editor.apply()
+        }
+    }
 
 }
 

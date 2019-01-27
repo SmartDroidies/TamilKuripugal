@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 class KuripugalApp : Application(), HasActivityInjector {
 
-    val defaultLocale = "ta"
+    private val defaultLocale = "ta"
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
@@ -24,6 +24,8 @@ class KuripugalApp : Application(), HasActivityInjector {
         super.onCreate()
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
+        } else {
+            //FIXME Create a Crashanalytics tree for Timber
         }
         AppInjector.init(this)
         setDefaultLocale(this)
