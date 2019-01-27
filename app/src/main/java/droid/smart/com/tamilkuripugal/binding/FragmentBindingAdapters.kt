@@ -22,6 +22,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import droid.smart.com.tamilkuripugal.extensions.loadKurippu
 import droid.smart.com.tamilkuripugal.testing.OpenForTesting
 import droid.smart.com.tamilkuripugal.ui.util.Helper
 import droid.smart.com.tamilkuripugal.vo.Kurippu
@@ -51,9 +52,9 @@ class FragmentBindingAdapters @Inject constructor(val fragment: Fragment) {
     @BindingAdapter("webData")
     fun showWebData(webView: WebView, kurippu: Kurippu?) {
         if (kurippu != null && !(kurippu!!.content.isNullOrEmpty())) {
-            webView.loadData(kurippu.content, "text/html", null)
+            webView.loadKurippu(kurippu)
         }
     }
 
-
 }
+
