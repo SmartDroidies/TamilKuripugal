@@ -46,7 +46,12 @@ const val PERMISSION_EXTERNAL_WRITE_KURIPPU = 5
 const val PREFKEY_UPDATE_VERSION = "pref_update_version"
 
 /**
- * FIXME - Based on existing app capability
+ * FIXME - Functionalities Planned
+ *
+ *  Featured kurippu listing
+ *  Favourite kurippu listing
+ *  Scheduled kuripugal for test device
+ *  Release Build
  */
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
