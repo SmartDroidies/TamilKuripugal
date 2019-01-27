@@ -18,7 +18,10 @@ package droid.smart.com.tamilkuripugal.binding
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import timber.log.Timber
+import java.util.*
 
 /**
  * Data Binding adapters specific to the app.
@@ -42,8 +45,15 @@ object BindingAdapters {
         view.setOnTouchListener(touchLister)
     }
 
+    @JvmStatic
+    @BindingAdapter("millis")
+    fun showTime(view: TextView, unixTime: Long) {
+        Timber.d("Tip update timestamp %s", unixTime)
+        val kurippuDate = Date(unixTime * 1000)
+        val sdf = java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
+        view.setText(sdf.format(kurippuDate))
+    }
+
 }
-
-
 
 

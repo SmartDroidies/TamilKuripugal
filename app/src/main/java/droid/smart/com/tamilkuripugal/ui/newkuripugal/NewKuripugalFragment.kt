@@ -7,15 +7,20 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.NewKuripugalFragmentBinding
 import droid.smart.com.tamilkuripugal.AppExecutors
 import droid.smart.com.tamilkuripugal.binding.FragmentDataBindingComponent
 import droid.smart.com.tamilkuripugal.di.Injectable
+import droid.smart.com.tamilkuripugal.ui.common.DividerItemDecoration
 import droid.smart.com.tamilkuripugal.ui.common.KuripugalAdapter
 import droid.smart.com.tamilkuripugal.ui.common.RetryCallback
+import droid.smart.com.tamilkuripugal.ui.kuripugal.KuripugalFragmentDirections
 import droid.smart.com.tamilkuripugal.util.autoCleared
 import java.util.*
 import javax.inject.Inject
@@ -48,7 +53,7 @@ class NewKuripugalFragment : Fragment(), Injectable {
         )
         dataBinding.retryCallback = object : RetryCallback {
             override fun retry() {
-                //newKuripugalViewModel.retry()
+                newKuripugalViewModel.retry()
             }
         }
         binding = dataBinding
@@ -63,7 +68,6 @@ class NewKuripugalFragment : Fragment(), Injectable {
         binding.kurippugal = newKuripugalViewModel.kuripugal
 
 
-/*
         val adapter = KuripugalAdapter(dataBindingComponent, appExecutors) { kurippu ->
             navController().navigate(
                 KuripugalFragmentDirections.kurippu(kurippu.kurippuId)
@@ -76,9 +80,23 @@ class NewKuripugalFragment : Fragment(), Injectable {
         val itemDecor = DividerItemDecoration(context!!)
         binding.kuripugalList.addItemDecoration(itemDecor)
 
-        initKuripugalList(kuripugalViewModel)
-*/
+        initKuripugalList(newKuripugalViewModel)
     }
 
+
+    private fun initKuripugalList(viewModel: NewKuripugalViewModel) {
+        viewModel.kuripugal.observe(viewLifecycleOwner, Observer { listResource ->
+            if (listResource?.data != null) {
+                adapter.submitList(listResource.data)
+            } else {
+                adapter.submitList(emptyList())
+            }
+        })
+    }
+
+    /**
+     * Created to be able to override in tests
+     */
+    fun navController() = findNavController()
 
 }
