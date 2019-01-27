@@ -1,0 +1,84 @@
+package droid.smart.com.tamilkuripugal.ui.newkuripugal
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingComponent
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import com.smart.droid.tamil.tips.R
+import com.smart.droid.tamil.tips.databinding.NewKuripugalFragmentBinding
+import droid.smart.com.tamilkuripugal.AppExecutors
+import droid.smart.com.tamilkuripugal.binding.FragmentDataBindingComponent
+import droid.smart.com.tamilkuripugal.di.Injectable
+import droid.smart.com.tamilkuripugal.ui.common.KuripugalAdapter
+import droid.smart.com.tamilkuripugal.ui.common.RetryCallback
+import droid.smart.com.tamilkuripugal.util.autoCleared
+import java.util.*
+import javax.inject.Inject
+
+class NewKuripugalFragment : Fragment(), Injectable {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    lateinit var newKuripugalViewModel: NewKuripugalViewModel
+
+    @Inject
+    lateinit var appExecutors: AppExecutors
+
+    // mutable for testing
+    var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
+    var binding by autoCleared<NewKuripugalFragmentBinding>()
+
+    private var adapter by autoCleared<KuripugalAdapter>()
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val dataBinding = DataBindingUtil.inflate<NewKuripugalFragmentBinding>(
+            inflater,
+            R.layout.new_kuripugal_fragment,
+            container,
+            false
+        )
+        dataBinding.retryCallback = object : RetryCallback {
+            override fun retry() {
+                //newKuripugalViewModel.retry()
+            }
+        }
+        binding = dataBinding
+        return dataBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        newKuripugalViewModel = ViewModelProviders.of(this, viewModelFactory)
+            .get(NewKuripugalViewModel::class.java)
+        newKuripugalViewModel.setLastViewed(Date().time) //FIXME - Collect time for shaped preference
+        binding.setLifecycleOwner(viewLifecycleOwner)
+        binding.kurippugal = newKuripugalViewModel.kuripugal
+
+
+/*
+        val adapter = KuripugalAdapter(dataBindingComponent, appExecutors) { kurippu ->
+            navController().navigate(
+                KuripugalFragmentDirections.kurippu(kurippu.kurippuId)
+            )
+        }
+        this.adapter = adapter
+        binding.kuripugalList.adapter = adapter
+        val mLayoutManager = LinearLayoutManager(context)
+        binding.kuripugalList.layoutManager = mLayoutManager
+        val itemDecor = DividerItemDecoration(context!!)
+        binding.kuripugalList.addItemDecoration(itemDecor)
+
+        initKuripugalList(kuripugalViewModel)
+*/
+    }
+
+
+}

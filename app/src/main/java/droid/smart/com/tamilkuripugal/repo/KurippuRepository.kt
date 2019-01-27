@@ -60,6 +60,27 @@ class KurippuRepository @Inject constructor(
             }
         }.asLiveData()
     }
+
+    fun loadNewKuripugal(lastViewed: Long?): LiveData<Resource<List<Kurippu>>> {
+        return object : NetworkBoundResource<List<Kurippu>, List<Kurippu>>(appExecutors) {
+            override fun saveCallResult(item: List<Kurippu>) {
+                kurippuDao.insertKuripugal(item)
+            }
+
+            override fun shouldFetch(data: List<Kurippu>?): Boolean {
+                return data == null || data.isEmpty() /*|| kurippuListRateLimit.shouldFetch("kuripugal-" + categoryId)*/ //FIXME - Also fetch if the last fetch was hours ago
+            }
+
+            override fun loadFromDb() = kurippuDao.loadNewKuripugal()
+
+            override fun createCall() = kuripugalService.getNewKuripugal("new", lastViewed!!)
+
+            override fun onFetchFailed() {
+                Timber.w("Error is collecting new kuripugal from server %s", lastViewed)
+                super.onFetchFailed()
+            }
+        }.asLiveData()
+    }
 }
 
 

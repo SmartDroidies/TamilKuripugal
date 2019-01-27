@@ -6,7 +6,7 @@
                 android:id="@+id/main_fragment"
                 android:title="@string/title_categories"/>
         <item
-                android:id="@+id/new_fragment"
+                android:id="@+id/newKuripugalFragment"
                 android:title="@string/title_new_kuripugal"/>
         <item
                 android:id="@+id/featured_fragment"
@@ -15,18 +15,6 @@
                 android:id="@+id/favourite_fragment"
                 android:title="@string/title_favourite_kuripugal"/>
     </group>
-
-    <!--group android:id="@+id/actions">
-        <item
-                android:id="@+id/action_share"
-                android:title="@string/action_share"/>
-        <item
-                android:id="@+id/action_feedback"
-                android:title="@string/action_feedback"/>
-        <item
-                android:id="@+id/action_rateme"
-                android:title="@string/action_rateme"/>
-    </group-->
 
     <group android:id="@+id/privacy">
         <item
