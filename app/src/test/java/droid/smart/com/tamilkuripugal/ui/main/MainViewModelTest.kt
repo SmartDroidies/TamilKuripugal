@@ -41,9 +41,10 @@ class MainViewModelTest {
         verifyNoMoreInteractions(categoryRepository)
     }
 
-    //FIXME - Send Results to UI
-    //FIXME - Retury
-    //FIXME - Null Category List
-    //FIXME - Dont Refresh on Same Data
-    //FIXME - No Retry without user
+    //TODO - Do later when you get change
+//     Send Results to UI
+//     Retry
+//     Null Category List
+//     Dont Refresh on Same Data
+//     No Retry without user
 }
