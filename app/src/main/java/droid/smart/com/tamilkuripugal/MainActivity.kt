@@ -244,7 +244,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         if (!sharedPreferences.contains(PREFKEY_UPDATE_VERSION)) {
             val categories = MainViewModel.CATEGORY_DATA
-            val editor = sharedPreferences.edit()
+            //val editor = sharedPreferences.edit()
             for (category in categories) {
                 Timber.d("Initialize preference for category : %s", category)
                 FirebaseMessaging.getInstance().subscribeToTopic(category.topic)
@@ -253,12 +253,12 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                             Timber.w("InitOnFirstStart - Subscription failed for topic : %s", category.topic)
                             Timber.e(task.exception)
                         } else {
-                            editor.putBoolean(category.topic, true)
+                            Timber.d("InitOnFirstStart - Subscription success for topic : %s", category.topic)
+                            sharedPreferences.edit().putBoolean(category.topic, true).apply()
                         }
                     }
             }
-            editor.putInt(PREFKEY_UPDATE_VERSION, BuildConfig.VERSION_CODE)
-            editor.apply()
+            sharedPreferences.edit().putInt(PREFKEY_UPDATE_VERSION, BuildConfig.VERSION_CODE).apply()
         }
     }
 
