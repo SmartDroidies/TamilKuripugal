@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
+import com.smart.droid.tamil.tips.BuildConfig
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.MainFragmentBinding
 import droid.smart.com.tamilkuripugal.AppExecutors
@@ -21,6 +22,7 @@ import droid.smart.com.tamilkuripugal.testing.OpenForTesting
 import droid.smart.com.tamilkuripugal.ui.common.CategoryListAdapter
 import droid.smart.com.tamilkuripugal.ui.common.RetryCallback
 import droid.smart.com.tamilkuripugal.util.autoCleared
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -63,6 +65,12 @@ class MainFragment : Fragment(), Injectable {
                 mainViewModel.retry()
             }
         }
+
+        if (BuildConfig.DEBUG) {
+            Timber.i("Test Device - Display test device controls")
+            //dataBinding.btnDraftKuripugal.visibility = View.VISIBLE
+        }
+
         binding = dataBinding
         return dataBinding.root
     }
@@ -103,6 +111,7 @@ class MainFragment : Fragment(), Injectable {
         super.onCreateOptionsMenu(menu, menuInflater)
         menuInflater.inflate(R.menu.overflow_menu, menu)
     }
+
 
     /**
      * Created to be able to override in tests

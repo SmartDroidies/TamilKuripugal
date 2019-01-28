@@ -7,6 +7,7 @@
     <string name="title_featured_kuripugal">\u0B9A\u0BBF\u0BB1\u0BA8\u0BCD\u0BA4\u0BB5\u0BC8</string>
     <string name="title_favourite_kuripugal">\u0BAA\u0BBF\u0B9F\u0BBF\u0BA4\u0BCD\u0BA4\u0BB5\u0BC8</string>
     <string name="title_privacy">\u0BAA\u0BC6\u0BBE\u0BB1\u0BC1\u0BAA\u0BCD\u0BAA\u0BBE\u0B95\u0BBE\u0BAE\u0BC8</string>
+    <string name="title_draft_kuripugal">Draft Kuripugal</string>
 
     <string name="action_share">Share</string>
     <string name="action_feedback">Feedback</string>
@@ -41,5 +42,6 @@
     <string name="msg_subscribe_failed">Scubscription failed</string>
     <string name="msg_unsubscribed">Unscbscribed successfully</string>
     <string name="msg_unsubscribe_failed">Notifcation unscbscribe failed</string>
+    <string name="draft_kuripugal">Draft Kuripugal</string>
 
 </resources>

@@ -6,6 +6,8 @@
     <string name="title_new_kuripugal">New Kuripugal</string>
     <string name="title_featured_kuripugal">Featured Tips</string>
     <string name="title_privacy">Privacy Policy</string>
+    <string name="title_favourite_kuripugal">Favourite Tips</string>
+    <string name="title_draft_kuripugal">Draft Kuripugal</string>
 
     <string name="action_share">Share</string>
     <string name="action_feedback">Feedback</string>
@@ -18,7 +20,6 @@
     <string name="retry">Retry</string>
     <string name="unknown_error">Unknown Error occured</string>
     <string name="kurippu_image">Kurippu Image</string>
-    <string name="title_favourite_kuripugal">Favourite Tips</string>
 
     <!-- Categories -->
     <string name="HEALTH">Health tips</string>
@@ -41,5 +42,7 @@
     <string name="msg_subscribe_failed">Scubscription failed</string>
     <string name="msg_unsubscribed">Unscbscribed successfully</string>
     <string name="msg_unsubscribe_failed">Notifcation unscbscribe failed</string>
+    <string name="draft_kuripugal">Draft Kuripugal</string>
+
 
 </resources>
