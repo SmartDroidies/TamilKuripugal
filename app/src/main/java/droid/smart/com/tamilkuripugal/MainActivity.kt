@@ -85,13 +85,11 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         //Init pref on first start
         initOnFirstStart()
 
-        if (intent.extras != null && !intent.extras.isEmpty) {
-            if (intent.extras.containsKey("id")) {
-                Timber.d("Extras : %s ", intent.extras.get("id"))
-                val kurippuId = intent.extras.get("id") as String
-                val bundle = Bundle().also { it.putString("kurippuId", kurippuId) }
-                navController.navigate(R.id.kurippu_fragment, bundle)
-            }
+        if (intent.extras != null && !intent.extras.isEmpty && intent.extras.containsKey("id")) {
+            Timber.d("Extras : %s ", intent.extras.get("id"))
+            val kurippuId = intent.extras.get("id") as String
+            val bundle = Bundle().also { it.putString("kurippuId", kurippuId) }
+            navController.navigate(R.id.kurippu_fragment, bundle)
         }
 
         // Kuripugal Ad initialization
