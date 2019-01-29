@@ -5,11 +5,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import droid.smart.com.tamilkuripugal.testing.OpenForTesting
 import droid.smart.com.tamilkuripugal.vo.Kurippu
 
 @Dao
-@OpenForTesting
 abstract class KurippuDao {
 
 

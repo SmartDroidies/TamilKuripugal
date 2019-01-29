@@ -5,12 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.smart.droid.tamil.tips.R
 import droid.smart.com.tamilkuripugal.repo.CategoryRepository
-import droid.smart.com.tamilkuripugal.testing.OpenForTesting
 import droid.smart.com.tamilkuripugal.vo.Category
 import droid.smart.com.tamilkuripugal.vo.Resource
 import javax.inject.Inject
 
-@OpenForTesting
 class MainViewModel @Inject constructor(categoryRepository: CategoryRepository) : ViewModel() {
 
     companion object {
@@ -24,7 +22,16 @@ class MainViewModel @Inject constructor(categoryRepository: CategoryRepository) 
             Category("CTGRY06", "MARUTHUVAM", "Medical Tips", 6, 1095, null, R.drawable.maruthuvam, "native-medicine"),
             Category("CTGRY07", "AANMEEGAM", "Divine Tips", 7, 7236, null, R.drawable.aanmeega, "native-aanmeegam"),
             Category("CTGRY08", "GENERAL", "General Tips", 8, 2920, null, R.drawable.general, "native-general-tip"),
-            Category("CTGRY09", "AGRICULTURE", "Agricultrue Tips", 9, 9479, null, R.drawable.agriculture, "native-agriculture")
+            Category(
+                "CTGRY09",
+                "AGRICULTURE",
+                "Agricultrue Tips",
+                9,
+                9479,
+                null,
+                R.drawable.agriculture,
+                "native-agriculture"
+            )
         )
     }
 

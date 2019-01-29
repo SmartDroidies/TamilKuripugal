@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import droid.smart.com.tamilkuripugal.AppExecutors
 import droid.smart.com.tamilkuripugal.api.KuripugalService
 import droid.smart.com.tamilkuripugal.data.CategoryDao
-import droid.smart.com.tamilkuripugal.testing.OpenForTesting
 import droid.smart.com.tamilkuripugal.util.RateLimiter
 import droid.smart.com.tamilkuripugal.vo.Category
 import droid.smart.com.tamilkuripugal.vo.Resource
@@ -12,7 +11,6 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@OpenForTesting
 @Singleton
 class CategoryRepository @Inject constructor(
     private val appExecutors: AppExecutors,

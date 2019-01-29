@@ -5,13 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import droid.smart.com.tamilkuripugal.repo.KurippuRepository
-import droid.smart.com.tamilkuripugal.testing.OpenForTesting
 import droid.smart.com.tamilkuripugal.util.AbsentLiveData
 import droid.smart.com.tamilkuripugal.vo.Kurippu
 import droid.smart.com.tamilkuripugal.vo.Resource
 import javax.inject.Inject
 
-@OpenForTesting
 class KuripugalViewModel @Inject constructor(kurippuRepository: KurippuRepository) : ViewModel() {
 
     private val _category = MutableLiveData<Int>()

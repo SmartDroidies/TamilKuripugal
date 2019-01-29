@@ -23,7 +23,6 @@ import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import droid.smart.com.tamilkuripugal.extensions.loadKurippu
-import droid.smart.com.tamilkuripugal.testing.OpenForTesting
 import droid.smart.com.tamilkuripugal.ui.util.Helper
 import droid.smart.com.tamilkuripugal.vo.Kurippu
 import timber.log.Timber
@@ -32,7 +31,6 @@ import javax.inject.Inject
 /**
  * Binding adapters that work with a fragment instance.
  */
-@OpenForTesting
 class FragmentBindingAdapters @Inject constructor(val fragment: Fragment) {
     @BindingAdapter("imageUrl")
     fun bindImage(imageView: ImageView, url: String?) {

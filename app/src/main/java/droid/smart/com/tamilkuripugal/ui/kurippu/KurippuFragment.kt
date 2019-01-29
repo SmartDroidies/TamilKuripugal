@@ -25,14 +25,12 @@ import droid.smart.com.tamilkuripugal.binding.FragmentDataBindingComponent
 import droid.smart.com.tamilkuripugal.di.Injectable
 import droid.smart.com.tamilkuripugal.extensions.checkSelfPermissionCompat
 import droid.smart.com.tamilkuripugal.extensions.extractBitmap
-import droid.smart.com.tamilkuripugal.testing.OpenForTesting
 import droid.smart.com.tamilkuripugal.ui.common.KuripugalGestureListener
 import droid.smart.com.tamilkuripugal.ui.common.RetryCallback
 import droid.smart.com.tamilkuripugal.util.autoCleared
 import timber.log.Timber
 import javax.inject.Inject
 
-@OpenForTesting
 class KurippuFragment : Fragment(), Injectable {
 
     private val SHARE_FOLDER_NAME = "Tamil Kuripugal"

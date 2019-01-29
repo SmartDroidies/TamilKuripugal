@@ -17,14 +17,12 @@ import com.smart.droid.tamil.tips.databinding.KuripugalFragmentBinding
 import droid.smart.com.tamilkuripugal.AppExecutors
 import droid.smart.com.tamilkuripugal.binding.FragmentDataBindingComponent
 import droid.smart.com.tamilkuripugal.di.Injectable
-import droid.smart.com.tamilkuripugal.testing.OpenForTesting
 import droid.smart.com.tamilkuripugal.ui.common.DividerItemDecoration
 import droid.smart.com.tamilkuripugal.ui.common.KuripugalAdapter
 import droid.smart.com.tamilkuripugal.ui.common.RetryCallback
 import droid.smart.com.tamilkuripugal.util.autoCleared
 import javax.inject.Inject
 
-@OpenForTesting
 class KuripugalFragment : Fragment(), Injectable {
 
     @Inject
