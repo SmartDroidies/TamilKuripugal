@@ -81,6 +81,27 @@ class KurippuRepository @Inject constructor(
             }
         }.asLiveData()
     }
+
+    fun getScheduledKuripugal(): LiveData<Resource<List<Kurippu>>> {
+        return object : NetworkBoundResource<List<Kurippu>, List<Kurippu>>(appExecutors) {
+            override fun saveCallResult(item: List<Kurippu>) {
+                kurippuDao.insertKuripugal(item)
+            }
+
+            override fun shouldFetch(data: List<Kurippu>?): Boolean {
+                return data == null || data.isEmpty() || kurippuListRateLimit.shouldFetch("kuripugal-draft")
+            }
+
+            override fun loadFromDb() = kurippuDao.loadScheduledKuripugal()
+
+            override fun createCall() = kuripugalService.getScheduledKuripugal("draft")
+
+            override fun onFetchFailed() {
+                Timber.w("Error in collecting draft kuripugal from server")
+                super.onFetchFailed()
+            }
+        }.asLiveData()
+    }
 }
 
 

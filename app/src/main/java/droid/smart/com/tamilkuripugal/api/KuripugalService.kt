@@ -27,7 +27,8 @@ import retrofit2.http.Query
  *
  *    Kuripugal By CategoryId - http://tamil.tips2stayhealthy.com/rest/?ct={CategoryID=5}
  *    Kuripu By KurippuId - http://tamil.tips2stayhealthy.com/json2/?id={KruppiID=16963}
- *
+ *    Draft Kuripugal - http://tamil.tips2stayhealthy.com/json2/?ty=draft
+ *    New Kuripugal - http://tamil.tips2stayhealthy.com/json2/?ty=new
  */
 interface KuripugalService {
     @GET("category/list")
@@ -38,6 +39,11 @@ interface KuripugalService {
 
     @GET("rest")
     fun getNewKuripugal(@Query("ty") type: String, @Query("lts") lastTimeStamp: Long): LiveData<ApiResponse<List<Kurippu>>>
+
+
+    @GET("rest")
+    fun getScheduledKuripugal(@Query("ty") type: String): LiveData<ApiResponse<List<Kurippu>>>
+
 
     @GET("rest")
     fun getKurippu(@Query("tip") tip: String, @Query("id") kurippuId: String): LiveData<ApiResponse<Kurippu>>

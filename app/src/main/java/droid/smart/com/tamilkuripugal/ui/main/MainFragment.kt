@@ -64,9 +64,15 @@ class MainFragment : Fragment(), Injectable {
             }
         }
 
+        dataBinding.btnDraftKuripugal.setOnClickListener {
+            navController().navigate(
+                MainFragmentDirections.draftKuripugal()
+            )
+        }
+
         if (BuildConfig.DEBUG) {
             Timber.i("Test Device - Display test device controls")
-            //dataBinding.btnDraftKuripugal.visibility = View.VISIBLE
+            dataBinding.btnDraftKuripugal.visibility = View.VISIBLE
         }
 
         binding = dataBinding
