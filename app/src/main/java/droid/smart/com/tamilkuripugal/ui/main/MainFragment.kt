@@ -72,7 +72,7 @@ class MainFragment : Fragment(), Injectable {
 
         if (BuildConfig.DEBUG) {
             Timber.i("Test Device - Display test device controls")
-            dataBinding.btnDraftKuripugal.visibility = View.VISIBLE
+            //dataBinding.btnDraftKuripugal.visibility = View.VISIBLE
         }
 
         binding = dataBinding

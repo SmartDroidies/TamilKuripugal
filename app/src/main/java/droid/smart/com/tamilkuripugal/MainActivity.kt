@@ -5,6 +5,7 @@ import android.annotation.TargetApi
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
@@ -32,10 +33,7 @@ import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.MainActivityBinding
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
-import droid.smart.com.tamilkuripugal.extensions.checkSelfPermissionCompat
-import droid.smart.com.tamilkuripugal.extensions.requestPermissionsCompat
-import droid.smart.com.tamilkuripugal.extensions.shouldShowRequestPermissionRationaleCompat
-import droid.smart.com.tamilkuripugal.extensions.showSnackbar
+import droid.smart.com.tamilkuripugal.extensions.*
 import droid.smart.com.tamilkuripugal.ui.main.MainFragmentDirections
 import droid.smart.com.tamilkuripugal.ui.main.MainViewModel
 import timber.log.Timber
@@ -47,11 +45,12 @@ const val PREFKEY_UPDATE_VERSION = "pref_update_version"
 
 /**
  * FIXME - Functionalities Planned
- *
+ *  Image & Version on navigation header
+ *  Banner ad on listing
+ *  Interstitial Ads
  *  Featured kurippu listing
  *  Favourite kurippu listing
  *  Scheduled kuripugal for test device
- *  Release Build
  */
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
@@ -240,7 +239,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         if (!sharedPreferences.contains(PREFKEY_UPDATE_VERSION)) {
             val categories = MainViewModel.CATEGORY_DATA
-            //val editor = sharedPreferences.edit()
             for (category in categories) {
                 Timber.d("Initialize preference for category : %s", category)
                 FirebaseMessaging.getInstance().subscribeToTopic(category.topic)
@@ -256,6 +254,12 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
             }
             sharedPreferences.edit().putInt(PREFKEY_UPDATE_VERSION, BuildConfig.VERSION_CODE).apply()
         }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        Timber.i("Configuration changed initiate locale change")
+        this.setDefaultLocale()
     }
 
 }
