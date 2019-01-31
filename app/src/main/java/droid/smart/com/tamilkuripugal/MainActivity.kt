@@ -25,6 +25,8 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.messaging.FirebaseMessaging
@@ -36,7 +38,9 @@ import dagger.android.support.HasSupportFragmentInjector
 import droid.smart.com.tamilkuripugal.extensions.*
 import droid.smart.com.tamilkuripugal.ui.main.MainFragmentDirections
 import droid.smart.com.tamilkuripugal.ui.main.MainViewModel
+import droid.smart.com.tamilkuripugal.util.RateLimiter
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 const val PERMISSION_EXTERNAL_WRITE = 0
@@ -57,6 +61,13 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
     private lateinit var layout: View
+
+    private lateinit var interstitialAd: InterstitialAd
+
+    @Inject
+    lateinit var adRequest: AdRequest
+
+    private val interstitialRateLimit = RateLimiter<String>(90, TimeUnit.SECONDS)
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
@@ -92,6 +103,11 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
         // Kuripugal Ad initialization
         MobileAds.initialize(this, "ca-app-pub-8439744074965483~7727700457")
+
+        //Initialize interstitial
+        interstitialAd = InterstitialAd(this)
+        interstitialAd.adUnitId = "ca-app-pub-8439744074965483/6782952894"
+        interstitialAd.loadAd(adRequest)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -259,6 +275,18 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         super.onConfigurationChanged(newConfig)
         Timber.i("Configuration changed initiate locale change")
         this.setDefaultLocale()
+    }
+
+    /**
+     * Displays ad after every 90 Seconds
+     */
+    fun showInterstiatial(bForce: Boolean) {
+        if (interstitialAd.isLoaded) {
+            if (interstitialRateLimit.shouldFetch("interstitial_ad")) {
+                interstitialAd.show()
+            }
+        }
+
     }
 
 }

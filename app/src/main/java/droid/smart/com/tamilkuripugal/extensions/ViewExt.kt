@@ -3,7 +3,9 @@ package droid.smart.com.tamilkuripugal.extensions
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.view.View
+import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
+import droid.smart.com.tamilkuripugal.MainActivity
 
 
 fun View.showSnackbar(msgId: Int, length: Int) {
@@ -60,8 +62,10 @@ fun View.extractBitmap() : Bitmap? {
 
     return b
 
+/*
+    private val SHARE_FOLDER_NAME = "Tamil Kuripugal"
 
-    /*this.clearFocus()
+    this.clearFocus()
     this.setPressed(false)
 
     val willNotCache = this.willNotCacheDrawing()
@@ -90,4 +94,9 @@ fun View.extractBitmap() : Bitmap? {
     this.setDrawingCacheBackgroundColor(color)
 
     return bitmap*/
+}
+
+//TODO - Move this to Fragment Extensions
+fun Fragment.showInterstiatial(activity: MainActivity) {
+    activity.showInterstiatial(true)
 }
