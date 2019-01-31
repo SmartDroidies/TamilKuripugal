@@ -12,6 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.KuripugalFragmentBinding
 import droid.smart.com.tamilkuripugal.AppExecutors
@@ -38,6 +40,11 @@ class KuripugalFragment : Fragment(), Injectable {
     var binding by autoCleared<KuripugalFragmentBinding>()
 
     private var adapter by autoCleared<KuripugalAdapter>()
+
+    @Inject
+    lateinit var adRequest: AdRequest
+
+    lateinit var mAdView: AdView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,6 +86,9 @@ class KuripugalFragment : Fragment(), Injectable {
         binding.kuripugalList.addItemDecoration(itemDecor)
 
         initKuripugalList(kuripugalViewModel)
+
+        mAdView = binding.adView
+        mAdView.loadAd(adRequest)
     }
 
     private fun initKuripugalList(viewModel: KuripugalViewModel) {

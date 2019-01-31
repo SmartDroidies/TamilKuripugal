@@ -45,7 +45,6 @@ const val PREFKEY_UPDATE_VERSION = "pref_update_version"
 
 /**
  * FIXME - Functionalities Planned
- *  Image & Version on navigation header
  *  Banner ad on listing
  *  Interstitial Ads
  *  Featured kurippu listing
