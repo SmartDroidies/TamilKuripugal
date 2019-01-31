@@ -45,11 +45,11 @@ const val PREFKEY_UPDATE_VERSION = "pref_update_version"
 
 /**
  * FIXME - Functionalities Planned
- *  Banner ad on listing
  *  Interstitial Ads
  *  Featured kurippu listing
  *  Favourite kurippu listing
  *  Scheduled kuripugal for test device
+ *  Banner ad between recycle view
  */
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
