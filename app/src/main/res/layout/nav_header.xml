@@ -1,26 +1,29 @@
 <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="@dimen/navigation_drawer_header_height"
         android:background="?attr/colorPrimaryDark"
         android:gravity="bottom"
         android:orientation="vertical"
-        android:padding="@dimen/navigation_drawer_header_padding"
         android:theme="@style/ThemeOverlay.MaterialComponents.Dark">
 
     <!-- TODO: add actual logo once available -->
     <ImageView
-            android:layout_width="@dimen/navigation_drawer_image_width"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_launcher_background"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navigation_drawer_image_height"
+            android:padding="4dp"
+            android:layout_gravity="top"
+            android:src="@drawable/banner"
             android:contentDescription="@string/navigation_drawer_header_content_description"/>
 
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
-            android:text="@string/navigation_drawer_header_title"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+            tools:text="App Name"
+            android:text="@string/app_name"
+            android:paddingBottom="8dp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
 
 </FrameLayout>
