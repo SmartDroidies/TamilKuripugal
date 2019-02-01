@@ -20,13 +20,11 @@ import com.google.android.gms.ads.AdView
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.KurippuFragmentBinding
 import droid.smart.com.tamilkuripugal.AppExecutors
-import droid.smart.com.tamilkuripugal.MainActivity
 import droid.smart.com.tamilkuripugal.PERMISSION_EXTERNAL_WRITE_KURIPPU
 import droid.smart.com.tamilkuripugal.binding.FragmentDataBindingComponent
 import droid.smart.com.tamilkuripugal.di.Injectable
 import droid.smart.com.tamilkuripugal.extensions.checkSelfPermissionCompat
 import droid.smart.com.tamilkuripugal.extensions.extractBitmap
-import droid.smart.com.tamilkuripugal.extensions.showInterstiatial
 import droid.smart.com.tamilkuripugal.ui.common.KuripugalGestureListener
 import droid.smart.com.tamilkuripugal.ui.common.RetryCallback
 import droid.smart.com.tamilkuripugal.util.autoCleared
@@ -126,7 +124,6 @@ class KurippuFragment : Fragment(), Injectable {
 
         mAdView = binding.adView
         mAdView.loadAd(adRequest)
-        this.showInterstiatial(this.activity as MainActivity)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {

@@ -26,6 +26,7 @@ import droid.smart.com.tamilkuripugal.data.CategoryDao
 import droid.smart.com.tamilkuripugal.data.KurippuDao
 import droid.smart.com.tamilkuripugal.data.KuripugalDb
 import droid.smart.com.tamilkuripugal.util.LiveDataCallAdapterFactory
+import droid.smart.com.tamilkuripugal.util.RateLimiter
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -65,6 +66,12 @@ class AppModule {
         return AdRequest.Builder()
             .addTestDevice("CA6CFF7065AD2A4A8636710F5DE45760")
             .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideRateLimiter() : RateLimiter {
+        return RateLimiter();
     }
 
     @Singleton

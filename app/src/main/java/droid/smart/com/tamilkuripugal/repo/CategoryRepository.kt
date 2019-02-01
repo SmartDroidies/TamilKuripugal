@@ -4,10 +4,8 @@ import androidx.lifecycle.LiveData
 import droid.smart.com.tamilkuripugal.AppExecutors
 import droid.smart.com.tamilkuripugal.api.KuripugalService
 import droid.smart.com.tamilkuripugal.data.CategoryDao
-import droid.smart.com.tamilkuripugal.util.RateLimiter
 import droid.smart.com.tamilkuripugal.vo.Category
 import droid.smart.com.tamilkuripugal.vo.Resource
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -18,7 +16,7 @@ class CategoryRepository @Inject constructor(
     private val kuripugalService: KuripugalService
 ) {
 
-    private val repoListRateLimit = RateLimiter<String>(30, TimeUnit.MINUTES)
+    //private val repoListRateLimit = RateLimiter<String>(30, TimeUnit.MINUTES)
 
     fun loadCategories(): LiveData<Resource<List<Category>>> {
         return object : NetworkBoundResource<List<Category>, List<Category>>(appExecutors) {
@@ -27,7 +25,7 @@ class CategoryRepository @Inject constructor(
             }
 
             override fun shouldFetch(data: List<Category>?): Boolean {
-                return data == null || data.isEmpty() || repoListRateLimit.shouldFetch("category")
+                return data == null || data.isEmpty() /*|| repoListRateLimit.shouldFetch("category")*/
             }
 
             override fun loadFromDb() = categoryDao.loadCategories()

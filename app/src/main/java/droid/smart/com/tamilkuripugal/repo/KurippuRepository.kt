@@ -15,21 +15,19 @@ import javax.inject.Inject
 class KurippuRepository @Inject constructor(
     private val appExecutors: AppExecutors,
     private val kurippuDao: KurippuDao,
-    private val kuripugalService: KuripugalService
+    private val kuripugalService: KuripugalService,
+    private val rateLimiter: RateLimiter
 ) {
-
-    private val kurippuListRateLimit = RateLimiter<String>(30, TimeUnit.MINUTES)
-
-    private val kurippuRateLimit = RateLimiter<String>(120, TimeUnit.MINUTES)
 
     fun loadKuripugal(categoryId: Int): LiveData<Resource<List<Kurippu>>> {
         return object : NetworkBoundResource<List<Kurippu>, List<Kurippu>>(appExecutors) {
             override fun saveCallResult(item: List<Kurippu>) {
+                Timber.d("loadKuripugal for %s - %s", categoryId, item.size)
                 kurippuDao.insertKuripugal(item)
             }
 
             override fun shouldFetch(data: List<Kurippu>?): Boolean {
-                return data == null || data.isEmpty() || kurippuListRateLimit.shouldFetch("kuripugal-" + categoryId)
+                return data == null || data.isEmpty() || rateLimiter.shouldFetch("kuripugal-" + categoryId, 30, TimeUnit.MINUTES)
             }
 
             override fun loadFromDb() = kurippuDao.loadKuripugal(categoryId)
@@ -50,7 +48,7 @@ class KurippuRepository @Inject constructor(
             }
 
             override fun shouldFetch(data: Kurippu?): Boolean {
-                return data == null || data.content == null || kurippuRateLimit.shouldFetch("kuripu-" + kurippuId)
+                return data == null || data.content == null  || rateLimiter.shouldFetch("kuripu-" + kurippuId, 30, TimeUnit.MINUTES)
             }
 
             override fun loadFromDb() = kurippuDao.loadKurippu(kurippuId)
@@ -68,7 +66,7 @@ class KurippuRepository @Inject constructor(
             }
 
             override fun shouldFetch(data: List<Kurippu>?): Boolean {
-                return data == null || data.isEmpty() /*|| kurippuListRateLimit.shouldFetch("kuripugal-" + categoryId)*/ //FIXME - Also fetch if the last fetch was hours ago
+                return data == null || data.isEmpty()  || rateLimiter.shouldFetch("new_kurippugal", 15, TimeUnit.MINUTES)
             }
 
             override fun loadFromDb() = kurippuDao.loadNewKuripugal()
@@ -89,7 +87,7 @@ class KurippuRepository @Inject constructor(
             }
 
             override fun shouldFetch(data: List<Kurippu>?): Boolean {
-                return data == null || data.isEmpty() || kurippuListRateLimit.shouldFetch("kuripugal-draft")
+                return data == null || data.isEmpty() || rateLimiter.shouldFetch("scheduled_kurippugal", 2, TimeUnit.MINUTES)
             }
 
             override fun loadFromDb() = kurippuDao.loadScheduledKuripugal()

@@ -3,9 +3,7 @@ package droid.smart.com.tamilkuripugal.extensions
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.view.View
-import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
-import droid.smart.com.tamilkuripugal.MainActivity
 
 
 fun View.showSnackbar(msgId: Int, length: Int) {
@@ -96,7 +94,3 @@ fun View.extractBitmap() : Bitmap? {
     return bitmap*/
 }
 
-//TODO - Move this to Fragment Extensions
-fun Fragment.showInterstiatial(activity: MainActivity) {
-    activity.showInterstiatial(true)
-}

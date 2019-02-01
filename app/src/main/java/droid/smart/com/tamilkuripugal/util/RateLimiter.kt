@@ -18,18 +18,19 @@ package droid.smart.com.tamilkuripugal.util
 
 import android.os.SystemClock
 import androidx.collection.ArrayMap
+import timber.log.Timber
 
 import java.util.concurrent.TimeUnit
 
 /**
  * Utility class that decides whether we should fetch some data or not.
  */
-class RateLimiter<in KEY>(timeout: Int, timeUnit: TimeUnit) {
-    private val timestamps = ArrayMap<KEY, Long>()
-    private val timeout = timeUnit.toMillis(timeout.toLong())
+class RateLimiter() {
+    private val timestamps = ArrayMap<String, Long>()
 
     @Synchronized
-    fun shouldFetch(key: KEY): Boolean {
+    fun shouldFetch(key: String,timeout: Int, timeUnit: TimeUnit ): Boolean {
+        val timeout = timeUnit.toMillis(timeout.toLong())
         val lastFetched = timestamps[key]
         val now = now()
         if (lastFetched == null) {
@@ -37,6 +38,7 @@ class RateLimiter<in KEY>(timeout: Int, timeUnit: TimeUnit) {
             return true
         }
         if (now - lastFetched > timeout) {
+            Timber.d("ReteLimiter Time Comparision for %s : %s - %s  = %s vs %s", key, now, lastFetched,  now-lastFetched, timeout )
             timestamps[key] = now
             return true
         }
@@ -46,7 +48,19 @@ class RateLimiter<in KEY>(timeout: Int, timeUnit: TimeUnit) {
     private fun now() = SystemClock.uptimeMillis()
 
     @Synchronized
-    fun reset(key: KEY) {
+    fun reset(key: String) {
         timestamps.remove(key)
     }
+
+    @Synchronized
+    fun elapsed(key: String) : Long {
+        val lastFetched = timestamps[key]
+        val now = now()
+        if (lastFetched == null) {
+            return -1
+        } else {
+            return TimeUnit.MILLISECONDS.toSeconds(now - lastFetched)
+        }
+    }
+
 }

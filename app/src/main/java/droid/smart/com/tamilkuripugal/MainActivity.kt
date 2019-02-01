@@ -25,6 +25,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
@@ -67,7 +68,8 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     @Inject
     lateinit var adRequest: AdRequest
 
-    private val interstitialRateLimit = RateLimiter<String>(90, TimeUnit.SECONDS)
+    @Inject
+    lateinit var interstitialRateLimit  : RateLimiter
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
@@ -108,13 +110,38 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         interstitialAd = InterstitialAd(this)
         interstitialAd.adUnitId = "ca-app-pub-8439744074965483/6782952894"
         interstitialAd.loadAd(adRequest)
+        interstitialAd.adListener = object: AdListener() {
+            override fun onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+                //FIXME - Report it on Firebase Analytics Event
+            }
+
+            override fun onAdFailedToLoad(errorCode: Int) {
+                // Code to be executed when an ad request fails.
+            }
+
+            override fun onAdOpened() {
+                // Code to be executed when the ad is displayed.
+            }
+
+            override fun onAdLeftApplication() {
+                // Code to be executed when the user has left the app.
+            }
+
+            override fun onAdClosed() {
+                interstitialAd.loadAd(adRequest)
+                // Code to be executed when when the interstitial ad is closed.
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
+        showInterstitial(false)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
     override fun onBackPressed() {
+        showInterstitial(false)
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
         } else {
@@ -280,11 +307,15 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     /**
      * Displays ad after every 90 Seconds
      */
-    fun showInterstiatial(bForce: Boolean) {
+    fun showInterstitial(bForce: Boolean) {
         if (interstitialAd.isLoaded) {
-            if (interstitialRateLimit.shouldFetch("interstitial_ad")) {
+            if (interstitialRateLimit.shouldFetch("interstitial_ad", 60, TimeUnit.SECONDS) || bForce) {
                 interstitialAd.show()
+            } else {
+                Timber.i("showInterstitial : Time interval not met - %s", interstitialRateLimit.elapsed("interstitial_ad"))
             }
+        } else {
+            Timber.i("showInterstitial : Ad not loaded yet - %s", interstitialAd.isLoading)
         }
 
     }
