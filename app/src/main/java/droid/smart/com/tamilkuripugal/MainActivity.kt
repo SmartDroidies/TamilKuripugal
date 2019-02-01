@@ -50,6 +50,7 @@ const val PREFKEY_UPDATE_VERSION = "pref_update_version"
 
 /**
  * FIXME - Functionalities Planned
+ *  Handle Encoded text on title
  *  Alert on Exit using back
  *  Featured kurippu listing
  *  Favourite kurippu listing

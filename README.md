@@ -91,7 +91,7 @@ Runs lint on just the fatal issues in the release build.
 
 ### Assemble Release Build
 
-Assembles all Release builds.
+Assembles all Release builds. This will create the mapping.txt
 ```
 ### ./gradlew assembleRelease
 ```
