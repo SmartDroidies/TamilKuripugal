@@ -8,6 +8,27 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
+                  <entry key="draftKuripugalFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="12" />
+                            <option name="y" value="12" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="kurippu">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="kurippu_fragment">
                     <value>
                       <LayoutPositions>
@@ -52,6 +73,11 @@
                         </option>
                         <option name="myPositions">
                           <map>
+                            <entry key="draftKuripugal">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="kuripugalList">
                               <value>
                                 <LayoutPositions />

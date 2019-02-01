@@ -63,7 +63,7 @@ class NewKuripugalFragment : Fragment(), Injectable {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         newKuripugalViewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(NewKuripugalViewModel::class.java)
-        newKuripugalViewModel.setLastViewed(Date().time) //FIXME - Collect time for shaped preference
+        newKuripugalViewModel.setLastViewed(Date().time) //FIXME - Collect time for shared preferences
         binding.setLifecycleOwner(viewLifecycleOwner)
         binding.kurippugal = newKuripugalViewModel.kuripugal
 

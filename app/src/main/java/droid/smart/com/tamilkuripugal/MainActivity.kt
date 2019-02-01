@@ -50,7 +50,7 @@ const val PREFKEY_UPDATE_VERSION = "pref_update_version"
 
 /**
  * FIXME - Functionalities Planned
- *  Interstitial Ads
+ *  Alert on Exit using back
  *  Featured kurippu listing
  *  Favourite kurippu listing
  *  Scheduled kuripugal for test device
