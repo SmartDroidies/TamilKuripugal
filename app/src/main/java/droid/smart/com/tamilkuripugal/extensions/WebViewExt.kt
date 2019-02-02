@@ -7,7 +7,7 @@ import timber.log.Timber
 
 
 fun WebView.loadKurippu(kurippu: Kurippu) {
-    Timber.d("Kurippu => %s", kurippu.content)
+    //Timber.d("Kurippu => %s", kurippu.content)
     val doc = Jsoup.parse(kurippu.content)
     val image = doc.select("img")
     doc.select("a").remove()

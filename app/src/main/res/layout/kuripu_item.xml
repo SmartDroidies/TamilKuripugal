@@ -4,7 +4,6 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
         <variable
                 name="kurippu"
                 type="droid.smart.com.tamilkuripugal.vo.Kurippu"/>
@@ -31,7 +30,7 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{kurippu.title}"
+                app:htmlText="@{kurippu.title}"
                 android:layout_toRightOf="@id/imageView"
                 android:layout_marginTop="@dimen/default_margin"
                 android:layout_marginBottom="@dimen/default_margin"
@@ -39,20 +38,20 @@
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:layout_toEndOf="@id/imageView"/>
 
-<!--
-        <TextView
-                android:id="@+id/textDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:millis="@{kurippu.updatedDate}"
-                android:layout_marginBottom="@dimen/default_margin"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/short_margin"
-                tools:text="Date"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                android:layout_alignParentEnd="true"/>
--->
+        <!--
+                <TextView
+                        android:id="@+id/textDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:millis="@{kurippu.updatedDate}"
+                        android:layout_marginBottom="@dimen/default_margin"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/short_margin"
+                        tools:text="Date"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                        android:layout_alignParentEnd="true"/>
+        -->
 
     </RelativeLayout>
 </layout>

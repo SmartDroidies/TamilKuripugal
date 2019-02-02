@@ -16,6 +16,7 @@
 
 package droid.smart.com.tamilkuripugal.binding
 
+import android.text.Html
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -52,6 +53,14 @@ object BindingAdapters {
         val kurippuDate = Date(unixTime * 1000)
         val sdf = java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
         view.setText(sdf.format(kurippuDate))
+    }
+
+    @JvmStatic
+    @BindingAdapter("htmlText")
+    fun showHtmlText(view: TextView, htmlText: String?) {
+        if (htmlText != null && !(htmlText!!.isNullOrEmpty())) {
+            view.text = Html.fromHtml(htmlText)
+        }
     }
 
 }

@@ -50,7 +50,9 @@ const val PREFKEY_UPDATE_VERSION = "pref_update_version"
 
 /**
  * FIXME - Functionalities Planned
- *  Handle Encoded text on title
+ *  Velanmai Icon Needs to be changed
+ *  Icon for Notification
+ *  Share Icon Background
  *  Alert on Exit using back
  *  Featured kurippu listing
  *  Favourite kurippu listing
@@ -109,7 +111,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
         //Initialize interstitial
         interstitialAd = InterstitialAd(this)
-        interstitialAd.adUnitId = "ca-app-pub-8439744074965483/6782952894"
+        interstitialAd.adUnitId = "ca-app-pub-8439744074965483/5473553264"
         interstitialAd.loadAd(adRequest)
         interstitialAd.adListener = object: AdListener() {
             override fun onAdLoaded() {

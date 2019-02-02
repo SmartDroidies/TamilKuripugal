@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Tamil Kuripugal</string>
-
-    <string name="title_categories">Categories</string>
-    <string name="title_new_kuripugal">New Kuripugal</string>
-    <string name="title_featured_kuripugal">Featured Tips</string>
-    <string name="title_privacy">Privacy Policy</string>
-    <string name="title_favourite_kuripugal">Favourite Tips</string>
+    <string name="app_name">"\u0ba4\u0bae\u0bbf\u0bb4\u0bcd \u0b95\u0bc1\u0bb1\u0bbf\u0baa\u0bcd\u0baa\u0bc1\u0b95\u0bb3\u0bcd"
+    </string>
+    <string name="title_categories">\u0BAA\u0BBF\u0BB0\u0BBF\u0BB5\u0BC1\u0B95\u0BB3\u0BCD</string>
+    <string name="title_new_kuripugal">\u0BAA\u0BC1\u0BA4\u0BBF\u0BAF\u0BB5\u0BC8</string>
+    <string name="title_featured_kuripugal">\u0B9A\u0BBF\u0BB1\u0BA8\u0BCD\u0BA4\u0BB5\u0BC8</string>
+    <string name="title_favourite_kuripugal">\u0BAA\u0BBF\u0B9F\u0BBF\u0BA4\u0BCD\u0BA4\u0BB5\u0BC8</string>
+    <string name="title_privacy">\u0BAA\u0BC6\u0BBE\u0BB1\u0BC1\u0BAA\u0BCD\u0BAA\u0BBE\u0B95\u0BBE\u0BAE\u0BC8</string>
     <string name="title_draft_kuripugal">Draft Kuripugal</string>
 
     <string name="action_share">Share</string>
@@ -22,27 +22,26 @@
     <string name="kurippu_image">Kurippu Image</string>
 
     <!-- Categories -->
-    <string name="HEALTH">Health tips</string>
-    <string name="BEAUTY">Beauty tips</string>
-    <string name="TREATMENT">Home Remedies</string>
-    <string name="COOKING">Cooking tips</string>
-    <string name="VETTU">Housekeeping tips</string>
-    <string name="MARUTHUVAM">Medical tips</string>
-    <string name="AANMEEGAM">Divine tips</string>
-    <string name="GENERAL">General tips</string>
-    <string name="AGRICULTURE">Agriculture tips</string>
+    <string name="HEALTH">\u0B86\u0BB0\u0BC7\u0BBE\u0B95\u0BCD\u0B95\u0BBF\u0BAF \u0B95\u0BC1\u0BB1\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1</string>
+    <string name="BEAUTY">\u0B85\u0BB4\u0B95\u0BC1 \u0B95\u0BC1\u0BB1\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1</string>
+    <string name="TREATMENT">\u0ba8\u0bbe\u0b9f\u0bcd\u0b9f\u0bc1 \u0bb5\u0bc8\u0ba4\u0bcd\u0ba4\u0bbf\u0baf\u0bae\u0bcd</string>
+    <string name="COOKING">\u0B9A\u0BAE\u0BC8\u0BAF\u0BB2\u0BCD \u0B95\u0BC1\u0BB1\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1</string>
+    <string name="VETTU">\u0bb5\u0bc0\u0b9f\u0bcd\u0b9f\u0bc1 \u0b95\u0bc1\u0bb1\u0bbf\u0baa\u0bcd\u0baa\u0bc1</string>
+    <string name="MARUTHUVAM">\u0bae\u0bb0\u0bc1\u0ba4\u0bcd\u0ba4\u0bc1\u0bb5 \u0b95\u0bc1\u0bb1\u0bbf\u0baa\u0bcd\u0baa\u0bc1</string>
+    <string name="AANMEEGAM">\u0B86\u0BA9\u0BCD\u0BAE\u0BC0\u0B95 \u0B95\u0BC1\u0BB1\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1</string>
+    <string name="GENERAL">\u0baa\u0bca\u0ba4\u0bc1 \u0b95\u0bc1\u0bb1\u0bbf\u0baa\u0bcd\u0baa\u0bc1</string>
+    <string name="AGRICULTURE">\u0BB5\u0BC7\u0BB3\u0BBE\u0BA3\u0BCD\u0BAE\u0BC8 \u0B95\u0BC1\u0BB1\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1</string>
 
-    <string name="disclaimer_text">Disclaimer goes here</string>
+
+    <string name="disclaimer_text">\u0ba4\u0bae\u0bbf\u0bb4\u0bcd \u0b95\u0bc1\u0bb1\u0bbf\u0baa\u0bcd\u0baa\u0bc1\u0b95\u0bcd\u0b95\u0bb3\u0bcd \u0b89\u0bb3\u0bcd\u0bb3 \u0ba4\u0b95\u0bb5\u0bb2\u0bcd\u0b95\u0bb3\u0bcd \u0b85\u0ba9\u0bc8\u0ba4\u0bcd\u0ba4\u0bc1\u0bae\u0bcd \u0baa\u0b9f\u0bbf\u0ba4\u0bcd\u0ba4\u0ba4\u0bbf\u0bb2\u0bcd \u0b87\u0bb0\u0bc1\u0ba8\u0bcd\u0ba4\u0bc1\u0bae\u0bcd \u0baa\u0bbf\u0bb1 \u0b87\u0ba3\u0bc8\u0baf \u0ba4\u0bb3\u0b99\u0bcd\u0b95\u0bb3\u0bbf\u0bb2\u0bcd \u0b87\u0bb0\u0bc1\u0ba8\u0bcd\u0ba4\u0bc1\u0bae\u0bcd \u0b85\u0bb1\u0bbf\u0ba8\u0bcd\u0ba4 \u0b9a\u0bc6\u0baf\u0bcd\u0ba4\u0bbf\u0b95\u0bb3\u0bcd \u0b86\u0b95\u0bc1\u0bae\u0bcd. \u0b87\u0ba4\u0bc1 \u0bae\u0bc1\u0bb4\u0bc1\u0b95\u0bcd\u0b95 \u0bae\u0bc1\u0bb4\u0bc1\u0b95\u0bcd\u0b95 \u0b86\u0bb0\u0bcb\u0b95\u0bbf\u0baf\u0ba4\u0bc1\u0b95\u0bcd\u0b95\u0bbe\u0ba9 \u0b85\u0bb1\u0bbf\u0bb5\u0bc1 \u0bae\u0bb1\u0bcd\u0bb1\u0bc1\u0bae\u0bcd \u0b9a\u0bc6\u0baf\u0bcd\u0ba4\u0bbf \u0baa\u0b95\u0bbf\u0bb0\u0bcd\u0bb5\u0ba4\u0bb0\u0bcd\u0b95\u0b95\u0bb5\u0bc7 \u0bae\u0b9f\u0bcd\u0b9f\u0bc1\u0bae\u0bc7 \u0b92\u0bb4\u0bbf\u0baf \u0b87\u0b99\u0bcd\u0b95\u0bc1 \u0b89\u0bb3\u0bcd\u0bb3 \u0b8e\u0ba8\u0bcd\u0ba4 \u0bae\u0bb0\u0bc1\u0ba4\u0bcd\u0ba4\u0bc1\u0bb5 \u0b86\u0bb2\u0bcb\u0b9a\u0bc8\u0ba9\u0bc8\u0b95\u0bc1\u0bae\u0bcd \u0ba4\u0bae\u0bbf\u0bb4\u0bcd \u0b95\u0bc1\u0bb1\u0bbf\u0baa\u0bcd\u0baa\u0bc1\u0b95\u0bcd\u0b95\u0bb3\u0bcd \u0baa\u0bca\u0bb1\u0bc1\u0baa\u0bcd\u0baa\u0bc1 \u0b8f\u0bb1\u0bcd\u0b95\u0bbe\u0ba4\u0bc1 \u0b8e\u0ba9\u0bcd\u0baa\u0ba4\u0bc8 \u0ba4\u0bc6\u0bb0\u0bbf\u0bb5\u0bbf\u0ba4\u0bcd\u0ba4\u0bc1\u0b95\u0bca\u0bb3\u0bcd\u0b95\u0bbf\u0bb1\u0bcb\u0bae\u0bcd. \u0b87\u0b99\u0bcd\u0b95\u0bc1 \u0b89\u0bb3\u0bcd\u0bb3 \u0b95\u0bc1\u0bb1\u0bbf\u0baa\u0bcd\u0baa\u0bc1\u0b95\u0bb3\u0bc8 \u0baa\u0b9f\u0bbf\u0ba4\u0bcd\u0ba4\u0bc1 \u0bae\u0b9f\u0bcd\u0b9f\u0bc1\u0bae\u0bcd \u0baa\u0baf\u0ba9\u0bcd \u0baa\u0bc6\u0bb1\u0bc1\u0bae\u0bbe\u0bb1\u0bc1 \u0b85\u0bb1\u0bbf\u0bb5\u0bc1\u0bb1\u0bc1\u0ba4\u0bcd\u0ba4\u0bc1\u0b95\u0bbf\u0ba9\u0bcd\u0bb1\u0bcb\u0bae\u0bcd. \u0ba8\u0ba9\u0bcd\u0bb1\u0bbf !</string>
     <string name="write_storage_permission_available">Write Storage permission avilable</string>
     <string name="storage_permission_required">Storage permission required</string>
     <string name="ok">Ok</string>
     <string name="storage_permission_not_available">Storage permission not available</string>
-
     <string name="msg_subscribed">Notification sucbscribed</string>
     <string name="msg_subscribe_failed">Scubscription failed</string>
     <string name="msg_unsubscribed">Unscbscribed successfully</string>
     <string name="msg_unsubscribe_failed">Notifcation unscbscribe failed</string>
     <string name="draft_kuripugal">Draft Kuripugal</string>
-
 
 </resources>
