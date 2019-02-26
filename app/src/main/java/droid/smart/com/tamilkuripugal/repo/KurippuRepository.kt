@@ -83,6 +83,7 @@ class KurippuRepository @Inject constructor(
     fun getScheduledKuripugal(): LiveData<Resource<List<Kurippu>>> {
         return object : NetworkBoundResource<List<Kurippu>, List<Kurippu>>(appExecutors) {
             override fun saveCallResult(item: List<Kurippu>) {
+                kurippuDao.clearDraft()
                 kurippuDao.insertKuripugal(item)
             }
 

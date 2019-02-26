@@ -46,6 +46,8 @@ class MainFragment : Fragment(), Injectable {
 
     lateinit var mAdView: AdView
 
+    private lateinit var menuScheduled: MenuItem
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -68,11 +70,6 @@ class MainFragment : Fragment(), Injectable {
             navController().navigate(
                 MainFragmentDirections.draftKuripugal()
             )
-        }
-
-        if (BuildConfig.DEBUG) {
-            Timber.i("Test Device - Display test device controls")
-            //dataBinding.btnDraftKuripugal.visibility = View.VISIBLE
         }
 
         binding = dataBinding
@@ -116,6 +113,26 @@ class MainFragment : Fragment(), Injectable {
         menuInflater.inflate(R.menu.overflow_menu, menu)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_scheduled -> {
+                navController().navigate(
+                    MainFragmentDirections.draftKuripugal()
+                )
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        menuScheduled  = menu.findItem(R.id.action_scheduled)
+        if (BuildConfig.DEBUG) {
+            menuScheduled.isVisible = true
+            Timber.i("Test Device - Display test device controls")
+        }
+    }
 
     /**
      * Created to be able to override in tests

@@ -43,5 +43,6 @@
     <string name="msg_unsubscribed">Unscbscribed successfully</string>
     <string name="msg_unsubscribe_failed">Notifcation unscbscribe failed</string>
     <string name="draft_kuripugal">Draft Kuripugal</string>
+    <string name="action_scheduled">Scheduled Tips</string>
 
 </resources>

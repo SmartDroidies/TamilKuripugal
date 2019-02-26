@@ -18,7 +18,7 @@ import droid.smart.com.tamilkuripugal.AppExecutors
 import droid.smart.com.tamilkuripugal.binding.FragmentDataBindingComponent
 import droid.smart.com.tamilkuripugal.di.Injectable
 import droid.smart.com.tamilkuripugal.ui.common.DividerItemDecoration
-import droid.smart.com.tamilkuripugal.ui.common.KuripugalAdapter
+import droid.smart.com.tamilkuripugal.ui.common.DraftKuripugalAdapter
 import droid.smart.com.tamilkuripugal.ui.common.RetryCallback
 import droid.smart.com.tamilkuripugal.ui.kuripugal.KuripugalFragmentDirections
 import droid.smart.com.tamilkuripugal.util.autoCleared
@@ -38,7 +38,7 @@ class DraftKuripugalFragment : Fragment(), Injectable {
     var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
     var binding by autoCleared<DraftKuripugalFragmentBinding>()
 
-    private var adapter by autoCleared<KuripugalAdapter>()
+    private var adapter by autoCleared<DraftKuripugalAdapter>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,7 +67,7 @@ class DraftKuripugalFragment : Fragment(), Injectable {
         binding.kurippugal = draftKuripugalViewModel.kuripugal
 
 
-        val adapter = KuripugalAdapter(dataBindingComponent, appExecutors) { kurippu ->
+        val adapter = DraftKuripugalAdapter(dataBindingComponent, appExecutors) { kurippu ->
             navController().navigate(
                 KuripugalFragmentDirections.kurippu(kurippu.kurippuId)
             )

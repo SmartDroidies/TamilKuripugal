@@ -27,4 +27,10 @@
             android:menuCategory="secondary"
             android:title="@string/action_exit"/>
 
+    <item
+            android:id="@+id/action_scheduled"
+            android:menuCategory="secondary"
+            android:title="@string/action_scheduled"
+            android:visible="false"/>
+
 </menu>

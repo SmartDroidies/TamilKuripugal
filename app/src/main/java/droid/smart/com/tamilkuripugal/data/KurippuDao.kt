@@ -23,10 +23,13 @@ abstract class KurippuDao {
     @Query("SELECT * FROM kurippu WHERE status = 'publish' ORDER BY updatedDate desc limit 200")
     abstract fun loadNewKuripugal(): LiveData<List<Kurippu>>
 
-    @Query("SELECT * FROM kurippu WHERE status != 'publish' ORDER BY updatedDate desc limit 200")
+    @Query("SELECT * FROM kurippu WHERE status != 'publish' ORDER BY postDate asc limit 200")
     abstract fun loadScheduledKuripugal(): LiveData<List<Kurippu>>
 
     @Query("SELECT * FROM kurippu WHERE kurippu_id = :kurippuId")
     abstract fun loadKurippu(kurippuId: String): LiveData<Kurippu>
+
+    @Query("DELETE FROM kurippu WHERE status != 'publish'")
+    abstract fun clearDraft()
 
 }

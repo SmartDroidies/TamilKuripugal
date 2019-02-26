@@ -51,7 +51,7 @@ object BindingAdapters {
     fun showTime(view: TextView, unixTime: Long) {
         Timber.d("Tip update timestamp %s", unixTime)
         val kurippuDate = Date(unixTime * 1000)
-        val sdf = java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
+        val sdf = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss a", Locale.US)
         view.setText(sdf.format(kurippuDate))
     }
 
