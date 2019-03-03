@@ -1,4 +1,4 @@
-package droid.smart.com.tamilkuripugal.ui.common
+package droid.smart.com.tamilkuripugal.ui.kuripugal
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.KuripuItemBinding
 import droid.smart.com.tamilkuripugal.AppExecutors
+import droid.smart.com.tamilkuripugal.ui.common.DataBoundListAdapter
 import droid.smart.com.tamilkuripugal.vo.Kurippu
 
 class KuripugalAdapter(

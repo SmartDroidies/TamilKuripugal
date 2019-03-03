@@ -2,6 +2,7 @@ package droid.smart.com.tamilkuripugal.vo
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "kurippu")
@@ -15,4 +16,7 @@ data class Kurippu(
     val status: String,
     val content: String?
 ) {
+    @Ignore
+    var categoryObj: Category? = null
+
 }

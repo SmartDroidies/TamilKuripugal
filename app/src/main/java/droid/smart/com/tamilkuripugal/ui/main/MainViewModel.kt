@@ -55,7 +55,7 @@ class MainViewModel @Inject constructor(categoryRepository: CategoryRepository) 
         get() = _categories
 
     init {
-        _categories.value = Resource.success(CATEGORY_DATA)
+        _categories.value = Resource.success(categoryRepository.loadCategories())
     }
 
     fun setUser(user: String?) {

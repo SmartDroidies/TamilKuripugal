@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+                name="kurippu"
+                type="droid.smart.com.tamilkuripugal.vo.Kurippu"/>
+    </data>
+
+    <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+        <ImageView
+                android:id="@+id/imageView"
+                android:contentDescription="@string/kurippu_image"
+                android:layout_width="@dimen/photo_width"
+                android:layout_height="@dimen/photo_height"
+                android:adjustViewBounds="false"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginBottom="@dimen/default_margin"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginStart="@dimen/default_margin"
+                android:cropToPadding="false"
+                android:scaleType="centerCrop"
+                app:visibleGone="@{kurippu.image != null}"
+                app:imageUrl="@{kurippu.image}"/>
+
+        <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:htmlText="@{kurippu.title}"
+                android:layout_toRightOf="@id/imageView"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginBottom="@dimen/default_margin"
+                tools:text="Kurippu Title goes here"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:layout_toEndOf="@id/imageView"/>
+
+        <TextView
+                android:id="@+id/textCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/default_margin"
+                android:layout_below="@+id/textView"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/short_margin"
+                android:layout_marginRight="@dimen/default_margin"
+                android:layout_marginEnd="@dimen/default_margin"
+                tools:text="Category"
+                app:localeText="@{kurippu.categoryObj.code}"
+                android:textStyle="italic"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+</layout>
+
+

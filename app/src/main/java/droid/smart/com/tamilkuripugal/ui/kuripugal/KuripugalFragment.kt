@@ -20,7 +20,6 @@ import droid.smart.com.tamilkuripugal.AppExecutors
 import droid.smart.com.tamilkuripugal.binding.FragmentDataBindingComponent
 import droid.smart.com.tamilkuripugal.di.Injectable
 import droid.smart.com.tamilkuripugal.ui.common.DividerItemDecoration
-import droid.smart.com.tamilkuripugal.ui.common.KuripugalAdapter
 import droid.smart.com.tamilkuripugal.ui.common.RetryCallback
 import droid.smart.com.tamilkuripugal.util.autoCleared
 import javax.inject.Inject
@@ -73,7 +72,10 @@ class KuripugalFragment : Fragment(), Injectable {
         binding.setLifecycleOwner(viewLifecycleOwner)
         binding.kurippugal = kuripugalViewModel.kuripugal
 
-        val adapter = KuripugalAdapter(dataBindingComponent, appExecutors) { kurippu ->
+        val adapter = KuripugalAdapter(
+            dataBindingComponent,
+            appExecutors
+        ) { kurippu ->
             navController().navigate(
                 KuripugalFragmentDirections.kurippu(kurippu.kurippuId)
             )

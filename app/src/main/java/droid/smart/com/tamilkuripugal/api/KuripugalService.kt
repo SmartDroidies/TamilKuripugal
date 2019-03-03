@@ -27,8 +27,8 @@ import retrofit2.http.Query
  *
  *    Kuripugal By CategoryId - http://tamil.tips2stayhealthy.com/rest/?ct={CategoryID=5}
  *    Kuripu By KurippuId - http://tamil.tips2stayhealthy.com/rest/?tip=y&id=6757
- *    Draft Kuripugal - http://tamil.tips2stayhealthy.com/json2/?ty=draft
- *    New Kuripugal - http://tamil.tips2stayhealthy.com/json2/?ty=new
+ *    Draft Kuripugal - http://tamil.tips2stayhealthy.com/rest/?ty=draft
+ *    New Kuripugal - http://tamil.tips2stayhealthy.com/rest/?ty=new
  */
 interface KuripugalService {
     @GET("category/list")

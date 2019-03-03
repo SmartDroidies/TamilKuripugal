@@ -283,6 +283,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     private fun initOnFirstStart() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         if (!sharedPreferences.contains(PREFKEY_UPDATE_VERSION)) {
+            //FIXME - Collect this from categoryRepository
             val categories = MainViewModel.CATEGORY_DATA
             for (category in categories) {
                 Timber.d("Initialize preference for category : %s", category)

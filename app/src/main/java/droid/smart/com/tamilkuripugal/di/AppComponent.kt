@@ -41,3 +41,5 @@ interface AppComponent {
 
     fun inject(kuripugalApp: KuripugalApp)
 }
+
+
