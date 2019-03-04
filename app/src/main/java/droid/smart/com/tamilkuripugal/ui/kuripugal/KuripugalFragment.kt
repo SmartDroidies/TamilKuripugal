@@ -14,15 +14,18 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
-import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.KuripugalFragmentBinding
 import droid.smart.com.tamilkuripugal.AppExecutors
+import droid.smart.com.tamilkuripugal.MainActivity
 import droid.smart.com.tamilkuripugal.binding.FragmentDataBindingComponent
 import droid.smart.com.tamilkuripugal.di.Injectable
 import droid.smart.com.tamilkuripugal.ui.common.DividerItemDecoration
 import droid.smart.com.tamilkuripugal.ui.common.RetryCallback
+import droid.smart.com.tamilkuripugal.ui.util.Helper
 import droid.smart.com.tamilkuripugal.util.autoCleared
+import timber.log.Timber
 import javax.inject.Inject
+
 
 class KuripugalFragment : Fragment(), Injectable {
 
@@ -51,7 +54,7 @@ class KuripugalFragment : Fragment(), Injectable {
     ): View? {
         val dataBinding = DataBindingUtil.inflate<KuripugalFragmentBinding>(
             inflater,
-            R.layout.kuripugal_fragment,
+            com.smart.droid.tamil.tips.R.layout.kuripugal_fragment,
             container,
             false
         )
@@ -72,6 +75,11 @@ class KuripugalFragment : Fragment(), Injectable {
         binding.setLifecycleOwner(viewLifecycleOwner)
         binding.kurippugal = kuripugalViewModel.kuripugal
 
+        kuripugalViewModel.category.observe(viewLifecycleOwner, Observer {
+            Timber.d("Category : %s", it.code)
+            (activity as MainActivity).setActionBarTitle(Helper.localeText(this!!.context!!, it.code)!!)
+        })
+
         val adapter = KuripugalAdapter(
             dataBindingComponent,
             appExecutors
@@ -88,6 +96,7 @@ class KuripugalFragment : Fragment(), Injectable {
         binding.kuripugalList.addItemDecoration(itemDecor)
 
         initKuripugalList(kuripugalViewModel)
+
 
         mAdView = binding.adView
         mAdView.loadAd(adRequest)

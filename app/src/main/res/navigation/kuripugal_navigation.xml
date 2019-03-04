@@ -53,7 +53,7 @@
 
     <fragment android:id="@+id/newKuripugalFragment"
               android:name="droid.smart.com.tamilkuripugal.ui.newkuripugal.NewKuripugalFragment"
-              android:label="@string/app_name"
+              android:label="@string/title_new_kuripugal"
               tools:layout="@layout/new_kuripugal_fragment">
 
         <action android:id="@+id/kurippu"

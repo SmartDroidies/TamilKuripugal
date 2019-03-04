@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     lateinit var adRequest: AdRequest
 
     @Inject
-    lateinit var interstitialRateLimit  : RateLimiter
+    lateinit var interstitialRateLimit: RateLimiter
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
@@ -113,7 +113,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         interstitialAd = InterstitialAd(this)
         interstitialAd.adUnitId = "ca-app-pub-8439744074965483/5473553264"
         interstitialAd.loadAd(adRequest)
-        interstitialAd.adListener = object: AdListener() {
+        interstitialAd.adListener = object : AdListener() {
             override fun onAdLoaded() {
                 // Code to be executed when an ad finishes loading.
                 //FIXME - Report it on Firebase Analytics Event
@@ -316,12 +316,19 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
             if (interstitialRateLimit.shouldFetch("interstitial_ad", 60, TimeUnit.SECONDS) || bForce) {
                 interstitialAd.show()
             } else {
-                Timber.i("showInterstitial : Time interval not met - %s", interstitialRateLimit.elapsed("interstitial_ad"))
+                Timber.i(
+                    "showInterstitial : Time interval not met - %s",
+                    interstitialRateLimit.elapsed("interstitial_ad")
+                )
             }
         } else {
             Timber.i("showInterstitial : Ad not loaded yet - %s", interstitialAd.isLoading)
         }
 
+    }
+
+    fun setActionBarTitle(title: String) {
+        getSupportActionBar()!!.setTitle(title);
     }
 
 }

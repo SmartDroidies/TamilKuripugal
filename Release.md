@@ -10,5 +10,8 @@
 # V1.1.4
  
 * Display Scheduled Tips if the Debug APK is installed
+* Title on New Kuripugal
+* Category on New Kuripugal
+* Title on Kuripugal
  
  
