@@ -31,6 +31,8 @@ import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.messaging.FirebaseMessaging
+import com.mopub.common.MoPub
+import com.mopub.common.SdkConfiguration
 import com.smart.droid.tamil.tips.BuildConfig
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.MainActivityBinding
@@ -106,8 +108,13 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
             navController.navigate(R.id.kurippu_fragment, bundle)
         }
 
+
         // Kuripugal Ad initialization
         MobileAds.initialize(this, "ca-app-pub-8439744074965483~7727700457")
+
+        //MoPub Ad initialization
+        val sdkConfiguration = SdkConfiguration.Builder("c1ac415d0bae4c088f7ed79f72f71628").build()
+        MoPub.initializeSdk(this, sdkConfiguration, null);
 
         //Initialize interstitial
         interstitialAd = InterstitialAd(this)

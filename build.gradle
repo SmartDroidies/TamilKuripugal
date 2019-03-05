@@ -27,6 +27,7 @@ buildscript {
         google()
         jcenter()
         maven { url 'https://maven.fabric.io/public' }
+        maven { url "https://s3.amazonaws.com/moat-sdk-builds" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.1'
