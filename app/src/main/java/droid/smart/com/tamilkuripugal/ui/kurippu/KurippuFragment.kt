@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.KurippuFragmentBinding
 import droid.smart.com.tamilkuripugal.AppExecutors
@@ -25,6 +26,7 @@ import droid.smart.com.tamilkuripugal.binding.FragmentDataBindingComponent
 import droid.smart.com.tamilkuripugal.di.Injectable
 import droid.smart.com.tamilkuripugal.extensions.checkSelfPermissionCompat
 import droid.smart.com.tamilkuripugal.extensions.extractBitmap
+import droid.smart.com.tamilkuripugal.extensions.kurippuView
 import droid.smart.com.tamilkuripugal.ui.common.KuripugalGestureListener
 import droid.smart.com.tamilkuripugal.ui.common.RetryCallback
 import droid.smart.com.tamilkuripugal.util.autoCleared
@@ -54,6 +56,8 @@ class KurippuFragment : Fragment(), Injectable {
 
     lateinit var mAdView: AdView
 
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -71,6 +75,8 @@ class KurippuFragment : Fragment(), Injectable {
                 kurippuViewModel.retry()
             }
         }
+
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this.context!!)
 
         mDetector = GestureDetectorCompat(context, object : KuripugalGestureListener() {
             override fun onSwipeLeft(): Boolean {
@@ -90,7 +96,7 @@ class KurippuFragment : Fragment(), Injectable {
             mDetector.onTouchEvent(event)
         }
 
-        layout = dataBinding.tipContent
+        layout = dataBinding.tipContent as View
 
         binding = dataBinding
         return dataBinding.root
@@ -106,7 +112,9 @@ class KurippuFragment : Fragment(), Injectable {
         binding.setLifecycleOwner(viewLifecycleOwner)
         binding.kurippu = kurippuViewModel.kurippu
 
-        binding.fabShare.setOnClickListener { view ->
+        firebaseAnalytics.kurippuView(params.kurippuId)
+
+        binding.fabShare.setOnClickListener {
             Timber.d("Android Version : %s", Build.VERSION.SDK_INT)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (checkSelfPermissionCompat(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -124,6 +132,8 @@ class KurippuFragment : Fragment(), Injectable {
 
         mAdView = binding.adView
         mAdView.loadAd(adRequest)
+
+        firebaseAnalytics.setCurrentScreen(activity!!, this.javaClass.simpleName, this.javaClass.simpleName)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {

@@ -13,5 +13,16 @@
 * Title on New Kuripugal
 * Category on New Kuripugal
 * Title on Kuripugal
+* Icon display on the kuripugal listing
  
+# V1.1.5
+
+* Network security issues on latest android version
+* Library updates
+
+
+# Pending
+ 
+* Category on Scheduled Tips if Debug APK 
+* Mediation for Interstitial
  
