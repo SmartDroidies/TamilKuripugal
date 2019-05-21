@@ -35,6 +35,10 @@ class KurippuViewModel @Inject constructor(kurippuRepository: KurippuRepository)
             _kurippuId.value = kurippuId
         }
     }
+
+    fun  getKurippuId() : String {
+        return _kurippuId.value!!
+    }
 }
 
 

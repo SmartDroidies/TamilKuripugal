@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.*
+import android.widget.Toast
 import androidx.core.view.GestureDetectorCompat
 import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
@@ -18,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.firestore.FirebaseFirestore
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.KurippuFragmentBinding
 import droid.smart.com.tamilkuripugal.AppExecutors
@@ -30,7 +32,9 @@ import droid.smart.com.tamilkuripugal.extensions.kurippuView
 import droid.smart.com.tamilkuripugal.ui.common.KuripugalGestureListener
 import droid.smart.com.tamilkuripugal.ui.common.RetryCallback
 import droid.smart.com.tamilkuripugal.util.autoCleared
+import droid.smart.com.tamilkuripugal.vo.Favourite
 import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
 
 class KurippuFragment : Fragment(), Injectable {
@@ -55,6 +59,9 @@ class KurippuFragment : Fragment(), Injectable {
     lateinit var adRequest: AdRequest
 
     lateinit var mAdView: AdView
+
+    @Inject
+    lateinit var firestore: FirebaseFirestore
 
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
@@ -139,6 +146,20 @@ class KurippuFragment : Fragment(), Injectable {
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, menuInflater)
         menuInflater.inflate(R.menu.kurippu_overflow_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_favourite -> {
+                Toast.makeText(this.context, "Add Kurippu to favourite", Toast.LENGTH_SHORT).show()
+                val favourites =  firestore.collection("favourites")
+                favourites.add(Favourite(kurippuViewModel.getKurippuId(), Date().time));
+            }
+            R.id.action_unfavourite -> {
+                Toast.makeText(this.context, "Remove kurippu from favourite", Toast.LENGTH_SHORT).show()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun shareKurippu(indImage: Boolean) {

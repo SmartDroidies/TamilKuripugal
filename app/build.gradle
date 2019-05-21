@@ -103,6 +103,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-ads:17.2.0'
     implementation 'com.google.firebase:firebase-messaging:18.0.0'
     implementation 'com.google.firebase:firebase-auth:17.0.0'
+    implementation 'com.google.firebase:firebase-firestore:19.0.0'
 
     //implementation 'com.mopub.volley:mopub-volley:2.0.0'
     implementation('com.mopub:mopub-sdk:5.5.0@aar') {

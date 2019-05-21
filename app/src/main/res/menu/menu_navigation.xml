@@ -11,9 +11,9 @@
         <!--item
                 android:id="@+id/featured_fragment"
                 android:title="@string/title_featured_kuripugal"/-->
-        <!--item
+        <item
                 android:id="@+id/favourite_fragment"
-                android:title="@string/title_favourite_kuripugal"/-->
+                android:title="@string/title_favourite_kuripugal"/>
 
     </group>
 
