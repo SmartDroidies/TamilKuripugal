@@ -29,7 +29,10 @@ import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
 import com.mopub.common.MoPub
 import com.mopub.common.SdkConfiguration
@@ -60,9 +63,11 @@ const val PREFKEY_UPDATE_VERSION = "pref_update_version"
  *  Favourite kurippu listing
  *  Scheduled kuripugal for test device
  *  Banner ad between recycle view
+ *  Google Sign in  https://developers.google.com/identity/sign-in/android/sign-in?authuser=0
  */
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
+    private val RC_SIGN_IN: Int = 75
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
@@ -78,6 +83,10 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+
+    //private lateinit var auth: FirebaseAuth
+
+    //private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -143,6 +152,19 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                 // Code to be executed when when the interstitial ad is closed.
             }
         }
+
+        // Configure sign-in to request the user's ID, email address, and basic profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .build()
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        //googleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        //signIn()
+
+        // Initialize Firebase Auth
+        //auth = FirebaseAuth.getInstance()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -158,6 +180,23 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
             super.onBackPressed()
         }
     }
+
+
+/*
+    fun signIn() {
+        val signInIntent = googleSignInClient.getSignInIntent()
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+*/
+
+   /* override fun onStart() {
+        super.onStart()
+        // Check if user is signed in (non-null) and update UI accordingly.
+        //val currentUser = auth.currentUser
+
+        // if (currentUser != null) Timber.i("User logged in : %s", currentUser.email)
+
+    }*/
 
     override fun supportFragmentInjector() = dispatchingAndroidInjector
 

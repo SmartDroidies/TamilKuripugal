@@ -12,7 +12,7 @@
                 android:id="@+id/featured_fragment"
                 android:title="@string/title_featured_kuripugal"/-->
         <item
-                android:id="@+id/favourite_fragment"
+                android:id="@+id/favouriteKuripugalFragment"
                 android:title="@string/title_favourite_kuripugal"/>
 
     </group>
