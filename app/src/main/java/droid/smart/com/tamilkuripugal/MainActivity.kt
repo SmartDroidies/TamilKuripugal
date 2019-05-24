@@ -29,10 +29,8 @@ import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
 import com.mopub.common.MoPub
 import com.mopub.common.SdkConfiguration
@@ -189,14 +187,14 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     }
 */
 
-   /* override fun onStart() {
-        super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
-        //val currentUser = auth.currentUser
+    /* override fun onStart() {
+         super.onStart()
+         // Check if user is signed in (non-null) and update UI accordingly.
+         //val currentUser = auth.currentUser
 
-        // if (currentUser != null) Timber.i("User logged in : %s", currentUser.email)
+         // if (currentUser != null) Timber.i("User logged in : %s", currentUser.email)
 
-    }*/
+     }*/
 
     override fun supportFragmentInjector() = dispatchingAndroidInjector
 

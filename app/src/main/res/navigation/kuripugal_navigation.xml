@@ -67,7 +67,7 @@
     </fragment>
 
     <fragment android:id="@+id/favouriteKuripugalFragment"
-              android:name="droid.smart.com.tamilkuripugal.ui.favourite.FavouriteKuripugalFragment"
+              android:name="droid.smart.com.tamilkuripugal.ui.favourite.FavouritesFragment"
               android:label="@string/title_favourite_kuripugal"
               tools:layout="@layout/new_kuripugal_fragment">
 
