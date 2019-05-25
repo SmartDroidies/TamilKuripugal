@@ -22,6 +22,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 import droid.smart.com.tamilkuripugal.ui.draft.DraftKuripugalViewModel
+import droid.smart.com.tamilkuripugal.ui.favourite.FavouritesViewModel
 import droid.smart.com.tamilkuripugal.ui.kurippu.KurippuViewModel
 import droid.smart.com.tamilkuripugal.ui.kuripugal.KuripugalViewModel
 import droid.smart.com.tamilkuripugal.ui.main.MainViewModel
@@ -56,6 +57,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(KurippuViewModel::class)
     abstract fun bindKurippuViewModel(kurippuViewModel: KurippuViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FavouritesViewModel::class)
+    abstract fun bindFavouritesViewModel(favouritesViewModel: FavouritesViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: KuripugalViewModelFactory): ViewModelProvider.Factory

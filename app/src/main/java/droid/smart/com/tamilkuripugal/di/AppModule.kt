@@ -19,6 +19,7 @@ package droid.smart.com.tamilkuripugal.di
 import android.app.Application
 import androidx.room.Room
 import com.google.android.gms.ads.AdRequest
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
@@ -103,5 +104,10 @@ class AppModule {
         return FirebaseFirestore.getInstance()
     }
 
+    @Singleton
+    @Provides
+    fun provideFirebaseAuth() : FirebaseAuth {
+        return FirebaseAuth.getInstance()
+    }
 
 }

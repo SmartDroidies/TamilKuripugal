@@ -19,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.KurippuFragmentBinding
@@ -62,6 +63,9 @@ class KurippuFragment : Fragment(), Injectable {
 
     @Inject
     lateinit var firestore: FirebaseFirestore
+
+    @Inject
+    lateinit var firebaseAuth: FirebaseAuth
 
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
@@ -151,9 +155,17 @@ class KurippuFragment : Fragment(), Injectable {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_favourite -> {
-                Toast.makeText(this.context, "Add Kurippu to favourite", Toast.LENGTH_SHORT).show()
-                val favourites =  firestore.collection("favourites")
-                favourites.add(Favourite(kurippuViewModel.getKurippuId(), Date().time));
+                //Toast.makeText(this.context, "Add Kurippu to favourite", Toast.LENGTH_SHORT).show()
+                val favourites = firestore.collection("favourites")
+                favourites.add(Favourite(kurippuViewModel.getKurippuId(), Date().time))
+                    .addOnSuccessListener { documentReference ->
+                        Timber.i("DocumentSnapshot added with ID: ${documentReference.id}")
+                        //FIXME - Report in Firebase Events
+                    }
+                    .addOnFailureListener { e ->
+                        Timber.e("Error adding document : %s", e)
+                        //FIXME - Report in Firebase Events
+                    };
             }
             R.id.action_unfavourite -> {
                 Toast.makeText(this.context, "Remove kurippu from favourite", Toast.LENGTH_SHORT).show()
