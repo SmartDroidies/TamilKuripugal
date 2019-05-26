@@ -19,6 +19,7 @@ package droid.smart.com.tamilkuripugal.di
 import android.app.Application
 import androidx.room.Room
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
@@ -66,7 +67,7 @@ class AppModule {
     @Provides
     fun provideAdRequest(/*app: Application*/): AdRequest {
         return AdRequest.Builder()
-            .addTestDevice("CA6CFF7065AD2A4A8636710F5DE45760")
+            .addTestDevice("DC14F1DAAD21C69EF0EE884173C21F66")
             .build()
     }
 
@@ -109,5 +110,17 @@ class AppModule {
     fun provideFirebaseAuth() : FirebaseAuth {
         return FirebaseAuth.getInstance()
     }
+
+
+    @Singleton
+    @Provides
+    fun provideGoogleSignInOptions() : GoogleSignInOptions {
+        return GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken("781897556091-5a1kh9qra1021rdr5h2btcp1a595s4tu.apps.googleusercontent.com")
+            .requestEmail()
+            .build()
+    }
+
+
 
 }
