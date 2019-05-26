@@ -44,5 +44,6 @@
     <string name="msg_unsubscribe_failed">Notifcation unscbscribe failed</string>
     <string name="draft_kuripugal">Draft Kuripugal</string>
     <string name="action_scheduled">Scheduled Tips</string>
+    <string name="desc_signin">Signin to save and view favourtes across all your devices.</string>
 
 </resources>
