@@ -8,16 +8,18 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.*
-import android.widget.Toast
+import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.core.view.GestureDetectorCompat
 import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -27,15 +29,11 @@ import droid.smart.com.tamilkuripugal.AppExecutors
 import droid.smart.com.tamilkuripugal.PERMISSION_EXTERNAL_WRITE_KURIPPU
 import droid.smart.com.tamilkuripugal.binding.FragmentDataBindingComponent
 import droid.smart.com.tamilkuripugal.di.Injectable
-import droid.smart.com.tamilkuripugal.extensions.checkSelfPermissionCompat
-import droid.smart.com.tamilkuripugal.extensions.extractBitmap
-import droid.smart.com.tamilkuripugal.extensions.kurippuView
+import droid.smart.com.tamilkuripugal.extensions.*
 import droid.smart.com.tamilkuripugal.ui.common.KuripugalGestureListener
 import droid.smart.com.tamilkuripugal.ui.common.RetryCallback
 import droid.smart.com.tamilkuripugal.util.autoCleared
-import droid.smart.com.tamilkuripugal.vo.Favourite
 import timber.log.Timber
-import java.util.*
 import javax.inject.Inject
 
 class KurippuFragment : Fragment(), Injectable {
@@ -123,6 +121,13 @@ class KurippuFragment : Fragment(), Injectable {
         binding.setLifecycleOwner(viewLifecycleOwner)
         binding.kurippu = kurippuViewModel.kurippu
 
+        kurippuViewModel.favourite.observe(viewLifecycleOwner, Observer {
+            Timber.d("Is Favourite : %s", it.data)
+            if(it.data != null) {
+                invalidateOptionsMenu(activity)
+            }
+        })
+
         firebaseAnalytics.kurippuView(params.kurippuId)
 
         binding.fabShare.setOnClickListener {
@@ -150,25 +155,29 @@ class KurippuFragment : Fragment(), Injectable {
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, menuInflater)
         menuInflater.inflate(R.menu.kurippu_overflow_menu, menu)
+        val menuFavourite = menu.findItem(R.id.action_favourite)
+        val menuUnFavourite = menu.findItem(R.id.action_unfavourite)
+        val resourceFavourite = kurippuViewModel.favourite.value
+        if(resourceFavourite?.data != null) {
+            menuFavourite.setVisible(false)
+            menuUnFavourite.setVisible(true)
+        }  else {
+            menuFavourite.setVisible(true)
+            menuUnFavourite.setVisible(false)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_favourite -> {
-                //Toast.makeText(this.context, "Add Kurippu to favourite", Toast.LENGTH_SHORT).show()
-                val favourites = firestore.collection("favourites")
-                favourites.add(Favourite(kurippuViewModel.getKurippuId(), Date().time))
-                    .addOnSuccessListener { documentReference ->
-                        Timber.i("DocumentSnapshot added with ID: ${documentReference.id}")
-                        //FIXME - Report in Firebase Events
-                    }
-                    .addOnFailureListener { e ->
-                        Timber.e("Error adding document : %s", e)
-                        //FIXME - Report in Firebase Events
-                    };
+                kurippuViewModel.favourite()
+                firebaseAnalytics.favourite(kurippuViewModel.getKurippuId())
+                Snackbar.make(binding.adView, "Added Kurippu to favourites", Snackbar.LENGTH_SHORT).show()
             }
             R.id.action_unfavourite -> {
-                Toast.makeText(this.context, "Remove kurippu from favourite", Toast.LENGTH_SHORT).show()
+                kurippuViewModel.unfavourite()
+                firebaseAnalytics.unfavourite(kurippuViewModel.getKurippuId())
+                Snackbar.make(binding.adView, "Removed Kurippu from favourites", Snackbar.LENGTH_SHORT).show()
             }
         }
         return super.onOptionsItemSelected(item)

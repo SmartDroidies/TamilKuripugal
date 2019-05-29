@@ -26,6 +26,7 @@ import dagger.Module
 import dagger.Provides
 import droid.smart.com.tamilkuripugal.api.KuripugalService
 import droid.smart.com.tamilkuripugal.data.CategoryDao
+import droid.smart.com.tamilkuripugal.data.FavouriteDao
 import droid.smart.com.tamilkuripugal.data.KurippuDao
 import droid.smart.com.tamilkuripugal.data.KuripugalDb
 import droid.smart.com.tamilkuripugal.util.LiveDataCallAdapterFactory
@@ -73,7 +74,7 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideRateLimiter() : RateLimiter {
+    fun provideRateLimiter(): RateLimiter {
         return RateLimiter();
     }
 
@@ -101,26 +102,30 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideFirebaseFirestore() : FirebaseFirestore {
+    fun provideFavouriteDao(db: KuripugalDb): FavouriteDao {
+        return db.favouriteDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideFirebaseFirestore(): FirebaseFirestore {
         return FirebaseFirestore.getInstance()
     }
 
     @Singleton
     @Provides
-    fun provideFirebaseAuth() : FirebaseAuth {
+    fun provideFirebaseAuth(): FirebaseAuth {
         return FirebaseAuth.getInstance()
     }
 
-
     @Singleton
     @Provides
-    fun provideGoogleSignInOptions() : GoogleSignInOptions {
+    fun provideGoogleSignInOptions(): GoogleSignInOptions {
         return GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken("781897556091-5a1kh9qra1021rdr5h2btcp1a595s4tu.apps.googleusercontent.com")
             .requestEmail()
             .build()
     }
-
 
 
 }
