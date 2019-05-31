@@ -1,6 +1,5 @@
 package droid.smart.com.tamilkuripugal.ui.favourite
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,25 +7,16 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.tasks.Task
-import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthProvider
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.FavouritesFragmentBinding
 import droid.smart.com.tamilkuripugal.AppExecutors
 import droid.smart.com.tamilkuripugal.binding.FragmentDataBindingComponent
 import droid.smart.com.tamilkuripugal.di.Injectable
 import droid.smart.com.tamilkuripugal.util.autoCleared
-import kotlinx.android.synthetic.main.main_activity.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -44,14 +34,14 @@ class FavouritesFragment : Fragment(), Injectable {
     var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
     var binding by autoCleared<FavouritesFragmentBinding>()
 
-    @Inject
-    lateinit var googleSignInOptions: GoogleSignInOptions
-
-    lateinit var googleSignInClient: GoogleSignInClient
-    private val RC_SIGN_IN = 9001
-
-    @Inject
-    lateinit var firebaseAuth: FirebaseAuth
+//    @Inject
+//    lateinit var googleSignInOptions: GoogleSignInOptions
+//
+//    lateinit var googleSignInClient: GoogleSignInClient
+//    private val RC_SIGN_IN = 9001
+//
+//    @Inject
+//    lateinit var firebaseAuth: FirebaseAuth
 
     //private var adapter by autoCleared<NewKuripugalAdapter>()
 
@@ -74,18 +64,20 @@ class FavouritesFragment : Fragment(), Injectable {
         favouritesViewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(FavouritesViewModel::class.java)
 
+        val firebaseUserId = "dummy" //FIXME - Collect the firebase user id
+        Timber.i("Display Kurippu details for : %s ", firebaseUserId)
+        favouritesViewModel.setUserId(firebaseUserId)
+
 /*
         val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
             .build()
 */
+/*
         googleSignInClient = GoogleSignIn.getClient(this.context!!, googleSignInOptions)
 
         //val params = KurippuFragmentArgs.fromBundle(arguments!!)
-        //Timber.i("Display Kurippu details for : %s ", params.kurippuId)
-        //kurippuViewModel.setKurippuId(params.kurippuId)
         binding.setLifecycleOwner(viewLifecycleOwner)
-
 
         //val currentUser = auth.currentUser
         // if (currentUser != null) Timber.i("User logged in : %s", currentUser.email)
@@ -94,21 +86,41 @@ class FavouritesFragment : Fragment(), Injectable {
             val signInIntent = googleSignInClient.getSignInIntent()
             startActivityForResult(signInIntent, RC_SIGN_IN)
         }
+*/
 
         //mAdView = binding.adView
         //mAdView.loadAd(adRequest)
 
         //firebaseAnalytics.setCurrentScreen(activity!!, this.javaClass.simpleName, this.javaClass.simpleName)
+
+        initKuripugalList(favouritesViewModel)
     }
 
+    private fun initKuripugalList(favouritesViewModel: FavouritesViewModel) {
+        favouritesViewModel.kuripugal.observe(viewLifecycleOwner, Observer { listResource ->
+            Timber.i("Favourite list resource : %s", listResource)
+/*
+        if (listResource?.data != null) {
+            adapter.submitList(listResource.data)
+        } else {
+            adapter.submitList(emptyList())
+        }
+*/
+
+        })
+    }
+
+
+/*
     override fun onStart() {
         super.onStart()
         //val account = GoogleSignIn.getLastSignedInAccount(this.context)
         //updateUI(account)
 
-        val currentUser = firebaseAuth.currentUser
-        updateUI(currentUser)
+//        val currentUser = firebaseAuth.currentUser
+//        updateUI(currentUser)
     }
+*/
 
 
     private fun updateUI(account: FirebaseUser?) {
@@ -126,15 +138,15 @@ class FavouritesFragment : Fragment(), Injectable {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+/*    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleSignInResult(task)
         }
-    }
+    }*/
 
-    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+    /*private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
             firebaseAuthWithGoogle(account!!)
@@ -144,9 +156,9 @@ class FavouritesFragment : Fragment(), Injectable {
             Timber.w("signInResult:failed code - %s , %s ", e.statusCode, e.statusMessage)
             updateUI(null)
         }
-    }
+    }*/
 
-    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
+    /*private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
         Timber.d("firebaseAuthWithGoogle: %s", acct.id!!)
 
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
@@ -163,7 +175,7 @@ class FavouritesFragment : Fragment(), Injectable {
                 }
             }
 
-    }
+    }*/
 
 
 }
