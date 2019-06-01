@@ -10,12 +10,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseUser
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.FavouritesFragmentBinding
 import droid.smart.com.tamilkuripugal.AppExecutors
 import droid.smart.com.tamilkuripugal.binding.FragmentDataBindingComponent
 import droid.smart.com.tamilkuripugal.di.Injectable
+import droid.smart.com.tamilkuripugal.ui.common.DividerItemDecoration
+import droid.smart.com.tamilkuripugal.ui.kuripugal.KuripugalFragmentDirections
 import droid.smart.com.tamilkuripugal.util.autoCleared
 import timber.log.Timber
 import javax.inject.Inject
@@ -43,7 +47,7 @@ class FavouritesFragment : Fragment(), Injectable {
 //    @Inject
 //    lateinit var firebaseAuth: FirebaseAuth
 
-    //private var adapter by autoCleared<NewKuripugalAdapter>()
+    private var adapter by autoCleared<FavouritesAdapter>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,6 +71,9 @@ class FavouritesFragment : Fragment(), Injectable {
         val firebaseUserId = "dummy" //FIXME - Collect the firebase user id
         Timber.i("Display Kurippu details for : %s ", firebaseUserId)
         favouritesViewModel.setUserId(firebaseUserId)
+        binding.setLifecycleOwner(viewLifecycleOwner)
+        binding.kurippugal = favouritesViewModel.kuripugal
+
 
 /*
         val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -93,20 +100,34 @@ class FavouritesFragment : Fragment(), Injectable {
 
         //firebaseAnalytics.setCurrentScreen(activity!!, this.javaClass.simpleName, this.javaClass.simpleName)
 
+
+        val adapter = FavouritesAdapter(
+            dataBindingComponent,
+            appExecutors
+        ) { kurippu ->
+            navController().navigate(
+                KuripugalFragmentDirections.kurippu(kurippu.kurippuId)
+            )
+        }
+        this.adapter = adapter
+        binding.kuripugalList.adapter = adapter
+        val mLayoutManager = LinearLayoutManager(context)
+        binding.kuripugalList.layoutManager = mLayoutManager
+        val itemDecor = DividerItemDecoration(context!!)
+        binding.kuripugalList.addItemDecoration(itemDecor)
+
+
         initKuripugalList(favouritesViewModel)
     }
 
     private fun initKuripugalList(favouritesViewModel: FavouritesViewModel) {
         favouritesViewModel.kuripugal.observe(viewLifecycleOwner, Observer { listResource ->
             Timber.i("Favourite list resource : %s", listResource)
-/*
-        if (listResource?.data != null) {
-            adapter.submitList(listResource.data)
-        } else {
-            adapter.submitList(emptyList())
-        }
-*/
-
+            if (listResource?.data != null) {
+                adapter.submitList(listResource.data)
+            } else {
+                adapter.submitList(emptyList())
+            }
         })
     }
 
@@ -177,5 +198,10 @@ class FavouritesFragment : Fragment(), Injectable {
 
     }*/
 
+
+    /**
+     * Created to be able to override in tests
+     */
+    fun navController() = findNavController()
 
 }
