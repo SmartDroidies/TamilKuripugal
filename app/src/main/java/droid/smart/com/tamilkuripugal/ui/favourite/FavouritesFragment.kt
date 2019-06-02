@@ -122,7 +122,7 @@ class FavouritesFragment : Fragment(), Injectable {
 
     private fun initKuripugalList(favouritesViewModel: FavouritesViewModel) {
         favouritesViewModel.kuripugal.observe(viewLifecycleOwner, Observer { listResource ->
-            Timber.i("Favourite list resource : %s", listResource)
+            //Timber.i("Favourite list resource : %s", listResource)
             if (listResource?.data != null) {
                 adapter.submitList(listResource.data)
             } else {

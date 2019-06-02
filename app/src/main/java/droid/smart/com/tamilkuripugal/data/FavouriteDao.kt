@@ -1,10 +1,7 @@
 package droid.smart.com.tamilkuripugal.data
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import droid.smart.com.tamilkuripugal.vo.Favourite
 import droid.smart.com.tamilkuripugal.vo.Kurippu
 
@@ -14,9 +11,11 @@ abstract class FavouriteDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insert(favourite: Favourite)
 
+    @Update(onConflict = OnConflictStrategy.IGNORE)
+    abstract fun update(favourite: Favourite)
+
     @Query("SELECT * FROM favourite WHERE kurippu_id = :kurippuId and active = 1")
     abstract fun loadFavourite(kurippuId: String): LiveData<Favourite>
-
 
     @Query("SELECT favourite.kurippu_id, kurippu.title, kurippu.image,kurippu.category,kurippu.postDate,favourite.updatedDate,kurippu.status,kurippu.content " +
             " FROM favourite " +

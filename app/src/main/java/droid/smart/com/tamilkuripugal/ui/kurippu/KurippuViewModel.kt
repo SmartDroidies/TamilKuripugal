@@ -56,10 +56,8 @@ class KurippuViewModel @Inject constructor(kurippuRepository: KurippuRepository,
     }
 
     fun favourite() {
-        Timber.i("Add kurippu to favourite : %s", _kurippuId.value)
         favouriteRepository.insertFavourite(_kurippuId.value!!)
-
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Timber.i("Add kurippu to favourite : %s", _kurippuId.value)
         /*
         val favourites = firestore.collection("favourites")
         favourites.add(Favourite(kurippuViewModel.getKurippuId(), Date().time))
@@ -76,8 +74,8 @@ class KurippuViewModel @Inject constructor(kurippuRepository: KurippuRepository,
     }
 
     fun unfavourite() {
+        favouriteRepository.removeFavourite(_kurippuId.value!!)
         Timber.i("Remove kurippu to favourite : %s", _kurippuId.value)
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
 

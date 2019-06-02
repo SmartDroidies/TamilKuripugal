@@ -29,12 +29,25 @@ class FavouriteRepository @Inject constructor(
         insertFavourite(favourite)
     }
 
+    fun removeFavourite(kurippuId: String) {
+        var favourite = Favourite(kurippuId, Date().time, false, cloudStatusModified)
+        updateFavourite(favourite)
+    }
+
     fun insertFavourite(favourite: Favourite) {
         appExecutors.diskIO().execute {
             favouriteDao.insert(favourite)
             //FIXME - If cloud sync is required sync here
         }
     }
+
+    fun updateFavourite(favourite: Favourite) {
+        appExecutors.diskIO().execute {
+            favouriteDao.update(favourite)
+            //FIXME - If cloud sync is required sync here
+        }
+    }
+
 
     fun loadFavourite(kurippuId: String): LiveData<Resource<Favourite>> {
         return object : NetworkBoundResource<Favourite, Favourite>(appExecutors) {

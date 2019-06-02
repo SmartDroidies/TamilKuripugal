@@ -123,9 +123,7 @@ class KurippuFragment : Fragment(), Injectable {
 
         kurippuViewModel.favourite.observe(viewLifecycleOwner, Observer {
             Timber.d("Is Favourite : %s", it.data)
-            if(it.data != null) {
-                invalidateOptionsMenu(activity)
-            }
+            invalidateOptionsMenu(activity)
         })
 
         firebaseAnalytics.kurippuView(params.kurippuId)
