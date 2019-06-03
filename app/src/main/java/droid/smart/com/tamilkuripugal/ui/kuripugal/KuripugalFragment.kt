@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.smart.droid.tamil.tips.databinding.KuripugalFragmentBinding
 import droid.smart.com.tamilkuripugal.AppExecutors
 import droid.smart.com.tamilkuripugal.MainActivity
@@ -47,6 +48,9 @@ class KuripugalFragment : Fragment(), Injectable {
     lateinit var adRequest: AdRequest
 
     lateinit var mAdView: AdView
+
+    @Inject
+    lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -100,6 +104,9 @@ class KuripugalFragment : Fragment(), Injectable {
 
         mAdView = binding.adView
         mAdView.loadAd(adRequest)
+
+        firebaseAnalytics.setCurrentScreen(activity!!, this.javaClass.simpleName, this.javaClass.simpleName)
+
     }
 
     private fun initKuripugalList(viewModel: KuripugalViewModel) {

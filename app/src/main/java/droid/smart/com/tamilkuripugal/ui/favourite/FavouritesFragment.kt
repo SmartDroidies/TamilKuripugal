@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseUser
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.FavouritesFragmentBinding
@@ -48,6 +49,9 @@ class FavouritesFragment : Fragment(), Injectable {
 //    lateinit var firebaseAuth: FirebaseAuth
 
     private var adapter by autoCleared<FavouritesAdapter>()
+
+    @Inject
+    lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -118,6 +122,9 @@ class FavouritesFragment : Fragment(), Injectable {
 
 
         initKuripugalList(favouritesViewModel)
+
+        firebaseAnalytics.setCurrentScreen(activity!!, this.javaClass.simpleName, this.javaClass.simpleName)
+
     }
 
     private fun initKuripugalList(favouritesViewModel: FavouritesViewModel) {

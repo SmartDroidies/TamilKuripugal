@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.NewKuripugalFragmentBinding
 import droid.smart.com.tamilkuripugal.AppExecutors
@@ -39,6 +40,9 @@ class NewKuripugalFragment : Fragment(), Injectable {
     var binding by autoCleared<NewKuripugalFragmentBinding>()
 
     private var adapter by autoCleared<NewKuripugalAdapter>()
+
+    @Inject
+    lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -83,6 +87,9 @@ class NewKuripugalFragment : Fragment(), Injectable {
         binding.kuripugalList.addItemDecoration(itemDecor)
 
         initKuripugalList(newKuripugalViewModel)
+
+        firebaseAnalytics.setCurrentScreen(activity!!, this.javaClass.simpleName, this.javaClass.simpleName)
+
     }
 
 

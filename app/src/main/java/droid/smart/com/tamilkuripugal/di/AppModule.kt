@@ -17,9 +17,11 @@
 package droid.smart.com.tamilkuripugal.di
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
@@ -104,6 +106,12 @@ class AppModule {
     @Provides
     fun provideFavouriteDao(db: KuripugalDb): FavouriteDao {
         return db.favouriteDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideFirebaseAnalytics(application: Application): FirebaseAnalytics {
+        return FirebaseAnalytics.getInstance(application)
     }
 
     @Singleton

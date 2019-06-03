@@ -65,7 +65,8 @@ class KurippuFragment : Fragment(), Injectable {
     @Inject
     lateinit var firebaseAuth: FirebaseAuth
 
-    private lateinit var firebaseAnalytics: FirebaseAnalytics
+    @Inject
+    lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -85,8 +86,6 @@ class KurippuFragment : Fragment(), Injectable {
             }
         }
 
-        firebaseAnalytics = FirebaseAnalytics.getInstance(this.context!!)
-
         mDetector = GestureDetectorCompat(context, object : KuripugalGestureListener() {
             override fun onSwipeLeft(): Boolean {
                 Timber.i("Left swipe")
@@ -105,7 +104,7 @@ class KurippuFragment : Fragment(), Injectable {
             mDetector.onTouchEvent(event)
         }
 
-        layout = dataBinding.tipContent as View
+        layout = dataBinding.tipContent
 
         binding = dataBinding
         return dataBinding.root
