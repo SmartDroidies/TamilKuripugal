@@ -16,12 +16,12 @@ buildscript {
         navigationVersion = '1.0.0'
         okhttpLoggingVersion = '3.9.0'
         retrofitVersion = '2.3.0'
-        roomVersion = '2.1.0-beta01'
+        roomVersion = '2.1.0-rc01'
         timberVersion = '4.7.1'
         uiAutomatorVersion = '2.2.0-alpha4'
 
-        versionCode = 10105
-        versionName = "1.1.5"
+        versionCode = 10107
+        versionName = "1.1.7"
     }
     repositories {
         google()
