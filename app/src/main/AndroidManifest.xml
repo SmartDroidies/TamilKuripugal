@@ -41,6 +41,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="droid.smart.com.tamilkuripugal.BaseActivity"/>
+
         <activity android:name="com.mopub.mobileads.MoPubActivity"
                   android:configChanges="keyboardHidden|orientation|screenSize"/>
 

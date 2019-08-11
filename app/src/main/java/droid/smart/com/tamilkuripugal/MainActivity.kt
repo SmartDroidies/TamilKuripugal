@@ -13,7 +13,6 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
@@ -29,7 +28,6 @@ import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.messaging.FirebaseMessaging
 import com.mopub.common.MoPub
@@ -40,6 +38,7 @@ import com.smart.droid.tamil.tips.databinding.MainActivityBinding
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import droid.smart.com.tamilkuripugal.extensions.*
+import droid.smart.com.tamilkuripugal.ui.AppExitDialogFragment
 import droid.smart.com.tamilkuripugal.ui.main.MainFragmentDirections
 import droid.smart.com.tamilkuripugal.ui.main.MainViewModel
 import droid.smart.com.tamilkuripugal.util.RateLimiter
@@ -63,7 +62,7 @@ const val PREFKEY_UPDATE_VERSION = "pref_update_version"
  *  Banner ad between recycle view
  *  Google Sign in  https://developers.google.com/identity/sign-in/android/sign-in?authuser=0
  */
-class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
+class MainActivity : BaseActivity(), HasSupportFragmentInjector {
 
     private val RC_SIGN_IN: Int = 75
     private lateinit var drawerLayout: DrawerLayout
@@ -109,8 +108,8 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         initOnFirstStart()
 
         if (intent.extras != null && !intent.extras.isEmpty && intent.extras.containsKey("id")) {
-            Timber.d("Extras : %s ", intent.extras.get("id"))
-            val kurippuId = intent.extras.get("id") as String
+            Timber.d("Extras : %s ", intent!!.extras.get("id"))
+            val kurippuId = intent!!.extras.get("id") as String
             val bundle = Bundle().also { it.putString("kurippuId", kurippuId) }
             navController.navigate(R.id.kurippu_fragment, bundle)
         }
@@ -121,7 +120,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
         //MoPub Ad initialization
         val sdkConfiguration = SdkConfiguration.Builder("c1ac415d0bae4c088f7ed79f72f71628").build()
-        MoPub.initializeSdk(this, sdkConfiguration, null);
+        MoPub.initializeSdk(this, sdkConfiguration, null)
 
         //Initialize interstitial
         interstitialAd = InterstitialAd(this)
@@ -152,9 +151,11 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         }
 
         // Configure sign-in to request the user's ID, email address, and basic profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+/*
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
             .build()
+*/
 
         // Build a GoogleSignInClient with the options specified by gso.
         //googleSignInClient = GoogleSignIn.getClient(this, gso);
@@ -171,11 +172,19 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     }
 
     override fun onBackPressed() {
-        showInterstitial(false)
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
         } else {
-            super.onBackPressed()
+            Timber.i(
+                "Nav Controller : %s vs %s",
+                navController.currentDestination!!.id,
+                navController.graph.startDestination
+            )
+            if (navController.graph.startDestination == navController.currentDestination!!.id) {
+                AppExitDialogFragment().show(supportFragmentManager, "ExitDialogFragment")
+            } else {
+                super.onBackPressed()
+            }
         }
     }
 
@@ -369,7 +378,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     }
 
     fun setActionBarTitle(title: String) {
-        getSupportActionBar()!!.setTitle(title);
+        supportActionBar!!.title = title
     }
 
 }
