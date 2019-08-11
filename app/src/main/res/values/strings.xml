@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">"\u0ba4\u0bae\u0bbf\u0bb4\u0bcd \u0b95\u0bc1\u0bb1\u0bbf\u0baa\u0bcd\u0baa\u0bc1\u0b95\u0bb3\u0bcd"
+    <string name="app_name">\u0ba4\u0bae\u0bbf\u0bb4\u0bcd
+        \u0b95\u0bc1\u0bb1\u0bbf\u0baa\u0bcd\u0baa\u0bc1\u0b95\u0bb3\u0bcd
     </string>
     <string name="title_categories">\u0BAA\u0BBF\u0BB0\u0BBF\u0BB5\u0BC1\u0B95\u0BB3\u0BCD</string>
     <string name="title_new_kuripugal">\u0BAA\u0BC1\u0BA4\u0BBF\u0BAF\u0BB5\u0BC8</string>
@@ -9,16 +10,14 @@
     <string name="title_privacy">\u0BAA\u0BC6\u0BBE\u0BB1\u0BC1\u0BAA\u0BCD\u0BAA\u0BBE\u0B95\u0BBE\u0BAE\u0BC8</string>
     <string name="title_draft_kuripugal">Draft Kuripugal</string>
 
-    <string name="action_share">Share</string>
+    <string name="action_share">\u0BAA\u0B95\u0BBF\u0BB0\u0BCD\u0B95</string>
     <string name="action_feedback">Feedback</string>
-    <string name="action_rateme">Rate Me</string>
-    <string name="action_exit">Exit</string>
     <string name="settings">Settings</string>
 
     <string name="navigation_drawer_header_title">Navigation Drawer Header Title</string>
     <string name="navigation_drawer_header_content_description">Navigation Drawer Header Logo</string>
     <string name="retry">Retry</string>
-    <string name="unknown_error">Unknown Error occured</string>
+    <string name="unknown_error">Unknown Error occurred</string>
     <string name="kurippu_image">Kurippu Image</string>
 
     <!-- Categories -->
@@ -32,11 +31,23 @@
     <string name="GENERAL">\u0baa\u0bca\u0ba4\u0bc1 \u0b95\u0bc1\u0bb1\u0bbf\u0baa\u0bcd\u0baa\u0bc1</string>
     <string name="AGRICULTURE">\u0BB5\u0BC7\u0BB3\u0BBE\u0BA3\u0BCD\u0BAE\u0BC8 \u0B95\u0BC1\u0BB1\u0BBF\u0BAA\u0BCD\u0BAA\u0BC1</string>
 
+    <string name="exit_title">\u0ba4\u0bae\u0bbf\u0bb4\u0bcd
+        \u0b95\u0bc1\u0bb1\u0bbf\u0baa\u0bcd\u0baa\u0bc1\u0b95\u0bb3\u0bcd
+    </string>
+    <string name="exit_message">\u0B8E\u0B99\u0BCD\u0B95\u0BB3\u0BA4\u0BC1
+        \u0BAA\u0BAF\u0BA9\u0BCD\u0BAA\u0BBE\u0B9F\u0BCD\u0B9F\u0BC8 \u0BAA\u0BA4\u0BBF\u0BB5\u0BC1
+        \u0B87\u0BB0\u0B95\u0BCD\u0B95\u0BAE\u0BCD \u0B9A\u0BC6\u0BAF\u0BCD\u0BA4\u0BC1
+        \u0BAA\u0B95\u0BBF\u0BB0\u0BCD\u0BA8\u0BCD\u0BA4\u0BAE\u0BC8\u0B95\u0BCD\u0B95\u0BC1
+        \u0BA8\u0BA9\u0BCD\u0BB1\u0BBF ! \u0BAE\u0BC0\u0BA3\u0BCD\u0B9F\u0BC1\u0BAE\u0BCD \u0BB5\u0BB0\u0BC1\u0B95..!
+    </string>
+    <string name="action_cancel">\u0BA4\u0BCA\u0B9F\u0BB0\u0BC1</string>
+    <string name="action_exit">\u0BB5\u0BBF\u0B9F\u0BC8\u0B95\u0BCA\u0B9F\u0BC1</string>
+    <string name="action_rateme">\u0BAE\u0BA4\u0BBF\u0BAA\u0BCD\u0BAA\u0BBF\u0B9F\u0BC1</string>
 
     <string name="disclaimer_text">\u0ba4\u0bae\u0bbf\u0bb4\u0bcd \u0b95\u0bc1\u0bb1\u0bbf\u0baa\u0bcd\u0baa\u0bc1\u0b95\u0bcd\u0b95\u0bb3\u0bcd \u0b89\u0bb3\u0bcd\u0bb3 \u0ba4\u0b95\u0bb5\u0bb2\u0bcd\u0b95\u0bb3\u0bcd \u0b85\u0ba9\u0bc8\u0ba4\u0bcd\u0ba4\u0bc1\u0bae\u0bcd \u0baa\u0b9f\u0bbf\u0ba4\u0bcd\u0ba4\u0ba4\u0bbf\u0bb2\u0bcd \u0b87\u0bb0\u0bc1\u0ba8\u0bcd\u0ba4\u0bc1\u0bae\u0bcd \u0baa\u0bbf\u0bb1 \u0b87\u0ba3\u0bc8\u0baf \u0ba4\u0bb3\u0b99\u0bcd\u0b95\u0bb3\u0bbf\u0bb2\u0bcd \u0b87\u0bb0\u0bc1\u0ba8\u0bcd\u0ba4\u0bc1\u0bae\u0bcd \u0b85\u0bb1\u0bbf\u0ba8\u0bcd\u0ba4 \u0b9a\u0bc6\u0baf\u0bcd\u0ba4\u0bbf\u0b95\u0bb3\u0bcd \u0b86\u0b95\u0bc1\u0bae\u0bcd. \u0b87\u0ba4\u0bc1 \u0bae\u0bc1\u0bb4\u0bc1\u0b95\u0bcd\u0b95 \u0bae\u0bc1\u0bb4\u0bc1\u0b95\u0bcd\u0b95 \u0b86\u0bb0\u0bcb\u0b95\u0bbf\u0baf\u0ba4\u0bc1\u0b95\u0bcd\u0b95\u0bbe\u0ba9 \u0b85\u0bb1\u0bbf\u0bb5\u0bc1 \u0bae\u0bb1\u0bcd\u0bb1\u0bc1\u0bae\u0bcd \u0b9a\u0bc6\u0baf\u0bcd\u0ba4\u0bbf \u0baa\u0b95\u0bbf\u0bb0\u0bcd\u0bb5\u0ba4\u0bb0\u0bcd\u0b95\u0b95\u0bb5\u0bc7 \u0bae\u0b9f\u0bcd\u0b9f\u0bc1\u0bae\u0bc7 \u0b92\u0bb4\u0bbf\u0baf \u0b87\u0b99\u0bcd\u0b95\u0bc1 \u0b89\u0bb3\u0bcd\u0bb3 \u0b8e\u0ba8\u0bcd\u0ba4 \u0bae\u0bb0\u0bc1\u0ba4\u0bcd\u0ba4\u0bc1\u0bb5 \u0b86\u0bb2\u0bcb\u0b9a\u0bc8\u0ba9\u0bc8\u0b95\u0bc1\u0bae\u0bcd \u0ba4\u0bae\u0bbf\u0bb4\u0bcd \u0b95\u0bc1\u0bb1\u0bbf\u0baa\u0bcd\u0baa\u0bc1\u0b95\u0bcd\u0b95\u0bb3\u0bcd \u0baa\u0bca\u0bb1\u0bc1\u0baa\u0bcd\u0baa\u0bc1 \u0b8f\u0bb1\u0bcd\u0b95\u0bbe\u0ba4\u0bc1 \u0b8e\u0ba9\u0bcd\u0baa\u0ba4\u0bc8 \u0ba4\u0bc6\u0bb0\u0bbf\u0bb5\u0bbf\u0ba4\u0bcd\u0ba4\u0bc1\u0b95\u0bca\u0bb3\u0bcd\u0b95\u0bbf\u0bb1\u0bcb\u0bae\u0bcd. \u0b87\u0b99\u0bcd\u0b95\u0bc1 \u0b89\u0bb3\u0bcd\u0bb3 \u0b95\u0bc1\u0bb1\u0bbf\u0baa\u0bcd\u0baa\u0bc1\u0b95\u0bb3\u0bc8 \u0baa\u0b9f\u0bbf\u0ba4\u0bcd\u0ba4\u0bc1 \u0bae\u0b9f\u0bcd\u0b9f\u0bc1\u0bae\u0bcd \u0baa\u0baf\u0ba9\u0bcd \u0baa\u0bc6\u0bb1\u0bc1\u0bae\u0bbe\u0bb1\u0bc1 \u0b85\u0bb1\u0bbf\u0bb5\u0bc1\u0bb1\u0bc1\u0ba4\u0bcd\u0ba4\u0bc1\u0b95\u0bbf\u0ba9\u0bcd\u0bb1\u0bcb\u0bae\u0bcd. \u0ba8\u0ba9\u0bcd\u0bb1\u0bbf !</string>
-    <string name="write_storage_permission_available">Write Storage permission avilable</string>
+    <string name="write_storage_permission_available">Write Storage permission available</string>
     <string name="storage_permission_required">Storage permission required</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="storage_permission_not_available">Storage permission not available</string>
     <string name="msg_subscribed">Notification sucbscribed</string>
     <string name="msg_subscribe_failed">Scubscription failed</string>
