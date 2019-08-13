@@ -51,14 +51,15 @@ object BindingAdapters {
     fun showTime(view: TextView, unixTime: Long) {
         Timber.d("Tip update timestamp %s", unixTime)
         val kurippuDate = Date(unixTime * 1000)
-        val sdf = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss a", Locale.US)
-        view.setText(sdf.format(kurippuDate))
+        val sdf = java.text.SimpleDateFormat("dd-MM-yyyy HH:mm:ss a", Locale.US)
+        sdf.timeZone = TimeZone.getTimeZone("IST")
+        view.text = sdf.format(kurippuDate)
     }
 
     @JvmStatic
     @BindingAdapter("htmlText")
     fun showHtmlText(view: TextView, htmlText: String?) {
-        if (htmlText != null && !(htmlText!!.isNullOrEmpty())) {
+        if (htmlText != null && !(htmlText.isNullOrEmpty())) {
             view.text = Html.fromHtml(htmlText)
         }
     }

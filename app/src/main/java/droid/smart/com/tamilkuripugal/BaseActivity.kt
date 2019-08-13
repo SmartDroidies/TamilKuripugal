@@ -8,8 +8,14 @@ import androidx.fragment.app.DialogFragment
 import droid.smart.com.tamilkuripugal.ui.AppExitDialogFragment
 import timber.log.Timber
 
+const val PERMISSION_EXTERNAL_WRITE = 0
+const val PERMISSION_EXTERNAL_WRITE_KURIPPU = 5
+const val PREFKEY_UPDATE_VERSION = "pref_update_version"
 
 open class BaseActivity : AppCompatActivity(), AppExitDialogFragment.AppExitDialogListener {
+
+    val PREFKEY_GSIGN_CHOICE = "gsign_choice"
+
 
 
     override fun onExitConfirm(dialog: DialogFragment) {

@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.TargetApi
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.BitmapFactory
@@ -46,9 +47,6 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-const val PERMISSION_EXTERNAL_WRITE = 0
-const val PERMISSION_EXTERNAL_WRITE_KURIPPU = 5
-const val PREFKEY_UPDATE_VERSION = "pref_update_version"
 
 /**
  * FIXME - Functionalities Planned
@@ -81,6 +79,8 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
+    lateinit var sharedPreferences: SharedPreferences
+
     //private lateinit var auth: FirebaseAuth
 
     //private lateinit var googleSignInClient: GoogleSignInClient
@@ -97,6 +97,8 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
 
         layout = binding.mainLayout
 
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+
         // Set up ActionBar
         setSupportActionBar(binding.toolbar)
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -107,13 +109,15 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
         //Init pref on first start
         initOnFirstStart()
 
+        //Authorize with google
+        checkGoogleSignIn()
+
         if (intent.extras != null && !intent.extras.isEmpty && intent.extras.containsKey("id")) {
             Timber.d("Extras : %s ", intent!!.extras.get("id"))
             val kurippuId = intent!!.extras.get("id") as String
             val bundle = Bundle().also { it.putString("kurippuId", kurippuId) }
             navController.navigate(R.id.kurippu_fragment, bundle)
         }
-
 
         // Kuripugal Ad initialization
         MobileAds.initialize(this, "ca-app-pub-8439744074965483~7727700457")
@@ -165,6 +169,7 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
         // Initialize Firebase Auth
         //auth = FirebaseAuth.getInstance()
     }
+
 
     override fun onSupportNavigateUp(): Boolean {
         showInterstitial(false)
@@ -331,7 +336,6 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
 
 
     private fun initOnFirstStart() {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         if (!sharedPreferences.contains(PREFKEY_UPDATE_VERSION)) {
             //FIXME - Collect this from categoryRepository
             val categories = MainViewModel.CATEGORY_DATA
@@ -349,6 +353,12 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
                     }
             }
             sharedPreferences.edit().putInt(PREFKEY_UPDATE_VERSION, BuildConfig.VERSION_CODE).apply()
+        }
+    }
+
+    fun checkGoogleSignIn() {
+        if (!sharedPreferences.contains(PREFKEY_GSIGN_CHOICE)) {
+            navController.navigate(MainFragmentDirections.signin())
         }
     }
 

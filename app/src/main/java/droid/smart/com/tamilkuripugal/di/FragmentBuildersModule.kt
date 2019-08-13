@@ -23,6 +23,7 @@ import droid.smart.com.tamilkuripugal.ui.favourite.FavouritesFragment
 import droid.smart.com.tamilkuripugal.ui.kurippu.KurippuFragment
 import droid.smart.com.tamilkuripugal.ui.kuripugal.KuripugalFragment
 import droid.smart.com.tamilkuripugal.ui.main.MainFragment
+import droid.smart.com.tamilkuripugal.ui.main.SigninFragment
 import droid.smart.com.tamilkuripugal.ui.newkuripugal.NewKuripugalFragment
 import droid.smart.com.tamilkuripugal.ui.policy.PrivacyFragment
 
@@ -49,5 +50,8 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeFavouriteKuripugalFragment(): FavouritesFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeSigninFragment(): SigninFragment
 
 }

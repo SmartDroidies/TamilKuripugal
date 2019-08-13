@@ -29,6 +29,13 @@
                 app:popEnterAnim="@anim/push_up_in"
                 app:popExitAnim="@anim/push_up_out"/>
 
+        <action android:id="@+id/signin"
+                app:destination="@id/signinFragment"
+                app:enterAnim="@anim/slide_in_up"
+                app:exitAnim="@anim/slide_out_down"
+                app:popEnterAnim="@anim/push_up_in"
+                app:popExitAnim="@anim/push_up_out"/>
+
     </fragment>
 
     <fragment android:id="@+id/kuripugalFragment"
@@ -116,6 +123,13 @@
 
     <fragment android:id="@+id/settingsFragment"
               android:name="droid.smart.com.tamilkuripugal.ui.settings.SettingsFragment"
+              android:label="@string/app_name">
+
+    </fragment>
+
+
+    <fragment android:id="@+id/signinFragment"
+              android:name="droid.smart.com.tamilkuripugal.ui.main.SigninFragment"
               android:label="@string/app_name">
 
     </fragment>
