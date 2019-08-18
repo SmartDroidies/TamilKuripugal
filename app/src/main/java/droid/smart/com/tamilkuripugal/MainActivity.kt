@@ -29,6 +29,9 @@ import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.messaging.FirebaseMessaging
 import com.mopub.common.MoPub
@@ -81,9 +84,14 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
 
     lateinit var sharedPreferences: SharedPreferences
 
-    //private lateinit var auth: FirebaseAuth
+    private lateinit var googleSignInClient: GoogleSignInClient
 
-    //private lateinit var googleSignInClient: GoogleSignInClient
+    @Inject
+    lateinit var googleSignInOptions: GoogleSignInOptions
+
+    //private lateinit var googleSignInAccount: GoogleSignInAccount
+
+    //private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -153,6 +161,9 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
                 // Code to be executed when when the interstitial ad is closed.
             }
         }
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
 
         // Configure sign-in to request the user's ID, email address, and basic profile. ID and basic profile are included in DEFAULT_SIGN_IN.
 /*
@@ -358,7 +369,12 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
 
     fun checkGoogleSignIn() {
         if (!sharedPreferences.contains(PREFKEY_GSIGN_CHOICE)) {
-            navController.navigate(MainFragmentDirections.signin())
+            val googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this)
+            if (googleSignInAccount != null) {
+                Timber.i("Google sign in : %s", googleSignInAccount.displayName)
+            } else {
+                navController.navigate(MainFragmentDirections.signin())
+            }
         }
     }
 
