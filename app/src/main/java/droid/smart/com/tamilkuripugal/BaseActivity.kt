@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
+import com.google.firebase.auth.FirebaseAuth
 import droid.smart.com.tamilkuripugal.ui.AppExitDialogFragment
 import timber.log.Timber
 
@@ -19,6 +20,7 @@ open class BaseActivity : AppCompatActivity(), AppExitDialogFragment.AppExitDial
 
 
     override fun onExitConfirm(dialog: DialogFragment) {
+        FirebaseAuth.getInstance().signOut()
         super.onBackPressed()
     }
 
