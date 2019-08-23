@@ -463,12 +463,13 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
         )
 
         firestore.collection("users")
-            .add(user)
+            .document(firebaseUser.uid)
+            .set(user)
             .addOnSuccessListener { documentReference ->
-                Timber.d("DocumentSnapshot added with ID: ${documentReference.id}")
+                Timber.d("User document succesfully updated for %s", firebaseUser.uid)
             }
             .addOnFailureListener { e ->
-                Timber.w(e, "Error adding document")
+                Timber.w(e, "Error adding user document for %s", firebaseUser.uid)
             }
 
     }

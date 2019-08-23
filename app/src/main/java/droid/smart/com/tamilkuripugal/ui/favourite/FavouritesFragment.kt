@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.FavouritesFragmentBinding
@@ -39,14 +40,7 @@ class FavouritesFragment : Fragment(), Injectable {
     var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
     var binding by autoCleared<FavouritesFragmentBinding>()
 
-//    @Inject
-//    lateinit var googleSignInOptions: GoogleSignInOptions
-//
-//    lateinit var googleSignInClient: GoogleSignInClient
-//    private val RC_SIGN_IN = 9001
-//
-//    @Inject
-//    lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var auth: FirebaseAuth
 
     private var adapter by autoCleared<FavouritesAdapter>()
 
@@ -72,14 +66,19 @@ class FavouritesFragment : Fragment(), Injectable {
         favouritesViewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(FavouritesViewModel::class.java)
 
-        val firebaseUserId = "dummy" //FIXME - Collect the firebase user id
+        // Initialize Firebase Auth
+        auth = FirebaseAuth.getInstance()
+
+        var firebaseUserId = ""
+        firebaseUserId = auth.currentUser?.email.toString()
         Timber.i("Display Kurippu details for : %s ", firebaseUserId)
         favouritesViewModel.setUserId(firebaseUserId)
-        binding.setLifecycleOwner(viewLifecycleOwner)
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.kurippugal = favouritesViewModel.kuripugal
 
 
 /*
+
         val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
             .build()
@@ -153,14 +152,14 @@ class FavouritesFragment : Fragment(), Injectable {
 
     private fun updateUI(account: FirebaseUser?) {
         if (account != null) {
-            Timber.d("Favourites Screen - User Identified : %s, %s ", account.displayName, account.email);
+            Timber.d("Favourites Screen - User Identified : %s, %s ", account.displayName, account.email)
             binding.signinContent.visibility = View.GONE
             binding.kuripugalList.visibility = View.VISIBLE
 
             //FIXME - Display favourites for user
 
         } else {
-            Timber.d("Favourites Screen - Display User Signin Button");
+            Timber.d("Favourites Screen - Display User Signin Button")
             binding.signinContent.visibility = View.VISIBLE
             binding.kuripugalList.visibility = View.GONE
         }

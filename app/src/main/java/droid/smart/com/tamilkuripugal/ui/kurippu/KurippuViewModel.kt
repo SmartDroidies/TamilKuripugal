@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import droid.smart.com.tamilkuripugal.repo.FavouriteRepository
 import droid.smart.com.tamilkuripugal.repo.KurippuRepository
 import droid.smart.com.tamilkuripugal.util.AbsentLiveData
@@ -14,11 +16,18 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class KurippuViewModel @Inject constructor(kurippuRepository: KurippuRepository,
-                                           favouriteRepository: FavouriteRepository) : ViewModel() {
+                                           favouriteRepository: FavouriteRepository,
+                                           firebaseAuth: FirebaseAuth,
+                                           firebaseFirestore: FirebaseFirestore
+) : ViewModel() {
 
     private val _kurippuId: MutableLiveData<String> = MutableLiveData()
 
     private val favouriteRepository = favouriteRepository
+
+    private val firebaseAuth = firebaseAuth
+
+    private val firestore = firebaseFirestore
 
     val kurippu: LiveData<Resource<Kurippu>> = Transformations
         .switchMap(_kurippuId) { kurippu ->
@@ -57,20 +66,39 @@ class KurippuViewModel @Inject constructor(kurippuRepository: KurippuRepository,
 
     fun favourite() {
         favouriteRepository.insertFavourite(_kurippuId.value!!)
-        Timber.i("Add kurippu to favourite : %s", _kurippuId.value)
-        /*
-        val favourites = firestore.collection("favourites")
-        favourites.add(Favourite(kurippuViewModel.getKurippuId(), Date().time))
-            .addOnSuccessListener { documentReference ->
-                Timber.i("DocumentSnapshot added with ID: ${documentReference.id}")
-                //FIXME - Report in Firebase Events
-            }
-            .addOnFailureListener { e ->
-                Timber.e("Error adding document : %s", e)
-                //FIXME - Report in Firebase Events
-            };
-            */
+        Timber.i("Add kurippu %s to favourite of %s ", _kurippuId.value, firebaseAuth.currentUser?.uid)
+        Timber.i("Current firebase user : %s", firebaseAuth.currentUser?.uid)
 
+        if (firebaseAuth.currentUser != null) {
+
+            val favourite = hashMapOf(
+                "fav" to "Y",
+                "updated" to System.currentTimeMillis()
+            )
+
+            firestore.collection("users")
+                .document(firebaseAuth.currentUser!!.uid)
+
+                .collection("kuripugal")
+                .document(_kurippuId.value!!)
+                .set(favourite)
+                .addOnSuccessListener { documentReference ->
+                    Timber.d(
+                        "Cloud favourite %s succesfully updated for %s",
+                        _kurippuId.value,
+                        firebaseAuth.currentUser?.uid
+                    )
+                    //FIXME - Report in Firebase Events
+                }
+                .addOnFailureListener { e ->
+                    Timber.w(
+                        e,
+                        "Firestore Error adding favourite %s for %s",
+                        _kurippuId.value,
+                        firebaseAuth.currentUser?.uid
+                    )
+                }
+        }
     }
 
     fun unfavourite() {
