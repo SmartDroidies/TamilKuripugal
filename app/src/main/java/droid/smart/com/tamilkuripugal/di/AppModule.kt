@@ -17,6 +17,8 @@
 package droid.smart.com.tamilkuripugal.di
 
 import android.app.Application
+import android.content.SharedPreferences
+import androidx.preference.PreferenceManager
 import androidx.room.Room
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -134,5 +136,10 @@ class AppModule {
             .build()
     }
 
+    @Singleton
+    @Provides
+    fun provideSharedPreferences(application: Application): SharedPreferences {
+        return PreferenceManager.getDefaultSharedPreferences(application)
+    }
 
 }

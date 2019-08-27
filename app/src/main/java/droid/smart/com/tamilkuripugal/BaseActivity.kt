@@ -15,13 +15,9 @@ const val PREFKEY_UPDATE_VERSION = "pref_update_version"
 
 open class BaseActivity : AppCompatActivity(), AppExitDialogFragment.AppExitDialogListener {
 
-    val PREFKEY_GSIGN_CHOICE = "gsign_choice"
-
-
-
     override fun onExitConfirm(dialog: DialogFragment) {
         FirebaseAuth.getInstance().signOut()
-        super.onBackPressed()
+        finish()
     }
 
     override fun onExitCancel(dialog: DialogFragment) {

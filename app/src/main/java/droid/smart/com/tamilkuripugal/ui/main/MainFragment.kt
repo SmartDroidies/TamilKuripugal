@@ -1,5 +1,6 @@
 package droid.smart.com.tamilkuripugal.ui.main
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingComponent
@@ -20,8 +21,9 @@ import droid.smart.com.tamilkuripugal.binding.FragmentDataBindingComponent
 import droid.smart.com.tamilkuripugal.di.Injectable
 import droid.smart.com.tamilkuripugal.ui.common.CategoryListAdapter
 import droid.smart.com.tamilkuripugal.ui.common.RetryCallback
-import droid.smart.com.tamilkuripugal.util.autoCleared
+import droid.smart.com.tamilkuripugal.util.*
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -40,6 +42,9 @@ class MainFragment : Fragment(), Injectable {
 
     private lateinit var mainViewModel: MainViewModel
     private var adapter by autoCleared<CategoryListAdapter>()
+
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
 
     @Inject
     lateinit var adRequest: AdRequest
@@ -72,6 +77,10 @@ class MainFragment : Fragment(), Injectable {
             )
         }
 
+        //Authorize with google
+        processSignIn()
+
+
         binding = dataBinding
         return dataBinding.root
     }
@@ -82,7 +91,7 @@ class MainFragment : Fragment(), Injectable {
         mainViewModel.setUser(paramUser)
 
         binding.categories = mainViewModel.categories
-        binding.setLifecycleOwner(viewLifecycleOwner)
+        binding.lifecycleOwner = viewLifecycleOwner
         val rvAdapter = CategoryListAdapter(
             dataBindingComponent = dataBindingComponent,
             appExecutors = appExecutors
@@ -138,6 +147,44 @@ class MainFragment : Fragment(), Injectable {
      * Created to be able to override in tests
      */
     fun navController() = findNavController()
+
+    fun processSignIn() {
+        if (!sharedPreferences.contains(PREFKEY_GSIGN_CHOICE)) {
+            navController().navigate(MainFragmentDirections.signin())
+        } else {
+            val signinChoice = sharedPreferences.getString(PREFKEY_GSIGN_CHOICE, "")
+            Timber.i("Signin Choice - %s", signinChoice)
+            when (signinChoice) {
+                PREFVAL_GSIGN_SKIP -> checkSkipTSExpiry()
+                PREFVAL_GSIGN_GOOGLE -> validateGSignin()
+            }
+        }
+
+    }
+
+    private fun validateGSignin() {
+        /*
+        val googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this)
+        if (googleSignInAccount != null) {
+            Timber.i("Google sign in : %s", googleSignInAccount.displayName)
+            checkFirebaseAuth(googleSignInAccount)
+        } else {
+            navController.navigate(MainFragmentDirections.signin())
+        }
+        */
+
+    }
+
+    private fun checkSkipTSExpiry() {
+        val signInSkipTS = sharedPreferences.getLong(PREFKEY_GSIGN_SKIPTS, 0L)
+        val currentMS = System.currentTimeMillis()
+        val milliSecSinceSkipped = currentMS - signInSkipTS
+        Timber.i("Sign in skipped since %s seconds", TimeUnit.MILLISECONDS.toSeconds(milliSecSinceSkipped))
+        /* FIXME - Change this to 7 days */
+        if (TimeUnit.MILLISECONDS.toSeconds(milliSecSinceSkipped) > 60) {
+            navController().navigate(MainFragmentDirections.signin())
+        }
+    }
 
 }
 

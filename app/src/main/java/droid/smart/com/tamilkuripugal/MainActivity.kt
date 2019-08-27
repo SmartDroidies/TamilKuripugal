@@ -59,7 +59,7 @@ import javax.inject.Inject
 
 
 /**
- * FIXME - Functionalities Planned
+ * FIXME - Functionalities Planned`
  *  Velanmai Icon Needs to be changed
  *  Icon for Notification
  *  Share Icon Background
@@ -133,6 +133,7 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
 
+        //FIXME - Drive this from Main Fragment
         if (intent.extras != null && !intent.extras.isEmpty && intent.extras.containsKey("id")) {
             Timber.d("Extras : %s ", intent!!.extras.get("id"))
             val kurippuId = intent!!.extras.get("id") as String
@@ -140,8 +141,6 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
             navController.navigate(R.id.kurippu_fragment, bundle)
         }
 
-        //Authorize with google
-        checkGoogleSignIn()
 
         // Kuripugal Ad initialization
         MobileAds.initialize(this, "ca-app-pub-8439744074965483~7727700457")
@@ -366,17 +365,6 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
         }
     }
 
-    fun checkGoogleSignIn() {
-        if (!sharedPreferences.contains(PREFKEY_GSIGN_CHOICE)) {
-            val googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this)
-            if (googleSignInAccount != null) {
-                Timber.i("Google sign in : %s", googleSignInAccount.displayName)
-                checkFirebaseAuth(googleSignInAccount)
-            } else {
-                navController.navigate(MainFragmentDirections.signin())
-            }
-        }
-    }
 
     private fun checkFirebaseAuth(googleSignInAccount: GoogleSignInAccount) {
         if (auth.currentUser == null) {
