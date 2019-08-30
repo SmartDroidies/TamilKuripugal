@@ -40,7 +40,8 @@ class FavouritesFragment : Fragment(), Injectable {
     var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
     var binding by autoCleared<FavouritesFragmentBinding>()
 
-    private lateinit var auth: FirebaseAuth
+    @Inject
+    lateinit var auth: FirebaseAuth
 
     private var adapter by autoCleared<FavouritesAdapter>()
 
@@ -66,43 +67,11 @@ class FavouritesFragment : Fragment(), Injectable {
         favouritesViewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(FavouritesViewModel::class.java)
 
-        // Initialize Firebase Auth
-        auth = FirebaseAuth.getInstance()
-
-        var firebaseUserId = ""
-        firebaseUserId = auth.currentUser?.email.toString()
-        Timber.i("Display Kurippu details for : %s ", firebaseUserId)
-        favouritesViewModel.setUserId(firebaseUserId)
+        val firebaseUserId = auth.currentUser?.uid
+        Timber.i("Display favourite kuripugal for : %s ", firebaseUserId)
+        firebaseUserId?.let { favouritesViewModel.setUserId(it) }
         binding.lifecycleOwner = viewLifecycleOwner
         binding.kurippugal = favouritesViewModel.kuripugal
-
-
-/*
-
-        val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail()
-            .build()
-*/
-/*
-        googleSignInClient = GoogleSignIn.getClient(this.context!!, googleSignInOptions)
-
-        //val params = KurippuFragmentArgs.fromBundle(arguments!!)
-        binding.setLifecycleOwner(viewLifecycleOwner)
-
-        //val currentUser = auth.currentUser
-        // if (currentUser != null) Timber.i("User logged in : %s", currentUser.email)
-
-        binding.signInButton.setOnClickListener {
-            val signInIntent = googleSignInClient.getSignInIntent()
-            startActivityForResult(signInIntent, RC_SIGN_IN)
-        }
-*/
-
-        //mAdView = binding.adView
-        //mAdView.loadAd(adRequest)
-
-        //firebaseAnalytics.setCurrentScreen(activity!!, this.javaClass.simpleName, this.javaClass.simpleName)
-
 
         val adapter = FavouritesAdapter(
             dataBindingComponent,

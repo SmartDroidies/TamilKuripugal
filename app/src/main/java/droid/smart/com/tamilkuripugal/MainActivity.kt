@@ -24,21 +24,13 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.preference.PreferenceManager
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
 import com.mopub.common.MoPub
 import com.mopub.common.SdkConfiguration
@@ -52,7 +44,6 @@ import droid.smart.com.tamilkuripugal.ui.AppExitDialogFragment
 import droid.smart.com.tamilkuripugal.ui.main.MainFragmentDirections
 import droid.smart.com.tamilkuripugal.ui.main.MainViewModel
 import droid.smart.com.tamilkuripugal.util.RateLimiter
-import kotlinx.android.synthetic.main.main_activity.*
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -89,18 +80,8 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
+    @Inject
     lateinit var sharedPreferences: SharedPreferences
-
-    private lateinit var googleSignInClient: GoogleSignInClient
-
-    @Inject
-    lateinit var googleSignInOptions: GoogleSignInOptions
-
-    private lateinit var auth: FirebaseAuth
-
-    @Inject
-    lateinit var firestore: FirebaseFirestore
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,8 +95,6 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
 
         layout = binding.mainLayout
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-
         // Set up ActionBar
         setSupportActionBar(binding.toolbar)
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -125,13 +104,6 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
 
         //Init pref on first start
         initOnFirstStart()
-
-        // Build a GoogleSignInClient with the options specified by gso.
-        googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
-
-
-        // Initialize Firebase Auth
-        auth = FirebaseAuth.getInstance()
 
         //FIXME - Drive this from Main Fragment
         if (intent.extras != null && !intent.extras.isEmpty && intent.extras.containsKey("id")) {
@@ -201,20 +173,6 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
             }
         }
     }
-
-
-/*
-    fun signIn() {
-        val signInIntent = googleSignInClient.getSignInIntent()
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-*/
-
-    /* override fun onStart() {
-         super.onStart()
-         // Check if user is signed in (non-null) and update UI accordingly.
-
-     }*/
 
     override fun supportFragmentInjector() = dispatchingAndroidInjector
 
@@ -366,15 +324,6 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
     }
 
 
-    private fun checkFirebaseAuth(googleSignInAccount: GoogleSignInAccount) {
-        if (auth.currentUser == null) {
-            firebaseAuthWithGoogle(googleSignInAccount)
-        } else {
-            Timber.i("FirebaseAuth Provider : %s", auth.currentUser!!.providerId)
-            Timber.i("Firebase User : %s", auth.currentUser!!.uid)
-            //linkAuthWithGoogle(googleSignInAccount)
-        }
-    }
 
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -411,69 +360,17 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
         if (requestCode == RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
+                Timber.i("User succesfully logged into to google - MainActivity")
                 // Google Sign In was successful, authenticate with Firebase
-                val account = task.getResult(ApiException::class.java)
-                firebaseAuthWithGoogle(account!!)
+                //val account = task.getResult(ApiException::class.java)
+                //firebaseAuthWithGoogle(account!!)
             } catch (e: ApiException) {
                 Timber.e(e)
             }
         }
     }
 
-    private fun firebaseAuthWithGoogle(account: GoogleSignInAccount) {
-        Timber.d("firebaseAuthWithGoogle : %s", account.id)
-        //showProgressDialog()  //FIXME https://github.com/firebase/quickstart-android/blob/4967bbf6fd51d65b3b2085e32d41b05112e57b52/auth/app/src/main/java/com/google/firebase/quickstart/auth/kotlin/GoogleSignInActivity.kt#L71-L89
-        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Timber.d("signInWithCredential:success")
-                    val user = auth.currentUser
-                    user?.let { checkCreateUserModule(it) }
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Timber.e(task.exception)
-                    Snackbar.make(main_layout, "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
-                }
 
-                // [START_EXCLUDE]
-                //hideProgressDialog()
-                // [END_EXCLUDE]
-            }
-    }
-
-    private fun checkCreateUserModule(firebaseUser: FirebaseUser) {
-
-        val user = hashMapOf(
-            "name" to firebaseUser.displayName,
-            "mail" to firebaseUser.email
-        )
-
-        firestore.collection("users")
-            .document(firebaseUser.uid)
-            .set(user)
-            .addOnSuccessListener { documentReference ->
-                Timber.d("User document succesfully updated for %s", firebaseUser.uid)
-            }
-            .addOnFailureListener { e ->
-                Timber.w(e, "Error adding user document for %s", firebaseUser.uid)
-            }
-
-    }
-
-    private fun linkAuthWithGoogle(account: GoogleSignInAccount) {
-        auth.currentUser?.linkWithCredential(GoogleAuthProvider.getCredential(account.idToken, null))
-            ?.addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    Timber.d("linkWithCredential:success")
-                    val user = task.result?.user
-                } else {
-                    Timber.e(task.exception)
-                }
-            }
-
-    }
 
 
 }

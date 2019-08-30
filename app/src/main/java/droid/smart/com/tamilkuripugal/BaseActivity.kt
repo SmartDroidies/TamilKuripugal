@@ -17,7 +17,7 @@ open class BaseActivity : AppCompatActivity(), AppExitDialogFragment.AppExitDial
 
     override fun onExitConfirm(dialog: DialogFragment) {
         FirebaseAuth.getInstance().signOut()
-        finish()
+        super.onBackPressed()
     }
 
     override fun onExitCancel(dialog: DialogFragment) {

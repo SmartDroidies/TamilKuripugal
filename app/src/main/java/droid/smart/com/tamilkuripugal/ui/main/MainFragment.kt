@@ -13,6 +13,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
 import com.smart.droid.tamil.tips.BuildConfig
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.MainFragmentBinding
@@ -22,6 +29,7 @@ import droid.smart.com.tamilkuripugal.di.Injectable
 import droid.smart.com.tamilkuripugal.ui.common.CategoryListAdapter
 import droid.smart.com.tamilkuripugal.ui.common.RetryCallback
 import droid.smart.com.tamilkuripugal.util.*
+import kotlinx.android.synthetic.main.main_activity.*
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -52,6 +60,12 @@ class MainFragment : Fragment(), Injectable {
     lateinit var mAdView: AdView
 
     private lateinit var menuScheduled: MenuItem
+
+    @Inject
+    lateinit var auth: FirebaseAuth
+
+    @Inject
+    lateinit var firestore: FirebaseFirestore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -150,7 +164,7 @@ class MainFragment : Fragment(), Injectable {
 
     fun processSignIn() {
         if (!sharedPreferences.contains(PREFKEY_GSIGN_CHOICE)) {
-            navController().navigate(MainFragmentDirections.signin())
+            navController().navigate(R.id.signin)
         } else {
             val signinChoice = sharedPreferences.getString(PREFKEY_GSIGN_CHOICE, "")
             Timber.i("Signin Choice - %s", signinChoice)
@@ -163,15 +177,13 @@ class MainFragment : Fragment(), Injectable {
     }
 
     private fun validateGSignin() {
-        /*
-        val googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this)
+        val googleSignInAccount = GoogleSignIn.getLastSignedInAccount(context)
         if (googleSignInAccount != null) {
             Timber.i("Google sign in : %s", googleSignInAccount.displayName)
             checkFirebaseAuth(googleSignInAccount)
         } else {
-            navController.navigate(MainFragmentDirections.signin())
+            navController().navigate(R.id.signin)
         }
-        */
 
     }
 
@@ -182,9 +194,64 @@ class MainFragment : Fragment(), Injectable {
         Timber.i("Sign in skipped since %s seconds", TimeUnit.MILLISECONDS.toSeconds(milliSecSinceSkipped))
         /* FIXME - Change this to 7 days */
         if (TimeUnit.MILLISECONDS.toSeconds(milliSecSinceSkipped) > 60) {
-            navController().navigate(MainFragmentDirections.signin())
+            navController().navigate(R.id.signin)
         }
     }
+
+    private fun checkFirebaseAuth(googleSignInAccount: GoogleSignInAccount) {
+        if (auth.currentUser == null) {
+            firebaseAuthWithGoogle(googleSignInAccount)
+        } else {
+            Timber.i("FirebaseAuth Provider : %s", auth.currentUser!!.providerId)
+            Timber.i("Firebase User : %s", auth.currentUser!!.uid)
+            //linkAuthWithGoogle(googleSignInAccount)
+        }
+    }
+
+    //TODO - Duplicate code in SigninFragment
+    private fun firebaseAuthWithGoogle(account: GoogleSignInAccount) {
+        Timber.d("firebaseAuthWithGoogle : %s", account.id)
+        //showProgressDialog()  //FIXME https://github.com/firebase/quickstart-android/blob/4967bbf6fd51d65b3b2085e32d41b05112e57b52/auth/app/src/main/java/com/google/firebase/quickstart/auth/kotlin/GoogleSignInActivity.kt#L71-L89
+        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Timber.d("signInWithCredential:success")
+                    val user = auth.currentUser
+                    user?.let { checkCreateUserModule(it) }
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Timber.e(task.exception)
+                    Snackbar.make(main_layout, "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
+                }
+
+                // [START_EXCLUDE]
+                //hideProgressDialog()
+                // [END_EXCLUDE]
+            }
+    }
+
+    //TODO - Duplicate code in SigninFragment
+    private fun checkCreateUserModule(firebaseUser: FirebaseUser) {
+
+        val user = hashMapOf(
+            "name" to firebaseUser.displayName,
+            "mail" to firebaseUser.email
+        )
+
+        firestore.collection("users")
+            .document(firebaseUser.uid)
+            .set(user)
+            .addOnSuccessListener { documentReference ->
+                Timber.d("User document succesfully updated for %s", firebaseUser.uid)
+            }
+            .addOnFailureListener { e ->
+                Timber.w(e, "Error adding user document for %s", firebaseUser.uid)
+            }
+
+    }
+
 
 }
 
