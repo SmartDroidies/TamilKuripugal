@@ -125,6 +125,7 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
         interstitialAd = InterstitialAd(this)
         interstitialAd.adUnitId = "ca-app-pub-8439744074965483/5473553264"
         interstitialAd.loadAd(adRequest)
+        interstitialRateLimit.shouldFetch("interstitial_ad", 60, TimeUnit.SECONDS)
         interstitialAd.adListener = object : AdListener() {
             override fun onAdLoaded() {
                 // Code to be executed when an ad finishes loading.

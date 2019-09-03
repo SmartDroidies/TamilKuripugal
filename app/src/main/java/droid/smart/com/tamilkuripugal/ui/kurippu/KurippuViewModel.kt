@@ -9,6 +9,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import droid.smart.com.tamilkuripugal.repo.FavouriteRepository
 import droid.smart.com.tamilkuripugal.repo.KurippuRepository
 import droid.smart.com.tamilkuripugal.util.AbsentLiveData
+import droid.smart.com.tamilkuripugal.util.cloudStatusModified
+import droid.smart.com.tamilkuripugal.util.cloudStatusSynced
 import droid.smart.com.tamilkuripugal.vo.Favourite
 import droid.smart.com.tamilkuripugal.vo.Kurippu
 import droid.smart.com.tamilkuripugal.vo.Resource
@@ -65,10 +67,7 @@ class KurippuViewModel @Inject constructor(kurippuRepository: KurippuRepository,
     }
 
     fun favourite() {
-        favouriteRepository.insertFavourite(_kurippuId.value!!)
-        Timber.i("Add kurippu %s to favourite of %s ", _kurippuId.value, firebaseAuth.currentUser?.uid)
-        Timber.i("Current firebase user : %s", firebaseAuth.currentUser?.uid)
-
+        Timber.d("Add kurippu %s to favourite of %s ", _kurippuId.value, firebaseAuth.currentUser?.uid)
         if (firebaseAuth.currentUser != null) {
 
             val favourite = hashMapOf(
@@ -78,32 +77,63 @@ class KurippuViewModel @Inject constructor(kurippuRepository: KurippuRepository,
 
             firestore.collection("users")
                 .document(firebaseAuth.currentUser!!.uid)
-
                 .collection("kuripugal")
                 .document(_kurippuId.value!!)
                 .set(favourite)
                 .addOnSuccessListener { documentReference ->
+                    favouriteRepository.insertFavourite(_kurippuId.value!!, cloudStatusSynced)
                     Timber.d(
                         "Cloud favourite %s succesfully updated for %s",
                         _kurippuId.value,
                         firebaseAuth.currentUser?.uid
                     )
-                    //FIXME - Report in Firebase Events
                 }
                 .addOnFailureListener { e ->
+                    favouriteRepository.insertFavourite(_kurippuId.value!!, cloudStatusModified)
                     Timber.w(
-                        e,
-                        "Firestore Error adding favourite %s for %s",
+                        e, "Firestore Error adding favourite %s for %s",
                         _kurippuId.value,
                         firebaseAuth.currentUser?.uid
                     )
                 }
+        } else {
+            favouriteRepository.insertFavourite(_kurippuId.value!!, cloudStatusModified)
         }
     }
 
     fun unfavourite() {
-        favouriteRepository.removeFavourite(_kurippuId.value!!)
-        Timber.i("Remove kurippu to favourite : %s", _kurippuId.value)
+        Timber.d("Remove kurippu %s from favourites of %s ", _kurippuId.value, firebaseAuth.currentUser?.uid)
+        if (firebaseAuth.currentUser != null) {
+
+            val favourite = hashMapOf(
+                "fav" to "N",
+                "updated" to System.currentTimeMillis()
+            )
+
+            firestore.collection("users")
+                .document(firebaseAuth.currentUser!!.uid)
+                .collection("kuripugal")
+                .document(_kurippuId.value!!)
+                .set(favourite)
+                .addOnSuccessListener { documentReference ->
+                    favouriteRepository.removeFavourite(_kurippuId.value!!, cloudStatusSynced)
+                    Timber.d(
+                        "Cloud unfavourite %s succesfully updated for %s",
+                        _kurippuId.value,
+                        firebaseAuth.currentUser?.uid
+                    )
+                }
+                .addOnFailureListener { e ->
+                    favouriteRepository.removeFavourite(_kurippuId.value!!, cloudStatusModified)
+                    Timber.w(
+                        e, "Firestore Error removing favourite %s for %s",
+                        _kurippuId.value,
+                        firebaseAuth.currentUser?.uid
+                    )
+                }
+        } else {
+            favouriteRepository.removeFavourite(_kurippuId.value!!, cloudStatusModified)
+        }
     }
 }
 

@@ -21,8 +21,6 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.KurippuFragmentBinding
 import droid.smart.com.tamilkuripugal.AppExecutors
@@ -58,12 +56,6 @@ class KurippuFragment : Fragment(), Injectable {
     lateinit var adRequest: AdRequest
 
     lateinit var mAdView: AdView
-
-    @Inject
-    lateinit var firestore: FirebaseFirestore
-
-    @Inject
-    lateinit var firebaseAuth: FirebaseAuth
 
     @Inject
     lateinit var firebaseAnalytics: FirebaseAnalytics
@@ -117,7 +109,7 @@ class KurippuFragment : Fragment(), Injectable {
         val params = KurippuFragmentArgs.fromBundle(arguments!!)
         Timber.i("Display Kurippu details for : %s ", params.kurippuId)
         kurippuViewModel.setKurippuId(params.kurippuId)
-        binding.setLifecycleOwner(viewLifecycleOwner)
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.kurippu = kurippuViewModel.kurippu
 
         kurippuViewModel.favourite.observe(viewLifecycleOwner, Observer {
@@ -156,11 +148,11 @@ class KurippuFragment : Fragment(), Injectable {
         val menuUnFavourite = menu.findItem(R.id.action_unfavourite)
         val resourceFavourite = kurippuViewModel.favourite.value
         if(resourceFavourite?.data != null) {
-            menuFavourite.setVisible(false)
-            menuUnFavourite.setVisible(true)
+            menuFavourite.isVisible = false
+            menuUnFavourite.isVisible = true
         }  else {
-            menuFavourite.setVisible(true)
-            menuUnFavourite.setVisible(false)
+            menuFavourite.isVisible = true
+            menuUnFavourite.isVisible = false
         }
     }
 

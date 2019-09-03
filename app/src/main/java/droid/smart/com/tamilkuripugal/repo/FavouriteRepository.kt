@@ -1,6 +1,7 @@
 package droid.smart.com.tamilkuripugal.repo
 
 import androidx.lifecycle.LiveData
+import com.google.firebase.firestore.FirebaseFirestore
 import droid.smart.com.tamilkuripugal.AppExecutors
 import droid.smart.com.tamilkuripugal.api.ApiResponse
 import droid.smart.com.tamilkuripugal.api.KuripugalService
@@ -10,41 +11,37 @@ import droid.smart.com.tamilkuripugal.util.RateLimiter
 import droid.smart.com.tamilkuripugal.vo.Favourite
 import droid.smart.com.tamilkuripugal.vo.Kurippu
 import droid.smart.com.tamilkuripugal.vo.Resource
+import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
 class FavouriteRepository @Inject constructor(
     private val appExecutors: AppExecutors,
     private val favouriteDao: FavouriteDao,
+    private val firebaseFirestore: FirebaseFirestore,
     private val kuripugalService: KuripugalService,
     private val rateLimiter: RateLimiter
 ) {
 
-    val cloudStatusModified = "M"
-
-    val cloudStatusSynced = "S"
-
-    fun insertFavourite(kurippuId: String) {
-        var favourite = Favourite(kurippuId, Date().time, true, cloudStatusModified)
+    fun insertFavourite(kurippuId: String, cloudStatus: String) {
+        val favourite = Favourite(kurippuId, Date().time, true, cloudStatus)
         insertFavourite(favourite)
     }
 
-    fun removeFavourite(kurippuId: String) {
-        var favourite = Favourite(kurippuId, Date().time, false, cloudStatusModified)
+    fun removeFavourite(kurippuId: String, cloudStatus: String) {
+        val favourite = Favourite(kurippuId, Date().time, false, cloudStatus)
         updateFavourite(favourite)
     }
 
     fun insertFavourite(favourite: Favourite) {
         appExecutors.diskIO().execute {
             favouriteDao.insert(favourite)
-            //FIXME - If cloud sync is required sync here
         }
     }
 
     fun updateFavourite(favourite: Favourite) {
         appExecutors.diskIO().execute {
             favouriteDao.update(favourite)
-            //FIXME - If cloud sync is required sync here
         }
     }
 
@@ -68,7 +65,7 @@ class FavouriteRepository @Inject constructor(
         }.asLiveData()
     }
 
-    fun loadFavouriteKuripugal(userid: String?): LiveData<Resource<List<Kurippu>>> {
+    fun loadFavouriteKuripugal(userid: String): LiveData<Resource<List<Kurippu>>> {
         return object : NetworkBoundResource<List<Kurippu>, Favourite>(appExecutors) {
             override fun saveCallResult(favourite: Favourite) {
                 favouriteDao.insert(favourite)
@@ -76,12 +73,28 @@ class FavouriteRepository @Inject constructor(
 
             override fun shouldFetch(data: List<Kurippu>?): Boolean {
                 //TODO - Should fetch if favourites is empty, last synced is more than 12 hours
-                return false
+                return userid != null
             }
 
             override fun loadFromDb() = favouriteDao.loadFavourites()
 
             override fun createCall(): LiveData<ApiResponse<Favourite>> {
+                Timber.i("Load favourites fro m firebase for user %s", userid)
+                firebaseFirestore.collection("users")
+                    .document(userid)
+                    .collection("kuripugal")
+                    .get()
+                    .addOnSuccessListener { result ->
+                        for (document in result) {
+                            Timber.i("Kurippu : %s - %s", document.id, document.data)
+                        }
+                    }
+                    .addOnFailureListener { exception ->
+                        Timber.w(exception, "Error getting documents")
+                    }
+                    .addOnCompleteListener {
+                        Timber.i("Completed collecting favourites")
+                    }
                 return AbsentLiveData.create() //TODO - Later load from firebase
             }
         }.asLiveData()

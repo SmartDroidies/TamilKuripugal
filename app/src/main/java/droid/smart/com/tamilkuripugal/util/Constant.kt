@@ -6,4 +6,5 @@ const val PREFKEY_GSIGN_SKIPTS = "gsign_skip_ts"
 const val PREFVAL_GSIGN_SKIP = "skip"
 const val PREFVAL_GSIGN_GOOGLE = "google"
 
-
+const val cloudStatusModified = "M"
+const val cloudStatusSynced = "S"

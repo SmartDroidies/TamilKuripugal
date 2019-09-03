@@ -14,7 +14,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.FavouritesFragmentBinding
 import droid.smart.com.tamilkuripugal.AppExecutors
@@ -97,7 +96,7 @@ class FavouritesFragment : Fragment(), Injectable {
 
     private fun initKuripugalList(favouritesViewModel: FavouritesViewModel) {
         favouritesViewModel.kuripugal.observe(viewLifecycleOwner, Observer { listResource ->
-            //Timber.i("Favourite list resource : %s", listResource)
+            Timber.i("Favourite list resource : %s", listResource)
             if (listResource?.data != null) {
                 adapter.submitList(listResource.data)
             } else {
@@ -105,74 +104,6 @@ class FavouritesFragment : Fragment(), Injectable {
             }
         })
     }
-
-
-/*
-    override fun onStart() {
-        super.onStart()
-        //val account = GoogleSignIn.getLastSignedInAccount(this.context)
-        //updateUI(account)
-
-//        val currentUser = firebaseAuth.currentUser
-//        updateUI(currentUser)
-    }
-*/
-
-
-    private fun updateUI(account: FirebaseUser?) {
-        if (account != null) {
-            Timber.d("Favourites Screen - User Identified : %s, %s ", account.displayName, account.email)
-            binding.signinContent.visibility = View.GONE
-            binding.kuripugalList.visibility = View.VISIBLE
-
-            //FIXME - Display favourites for user
-
-        } else {
-            Timber.d("Favourites Screen - Display User Signin Button")
-            binding.signinContent.visibility = View.VISIBLE
-            binding.kuripugalList.visibility = View.GONE
-        }
-    }
-
-/*    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RC_SIGN_IN) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            handleSignInResult(task)
-        }
-    }*/
-
-    /*private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
-        try {
-            val account = completedTask.getResult(ApiException::class.java)
-            firebaseAuthWithGoogle(account!!)
-            // Signed in successfully, show authenticated UI.
-            //updateUI(account)
-        } catch (e: ApiException) {
-            Timber.w("signInResult:failed code - %s , %s ", e.statusCode, e.statusMessage)
-            updateUI(null)
-        }
-    }*/
-
-    /*private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
-        Timber.d("firebaseAuthWithGoogle: %s", acct.id!!)
-
-        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
-        firebaseAuth.signInWithCredential(credential)
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    Timber.d("signInWithCredential:success")
-                    val user = firebaseAuth.currentUser
-                    updateUI(user)
-                } else {
-                    Timber.w("signInWithCredential:failure - %s", it.exception)
-                    Snackbar.make(main_layout, "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
-                    updateUI(null)
-                }
-            }
-
-    }*/
-
 
     /**
      * Created to be able to override in tests
