@@ -68,7 +68,8 @@ class FavouritesFragment : Fragment(), Injectable {
 
         val firebaseUserId = auth.currentUser?.uid
         Timber.i("Display favourite kuripugal for : %s ", firebaseUserId)
-        firebaseUserId?.let { favouritesViewModel.setUserId(it) }
+        //firebaseUserId?.let { favouritesViewModel.setUserId(it) }
+        favouritesViewModel.setUserId(firebaseUserId)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.kurippugal = favouritesViewModel.kuripugal
 
