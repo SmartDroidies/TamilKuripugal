@@ -5,15 +5,15 @@
 
     <data>
 
-        <import type="droid.smart.com.tamilkuripugal.vo.Kurippu"/>
+        <import type="droid.smart.com.tamilkuripugal.vo.Favourite"/>
         <import type="droid.smart.com.tamilkuripugal.vo.Status"/>
         <import type="droid.smart.com.tamilkuripugal.vo.Resource"/>
         <import type="androidx.lifecycle.LiveData"/>
         <import type="java.util.List"/>
 
         <variable
-                name="kurippugal"
-                type="LiveData&lt;Resource&lt;List&lt;Kurippu>>>"/>
+                name="favourites"
+                type="LiveData&lt;Resource&lt;List&lt;Favourite>>>"/>
 
         <variable
                 name="contributorsStatus"
@@ -72,7 +72,7 @@
 
         <include
                 layout="@layout/loading_state"
-                app:resource="@{(Resource) kurippugal}"
+                app:resource="@{(Resource) favourites}"
                 app:callback="@{() -> retryCallback.retry()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

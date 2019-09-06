@@ -109,8 +109,9 @@ class KurippuViewModel @Inject constructor(kurippuRepository: KurippuRepository,
                 "fav" to "N",
                 "updated" to System.currentTimeMillis()
             )
-
-            firestore.collection("users")
+            //FIXME - Temp code for fixing syncing favourite from cloud
+            favouriteRepository.removeFavourite(_kurippuId.value!!, cloudStatusModified)
+            /*firestore.collection("users")
                 .document(firebaseAuth.currentUser!!.uid)
                 .collection("kuripugal")
                 .document(_kurippuId.value!!)
@@ -130,7 +131,7 @@ class KurippuViewModel @Inject constructor(kurippuRepository: KurippuRepository,
                         _kurippuId.value,
                         firebaseAuth.currentUser?.uid
                     )
-                }
+                }*/
         } else {
             favouriteRepository.removeFavourite(_kurippuId.value!!, cloudStatusModified)
         }

@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import droid.smart.com.tamilkuripugal.repo.FavouriteRepository
-import droid.smart.com.tamilkuripugal.vo.Kurippu
+import droid.smart.com.tamilkuripugal.vo.Favourite
 import droid.smart.com.tamilkuripugal.vo.Resource
 import timber.log.Timber
 import javax.inject.Inject
@@ -14,7 +14,7 @@ class FavouritesViewModel @Inject constructor(favouriteRepository: FavouriteRepo
 
     private val _userId = MutableLiveData<String>()
 
-    val kuripugal: LiveData<Resource<List<Kurippu>>> = Transformations.switchMap(_userId) { userid ->
+    val favourites: LiveData<Resource<List<Favourite>>> = Transformations.switchMap(_userId) { userid ->
         if (userid == null) {
             Timber.d("Load favourite kuripugal from device")
             favouriteRepository.loadFavouriteKuripugal()

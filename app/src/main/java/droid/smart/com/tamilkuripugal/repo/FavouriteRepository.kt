@@ -1,14 +1,17 @@
 package droid.smart.com.tamilkuripugal.repo
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import droid.smart.com.tamilkuripugal.AppExecutors
 import droid.smart.com.tamilkuripugal.api.ApiResponse
+import droid.smart.com.tamilkuripugal.api.ApiSuccessResponse
 import droid.smart.com.tamilkuripugal.data.FavouriteDao
 import droid.smart.com.tamilkuripugal.util.AbsentLiveData
 import droid.smart.com.tamilkuripugal.util.RateLimiter
+import droid.smart.com.tamilkuripugal.util.cloudStatusSynced
 import droid.smart.com.tamilkuripugal.vo.Favourite
-import droid.smart.com.tamilkuripugal.vo.Kurippu
 import droid.smart.com.tamilkuripugal.vo.Resource
 import timber.log.Timber
 import java.util.*
@@ -64,13 +67,13 @@ class FavouriteRepository @Inject constructor(
     }
 
     //When user skips signin then return favourites only from device
-    fun loadFavouriteKuripugal(): LiveData<Resource<List<Kurippu>>> {
-        return object : NetworkBoundResource<List<Kurippu>, Favourite>(appExecutors) {
+    fun loadFavouriteKuripugal(): LiveData<Resource<List<Favourite>>> {
+        return object : NetworkBoundResource<List<Favourite>, Favourite>(appExecutors) {
             override fun saveCallResult(favourite: Favourite) {
                 //No Action required
             }
 
-            override fun shouldFetch(data: List<Kurippu>?): Boolean {
+            override fun shouldFetch(data: List<Favourite>?): Boolean {
                 return false //no cloud syncing
             }
 
@@ -82,37 +85,58 @@ class FavouriteRepository @Inject constructor(
         }.asLiveData()
     }
 
-    fun loadFavouriteKuripugal(userid: String): LiveData<Resource<List<Kurippu>>> {
-        return object : NetworkBoundResource<List<Kurippu>, Favourite>(appExecutors) {
-            override fun saveCallResult(favourite: Favourite) {
-                favouriteDao.insert(favourite)
+    fun loadFavouriteKuripugal(userid: String): LiveData<Resource<List<Favourite>>> {
+        return object : NetworkBoundResource<List<Favourite>, QuerySnapshot>(appExecutors) {
+            override fun saveCallResult(querySnapshot: QuerySnapshot) {
+                for (document in querySnapshot) {
+                    Timber.i("Sync Firestore favourite Kurippu : %s - %s", document.id, document.data)
+                    var dbfavourite = favouriteDao.loadById(document.id)
+                    Timber.i("Locale favourite Kurippu : %s", dbfavourite)
+                    if (dbfavourite != null) {
+                        favouriteDao.update(
+                            Favourite(
+                                document.id,
+                                document.data.get("updated") as Long,
+                                true,
+                                cloudStatusSynced
+                            )
+                        )
+                    } else {
+                        favouriteDao.insert(
+                            Favourite(
+                                document.id,
+                                document.data.get("updated") as Long,
+                                true,
+                                cloudStatusSynced
+                            )
+                        )
+                    }
+                }
             }
 
-            override fun shouldFetch(data: List<Kurippu>?): Boolean {
-                //TODO - Should fetch if favourites is empty, last synced is more than 12 hours
-                return userid != null
+            override fun shouldFetch(data: List<Favourite>?): Boolean {
+                //return data == null || data.isEmpty()  || rateLimiter.shouldFetch("fav_kurippugal", 12, TimeUnit.HOURS)
+                return true //FIXME - Used for testing sync flow.
             }
 
             override fun loadFromDb() = favouriteDao.loadFavourites()
 
-            override fun createCall(): LiveData<ApiResponse<Favourite>> {
+            override fun createCall(): LiveData<ApiResponse<QuerySnapshot>> {
                 Timber.i("Load favourites fro m firebase for user %s", userid)
+                val cloudFavourites: MutableLiveData<ApiResponse<QuerySnapshot>> = MutableLiveData()
+
                 firebaseFirestore.collection("users")
                     .document(userid)
                     .collection("kuripugal")
-                    .get()
-                    .addOnSuccessListener { result ->
-                        for (document in result) {
-                            Timber.i("Kurippu : %s - %s", document.id, document.data)
+                    .addSnapshotListener { value, e ->
+                        if (e != null) {
+                            Timber.w(e, "Firestore favourites listen failed")
+                            return@addSnapshotListener
                         }
+                        cloudFavourites.value = ApiSuccessResponse(value!!, "")
+
                     }
-                    .addOnFailureListener { exception ->
-                        Timber.w(exception, "Error getting documents")
-                    }
-                    .addOnCompleteListener {
-                        Timber.i("Completed collecting favourites")
-                    }
-                return AbsentLiveData.create() //TODO - Later load from firebase
+                return cloudFavourites
             }
         }.asLiveData()
     }

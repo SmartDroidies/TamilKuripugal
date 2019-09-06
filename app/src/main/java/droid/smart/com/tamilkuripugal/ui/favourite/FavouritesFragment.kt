@@ -71,7 +71,7 @@ class FavouritesFragment : Fragment(), Injectable {
         //firebaseUserId?.let { favouritesViewModel.setUserId(it) }
         favouritesViewModel.setUserId(firebaseUserId)
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.kurippugal = favouritesViewModel.kuripugal
+        binding.favourites = favouritesViewModel.favourites
 
         val adapter = FavouritesAdapter(
             dataBindingComponent,
@@ -96,7 +96,7 @@ class FavouritesFragment : Fragment(), Injectable {
     }
 
     private fun initKuripugalList(favouritesViewModel: FavouritesViewModel) {
-        favouritesViewModel.kuripugal.observe(viewLifecycleOwner, Observer { listResource ->
+        favouritesViewModel.favourites.observe(viewLifecycleOwner, Observer { listResource ->
             Timber.i("Favourite list resource : %s", listResource)
             if (listResource?.data != null) {
                 adapter.submitList(listResource.data)

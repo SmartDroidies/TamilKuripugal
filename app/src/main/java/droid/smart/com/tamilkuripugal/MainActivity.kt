@@ -48,18 +48,14 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-
 /**
  * FIXME - Functionalities Planned`
  *  Velanmai Icon Needs to be changed
  *  Icon for Notification
  *  Share Icon Background
- *  Alert on Exit using back
  *  Featured kurippu listing
  *  Favourite kurippu listing
- *  Scheduled kuripugal for test device
  *  Banner ad between recycle view
- *  Google Sign in  https://developers.google.com/identity/sign-in/android/sign-in?authuser=0
  */
 class MainActivity : BaseActivity(), HasSupportFragmentInjector {
 
@@ -325,8 +321,6 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
     }
 
 
-
-
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         Timber.i("Configuration changed initiate locale change")
@@ -370,8 +364,6 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
             }
         }
     }
-
-
 
 
 }

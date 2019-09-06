@@ -6,46 +6,54 @@ import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import com.smart.droid.tamil.tips.R
-import com.smart.droid.tamil.tips.databinding.KuripuItemBinding
+import com.smart.droid.tamil.tips.databinding.FavouriteItemBinding
 import droid.smart.com.tamilkuripugal.AppExecutors
 import droid.smart.com.tamilkuripugal.ui.common.DataBoundListAdapter
-import droid.smart.com.tamilkuripugal.vo.Kurippu
+import droid.smart.com.tamilkuripugal.vo.Favourite
 
 class FavouritesAdapter(
     private val dataBindingComponent: DataBindingComponent,
     appExecutors: AppExecutors,
-    private val callback: ((Kurippu) -> Unit)?
-) : DataBoundListAdapter<Kurippu, KuripuItemBinding>(
+    private val callback: ((Favourite) -> Unit)?
+) : DataBoundListAdapter<Favourite, FavouriteItemBinding>(
     appExecutors = appExecutors,
-    diffCallback = object : DiffUtil.ItemCallback<Kurippu>() {
-        override fun areItemsTheSame(oldItem: Kurippu, newItem: Kurippu): Boolean {
+    diffCallback = object : DiffUtil.ItemCallback<Favourite>() {
+        override fun areItemsTheSame(oldItem: Favourite, newItem: Favourite): Boolean {
             return oldItem.kurippuId == newItem.kurippuId
         }
 
-        override fun areContentsTheSame(oldItem: Kurippu, newItem: Kurippu): Boolean {
-            return oldItem.title == newItem.title
+        override fun areContentsTheSame(oldItem: Favourite, newItem: Favourite): Boolean {
+            return oldItem.kurippuId == newItem.kurippuId
+            //return oldItem.title == newItem.title
         }
     }
 ) {
-    override fun createBinding(parent: ViewGroup): KuripuItemBinding {
+    override fun createBinding(parent: ViewGroup): FavouriteItemBinding {
         val binding = DataBindingUtil
-            .inflate<KuripuItemBinding>(
+            .inflate<FavouriteItemBinding>(
                 LayoutInflater.from(parent.context),
-                R.layout.kuripu_item,
+                R.layout.favourite_item,
                 parent,
                 false,
                 dataBindingComponent
             )
+/*
         binding.root.setOnClickListener {
             binding.kurippu?.let {
                 callback?.invoke(it)
             }
         }
+*/
         return binding
     }
 
-    override fun bind(binding: KuripuItemBinding, item: Kurippu) {
+    override fun bind(binding: FavouriteItemBinding, item: Favourite) {
         binding.kurippu = item
     }
 }
+
+
+
+
+
 
