@@ -9,13 +9,12 @@ import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.FavouriteItemBinding
 import droid.smart.com.tamilkuripugal.AppExecutors
 import droid.smart.com.tamilkuripugal.ui.common.DataBoundListAdapter
-import droid.smart.com.tamilkuripugal.vo.Favourite
 import droid.smart.com.tamilkuripugal.vo.FavouriteKurippu
 
 class FavouritesAdapter(
     private val dataBindingComponent: DataBindingComponent,
     appExecutors: AppExecutors,
-    private val callback: ((Favourite) -> Unit)?
+    private val callback: ((FavouriteKurippu) -> Unit)?
 ) : DataBoundListAdapter<FavouriteKurippu, FavouriteItemBinding>(
     appExecutors = appExecutors,
     diffCallback = object : DiffUtil.ItemCallback<FavouriteKurippu>() {
@@ -38,13 +37,12 @@ class FavouritesAdapter(
                 false,
                 dataBindingComponent
             )
-/*
         binding.root.setOnClickListener {
-            binding.kurippu?.let {
+            binding.favourite?.let {
                 callback?.invoke(it)
             }
         }
-*/
+
         return binding
     }
 
