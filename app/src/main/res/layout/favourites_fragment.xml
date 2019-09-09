@@ -5,7 +5,7 @@
 
     <data>
 
-        <import type="droid.smart.com.tamilkuripugal.vo.Favourite"/>
+        <import type="droid.smart.com.tamilkuripugal.vo.FavouriteKurippu"/>
         <import type="droid.smart.com.tamilkuripugal.vo.Status"/>
         <import type="droid.smart.com.tamilkuripugal.vo.Resource"/>
         <import type="androidx.lifecycle.LiveData"/>
@@ -13,7 +13,7 @@
 
         <variable
                 name="favourites"
-                type="LiveData&lt;Resource&lt;List&lt;Favourite>>>"/>
+                type="LiveData&lt;Resource&lt;List&lt;FavouriteKurippu>>>"/>
 
         <variable
                 name="contributorsStatus"

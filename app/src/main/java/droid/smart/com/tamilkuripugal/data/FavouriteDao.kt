@@ -3,6 +3,7 @@ package droid.smart.com.tamilkuripugal.data
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import droid.smart.com.tamilkuripugal.vo.Favourite
+import droid.smart.com.tamilkuripugal.vo.FavouriteKurippu
 
 @Dao
 abstract class FavouriteDao {
@@ -26,7 +27,13 @@ abstract class FavouriteDao {
                 " WHERE favourite.active = 1 " +
                 " order by favourite.updatedDate desc")
     */
-    @Query("SELECT * FROM favourite WHERE active = 1")
-    abstract fun loadFavourites(): LiveData<List<Favourite>>
+    @Query(
+        "SELECT favourite.kurippu_id as kurippuId, favourite.updatedDate, favourite.active, favourite.cloudStatus, kurippu.title, kurippu.image " +
+                "FROM favourite " +
+                "LEFT JOIN kurippu on favourite.kurippu_id = kurippu.kurippu_Id " +
+                "WHERE active = 1 " +
+                "order by favourite.updatedDate desc"
+    )
+    abstract fun loadFavourites(): LiveData<List<FavouriteKurippu>>
 
 }

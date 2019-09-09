@@ -12,6 +12,7 @@ import droid.smart.com.tamilkuripugal.util.AbsentLiveData
 import droid.smart.com.tamilkuripugal.util.RateLimiter
 import droid.smart.com.tamilkuripugal.util.cloudStatusSynced
 import droid.smart.com.tamilkuripugal.vo.Favourite
+import droid.smart.com.tamilkuripugal.vo.FavouriteKurippu
 import droid.smart.com.tamilkuripugal.vo.Resource
 import timber.log.Timber
 import java.util.*
@@ -67,13 +68,13 @@ class FavouriteRepository @Inject constructor(
     }
 
     //When user skips signin then return favourites only from device
-    fun loadFavouriteKuripugal(): LiveData<Resource<List<Favourite>>> {
-        return object : NetworkBoundResource<List<Favourite>, Favourite>(appExecutors) {
+    fun loadFavouriteKuripugal(): LiveData<Resource<List<FavouriteKurippu>>> {
+        return object : NetworkBoundResource<List<FavouriteKurippu>, Favourite>(appExecutors) {
             override fun saveCallResult(favourite: Favourite) {
                 //No Action required
             }
 
-            override fun shouldFetch(data: List<Favourite>?): Boolean {
+            override fun shouldFetch(data: List<FavouriteKurippu>?): Boolean {
                 return false //no cloud syncing
             }
 
@@ -85,8 +86,8 @@ class FavouriteRepository @Inject constructor(
         }.asLiveData()
     }
 
-    fun loadFavouriteKuripugal(userid: String): LiveData<Resource<List<Favourite>>> {
-        return object : NetworkBoundResource<List<Favourite>, QuerySnapshot>(appExecutors) {
+    fun loadFavouriteKuripugal(userid: String): LiveData<Resource<List<FavouriteKurippu>>> {
+        return object : NetworkBoundResource<List<FavouriteKurippu>, QuerySnapshot>(appExecutors) {
             override fun saveCallResult(querySnapshot: QuerySnapshot) {
                 for (document in querySnapshot) {
                     Timber.i("Sync Firestore favourite Kurippu : %s - %s", document.id, document.data)
@@ -114,7 +115,7 @@ class FavouriteRepository @Inject constructor(
                 }
             }
 
-            override fun shouldFetch(data: List<Favourite>?): Boolean {
+            override fun shouldFetch(data: List<FavouriteKurippu>?): Boolean {
                 //return data == null || data.isEmpty()  || rateLimiter.shouldFetch("fav_kurippugal", 12, TimeUnit.HOURS)
                 return true //FIXME - Used for testing sync flow.
             }

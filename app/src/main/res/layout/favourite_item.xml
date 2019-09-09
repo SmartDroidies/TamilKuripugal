@@ -5,8 +5,8 @@
 
     <data>
         <variable
-                name="kurippu"
-                type="droid.smart.com.tamilkuripugal.vo.Favourite"/>
+                name="favourite"
+                type="droid.smart.com.tamilkuripugal.vo.FavouriteKurippu"/>
     </data>
 
 
@@ -14,19 +14,7 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent">
 
-        <TextView
-                android:id="@+id/txtKurippuId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:htmlText="@{kurippu.kurippuId}"
-                android:layout_marginLeft="@dimen/default_margin"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginTop="@dimen/default_margin"
-                android:layout_marginBottom="@dimen/default_margin"
-                tools:text="Kurippu Id"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"/>
-
-        <!--ImageView
+        <ImageView
                 android:id="@+id/imageView"
                 android:contentDescription="@string/kurippu_image"
                 android:layout_width="@dimen/photo_width"
@@ -38,37 +26,37 @@
                 android:layout_marginBottom="@dimen/default_margin"
                 android:cropToPadding="false"
                 android:scaleType="centerCrop"
-                app:visibleGone="@{kurippu.image != null}"
-                app:imageUrl="@{kurippu.image}"/>
+                app:visibleGone="@{favourite.image != null}"
+                app:imageUrl="@{favourite.image}"/>
 
         <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:htmlText="@{kurippu.title}"
-                android:layout_toRightOf="@id/imageView"
+                app:htmlText="@{favourite.title}"
                 android:layout_marginLeft="@dimen/default_margin"
                 android:layout_marginStart="@dimen/default_margin"
                 android:layout_marginTop="@dimen/default_margin"
                 android:layout_marginBottom="@dimen/default_margin"
                 tools:text="Kurippu Title"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                android:layout_toEndOf="@id/imageView"/-->
+                android:layout_toRightOf="@id/imageView"
+                android:layout_toEndOf="@id/imageView"/>
 
-        <!--
-                <TextView
-                        android:id="@+id/textDate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:millis="@{kurippu.updatedDate}"
-                        android:layout_marginBottom="@dimen/default_margin"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/short_margin"
-                        tools:text="Date"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                        android:layout_alignParentEnd="true"/>
-        -->
+        <TextView
+                android:id="@+id/txtKurippuId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:htmlText="@{favourite.kurippuId}"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="@dimen/default_margin"
+                tools:text="Kurippu Id"
+                android:layout_below="@+id/textView"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"/>
 
     </RelativeLayout>
 </layout>
