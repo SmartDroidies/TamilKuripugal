@@ -7,12 +7,15 @@ import com.google.firebase.firestore.QuerySnapshot
 import droid.smart.com.tamilkuripugal.AppExecutors
 import droid.smart.com.tamilkuripugal.api.ApiResponse
 import droid.smart.com.tamilkuripugal.api.ApiSuccessResponse
+import droid.smart.com.tamilkuripugal.api.KuripugalService
 import droid.smart.com.tamilkuripugal.data.FavouriteDao
+import droid.smart.com.tamilkuripugal.data.KurippuDao
 import droid.smart.com.tamilkuripugal.util.AbsentLiveData
 import droid.smart.com.tamilkuripugal.util.RateLimiter
 import droid.smart.com.tamilkuripugal.util.cloudStatusSynced
 import droid.smart.com.tamilkuripugal.vo.Favourite
 import droid.smart.com.tamilkuripugal.vo.FavouriteKurippu
+import droid.smart.com.tamilkuripugal.vo.Kurippu
 import droid.smart.com.tamilkuripugal.vo.Resource
 import timber.log.Timber
 import java.util.*
@@ -21,7 +24,9 @@ import javax.inject.Inject
 class FavouriteRepository @Inject constructor(
     private val appExecutors: AppExecutors,
     private val favouriteDao: FavouriteDao,
+    private val kurippuDao: KurippuDao,
     private val firebaseFirestore: FirebaseFirestore,
+    private val kuripugalService: KuripugalService,
     private val rateLimiter: RateLimiter
 ) {
 
@@ -142,4 +147,26 @@ class FavouriteRepository @Inject constructor(
         }.asLiveData()
     }
 
+
+    fun loadKuripugal(kurippuIds: List<String>): LiveData<Resource<List<FavouriteKurippu>>> {
+        return object : NetworkBoundResource<List<FavouriteKurippu>, List<Kurippu>>(appExecutors) {
+            override fun saveCallResult(item: List<Kurippu>) {
+                Timber.d("Update store Kuripugal for %s - %s", kurippuIds, item.size)
+                kurippuDao.insertKuripugal(item)
+            }
+
+            override fun shouldFetch(data: List<FavouriteKurippu>?): Boolean {
+                return kurippuIds.isNotEmpty()
+            }
+
+            override fun loadFromDb() = favouriteDao.loadFavourites()
+
+            override fun createCall() = kuripugalService.getKuripugal("y", kurippuIds.joinToString())
+
+            override fun onFetchFailed() {
+                Timber.w("Error is collecting Kuripugal for kurippu ids")
+                super.onFetchFailed()
+            }
+        }.asLiveData()
+    }
 }

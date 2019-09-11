@@ -54,7 +54,7 @@ class KurippuRepository @Inject constructor(
             override fun loadFromDb() = kurippuDao.loadKurippu(kurippuId)
 
             override fun createCall(): LiveData<ApiResponse<Kurippu>> {
-                return kuripugalService.getKurippu("y", kurippuId);
+                return kuripugalService.getKurippu("y", kurippuId)
             }
         }.asLiveData()
     }
