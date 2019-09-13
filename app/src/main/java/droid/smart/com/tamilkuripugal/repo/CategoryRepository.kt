@@ -27,12 +27,6 @@ class CategoryRepository @Inject constructor() {
         return CATEGORY_DATA
     }
 
-    fun findCategory(categoryId: Int): Category {
-        return CATEGORY_DATA.get(0)
-    }
-
-
-
     /*
     fun loadCategories(): LiveData<Resource<List<Category>>> {
         return object : NetworkBoundResource<List<Category>, List<Category>>(appExecutors) {

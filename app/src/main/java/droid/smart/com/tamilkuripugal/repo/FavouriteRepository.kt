@@ -19,6 +19,7 @@ import droid.smart.com.tamilkuripugal.vo.Kurippu
 import droid.smart.com.tamilkuripugal.vo.Resource
 import timber.log.Timber
 import java.util.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class FavouriteRepository @Inject constructor(
@@ -121,8 +122,7 @@ class FavouriteRepository @Inject constructor(
             }
 
             override fun shouldFetch(data: List<FavouriteKurippu>?): Boolean {
-                //return data == null || data.isEmpty()  || rateLimiter.shouldFetch("fav_kurippugal", 12, TimeUnit.HOURS)
-                return true //FIXME - Used for testing sync flow.
+                return data == null || data.isEmpty() || rateLimiter.shouldFetch("fav_kurippugal", 6, TimeUnit.HOURS)
             }
 
             override fun loadFromDb() = favouriteDao.loadFavourites()
@@ -134,6 +134,7 @@ class FavouriteRepository @Inject constructor(
                 firebaseFirestore.collection("users")
                     .document(userid)
                     .collection("kuripugal")
+                    .whereEqualTo("fav", "Y")
                     .addSnapshotListener { value, e ->
                         if (e != null) {
                             Timber.w(e, "Firestore favourites listen failed")

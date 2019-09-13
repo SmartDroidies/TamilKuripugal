@@ -28,9 +28,8 @@ import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.common.api.ApiException
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
 import com.mopub.common.MoPub
 import com.mopub.common.SdkConfiguration
@@ -40,9 +39,9 @@ import com.smart.droid.tamil.tips.databinding.MainActivityBinding
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import droid.smart.com.tamilkuripugal.extensions.*
+import droid.smart.com.tamilkuripugal.repo.CategoryRepository
 import droid.smart.com.tamilkuripugal.ui.AppExitDialogFragment
 import droid.smart.com.tamilkuripugal.ui.main.MainFragmentDirections
-import droid.smart.com.tamilkuripugal.ui.main.MainViewModel
 import droid.smart.com.tamilkuripugal.util.RateLimiter
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
@@ -125,7 +124,6 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
         interstitialAd.adListener = object : AdListener() {
             override fun onAdLoaded() {
                 // Code to be executed when an ad finishes loading.
-                //FIXME - Report it on Firebase Analytics Event
             }
 
             override fun onAdFailedToLoad(errorCode: Int) {
@@ -176,6 +174,7 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
             R.id.action_exit -> {
+                FirebaseAuth.getInstance().signOut()
                 finish()
                 return true
             }
@@ -301,8 +300,7 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
 
     private fun initOnFirstStart() {
         if (!sharedPreferences.contains(PREFKEY_UPDATE_VERSION)) {
-            //FIXME - Collect this from categoryRepository
-            val categories = MainViewModel.CATEGORY_DATA
+            val categories = CategoryRepository.CATEGORY_DATA
             for (category in categories) {
                 Timber.d("Initialize preference for category : %s", category)
                 FirebaseMessaging.getInstance().subscribeToTopic(category.topic)
@@ -350,6 +348,7 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
         supportActionBar!!.title = title
     }
 
+    /*
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RC_SIGN_IN) {
@@ -364,7 +363,7 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
             }
         }
     }
-
+    */
 
 }
 

@@ -7,14 +7,14 @@ import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.google.firebase.messaging.FirebaseMessaging
-import droid.smart.com.tamilkuripugal.ui.main.MainViewModel
+import droid.smart.com.tamilkuripugal.repo.CategoryRepository
 import droid.smart.com.tamilkuripugal.ui.util.Helper
 import timber.log.Timber
 
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
-    val categories = MainViewModel.CATEGORY_DATA
+    val categories = CategoryRepository.CATEGORY_DATA
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
 
