@@ -55,8 +55,8 @@
     <string name="msg_unsubscribe_failed">Notifcation unscbscribe failed</string>
     <string name="draft_kuripugal">Draft Kuripugal</string>
     <string name="action_scheduled">Scheduled Tips</string>
-    <string name="desc_signin">Signin to save and view favourtes across all your devices.</string>
-    <string name="signin_desc">Signin to google to view favourites across your devices</string>
+    <string name="desc_signin">Signin to manage favourites</string>
+    <string name="signin_desc">Signin to manage favourites</string>
     <string name="signin_skip">Skip Now</string>
 
 </resources>

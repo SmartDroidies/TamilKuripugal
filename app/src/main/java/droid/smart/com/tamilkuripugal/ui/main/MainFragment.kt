@@ -210,8 +210,7 @@ class MainFragment : Fragment(), Injectable {
         val currentMS = System.currentTimeMillis()
         val milliSecSinceSkipped = currentMS - signInSkipTS
         Timber.i("Sign in skipped since %s seconds", TimeUnit.MILLISECONDS.toSeconds(milliSecSinceSkipped))
-        /* FIXME - Change this to 7 days */
-        if (TimeUnit.MILLISECONDS.toSeconds(milliSecSinceSkipped) > 60) {
+        if (TimeUnit.MILLISECONDS.toDays(milliSecSinceSkipped) > 7) {
             navController().navigate(R.id.signin)
         }
     }
