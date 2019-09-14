@@ -34,8 +34,6 @@ import javax.inject.Inject
 
 class MainFragment : Fragment(), Injectable {
 
-    private val paramUser = "user"
-
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -100,7 +98,7 @@ class MainFragment : Fragment(), Injectable {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-        mainViewModel.setUser(paramUser)
+        mainViewModel.setUser(auth.currentUser!!.displayName)
 
         binding.categories = mainViewModel.categories
         binding.lifecycleOwner = viewLifecycleOwner

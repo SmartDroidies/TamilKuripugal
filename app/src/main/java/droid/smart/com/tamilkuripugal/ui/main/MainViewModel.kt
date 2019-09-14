@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import droid.smart.com.tamilkuripugal.repo.CategoryRepository
 import droid.smart.com.tamilkuripugal.vo.Category
 import droid.smart.com.tamilkuripugal.vo.Resource
+import timber.log.Timber
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(categoryRepository: CategoryRepository) : ViewModel() {
@@ -35,6 +36,7 @@ class MainViewModel @Inject constructor(categoryRepository: CategoryRepository) 
 */
     private val _user = MutableLiveData<String>()
     private val _categories = MutableLiveData<Resource<List<Category>>>()
+
     val user: LiveData<String>
         get() = _user
 
@@ -48,6 +50,7 @@ class MainViewModel @Inject constructor(categoryRepository: CategoryRepository) 
     fun setUser(user: String?) {
         if (_user.value != user) {
             _user.value = user
+            Timber.i("User Logged in : %s", _user.value)
         }
     }
 
@@ -56,4 +59,6 @@ class MainViewModel @Inject constructor(categoryRepository: CategoryRepository) 
             _user.value = it
         }
     }
+
+
 }
