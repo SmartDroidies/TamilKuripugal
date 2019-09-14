@@ -60,7 +60,6 @@
                 app:popEnterAnim="@anim/slide_in_left"
                 app:popExitAnim="@anim/slide_out_right"/>
 
-        <!-- FIXME - Use a better animation -->
     </fragment>
 
 
@@ -76,7 +75,6 @@
                 app:popEnterAnim="@anim/slide_in_left"
                 app:popExitAnim="@anim/slide_out_right"/>
 
-        <!-- FIXME - Use a better animation -->
     </fragment>
 
     <fragment android:id="@+id/favouriteKuripugalFragment"
@@ -91,7 +89,6 @@
                 app:popEnterAnim="@anim/slide_in_left"
                 app:popExitAnim="@anim/slide_out_right"/>
 
-        <!-- FIXME - Use a better animation -->
     </fragment>
 
 
@@ -107,7 +104,6 @@
                 app:popEnterAnim="@anim/slide_in_left"
                 app:popExitAnim="@anim/slide_out_right"/>
 
-        <!-- FIXME - Use a better animation -->
     </fragment>
 
     <fragment android:id="@+id/kurippu_fragment"

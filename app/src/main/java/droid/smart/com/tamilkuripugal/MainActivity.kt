@@ -28,6 +28,8 @@ import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
@@ -42,20 +44,12 @@ import droid.smart.com.tamilkuripugal.extensions.*
 import droid.smart.com.tamilkuripugal.repo.CategoryRepository
 import droid.smart.com.tamilkuripugal.ui.AppExitDialogFragment
 import droid.smart.com.tamilkuripugal.ui.main.MainFragmentDirections
+import droid.smart.com.tamilkuripugal.util.PREFKEY_GSIGN_CHOICE
 import droid.smart.com.tamilkuripugal.util.RateLimiter
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-/**
- * FIXME - Functionalities Planned`
- *  Velanmai Icon Needs to be changed
- *  Icon for Notification
- *  Share Icon Background
- *  Featured kurippu listing
- *  Favourite kurippu listing
- *  Banner ad between recycle view
- */
 class MainActivity : BaseActivity(), HasSupportFragmentInjector {
 
     private val RC_SIGN_IN: Int = 75
@@ -65,6 +59,9 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
     private lateinit var layout: View
 
     private lateinit var interstitialAd: InterstitialAd
+
+    @Inject
+    lateinit var googleSignInOptions: GoogleSignInOptions
 
     @Inject
     lateinit var adRequest: AdRequest
@@ -174,7 +171,20 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
             R.id.action_exit -> {
+
+                //FIXME - Test code starts
                 FirebaseAuth.getInstance().signOut()
+
+                val googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
+                googleSignInClient.signOut()
+                googleSignInClient.revokeAccess()
+
+                sharedPreferences.edit()
+                    .remove(PREFKEY_GSIGN_CHOICE)
+                    .apply()
+
+                //FIXME - Test code ends
+
                 finish()
                 return true
             }
