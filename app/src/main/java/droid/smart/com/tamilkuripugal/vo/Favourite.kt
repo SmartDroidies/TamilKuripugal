@@ -10,5 +10,5 @@ data class Favourite (
     @PrimaryKey @ColumnInfo(name = "kurippu_id") val kurippuId: String,
     val updatedDate: Long,
     val active: Boolean,
-    val cloudStatus: String
+    var cloudStatus: String
 )

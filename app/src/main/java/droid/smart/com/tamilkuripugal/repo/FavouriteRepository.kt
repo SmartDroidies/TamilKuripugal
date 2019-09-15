@@ -2,6 +2,7 @@ package droid.smart.com.tamilkuripugal.repo
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import droid.smart.com.tamilkuripugal.AppExecutors
@@ -12,6 +13,7 @@ import droid.smart.com.tamilkuripugal.data.FavouriteDao
 import droid.smart.com.tamilkuripugal.data.KurippuDao
 import droid.smart.com.tamilkuripugal.util.AbsentLiveData
 import droid.smart.com.tamilkuripugal.util.RateLimiter
+import droid.smart.com.tamilkuripugal.util.cloudStatusModified
 import droid.smart.com.tamilkuripugal.util.cloudStatusSynced
 import droid.smart.com.tamilkuripugal.vo.Favourite
 import droid.smart.com.tamilkuripugal.vo.FavouriteKurippu
@@ -41,7 +43,7 @@ class FavouriteRepository @Inject constructor(
         updateFavourite(favourite)
     }
 
-    fun insertFavourite(favourite: Favourite) {
+    private fun insertFavourite(favourite: Favourite) {
         appExecutors.diskIO().execute {
             favouriteDao.insert(favourite)
         }
@@ -169,5 +171,46 @@ class FavouriteRepository @Inject constructor(
                 super.onFetchFailed()
             }
         }.asLiveData()
+    }
+
+    fun syncLocalWithCloud(firebaseAuth: FirebaseAuth, firestore: FirebaseFirestore) {
+        if (firebaseAuth.currentUser != null) {
+            appExecutors.diskIO().execute {
+                val localFavourites = favouriteDao.loadFavouritesByStatus(cloudStatusModified)
+                for (favourite: Favourite in localFavourites) {
+                    Timber.i("Sync with cloud : %s", favourite.kurippuId)
+                    val fav = if (favourite.active) "Y" else "N"
+                    val favouriteCloud = hashMapOf(
+                        "fav" to fav,
+                        "updated" to favourite.updatedDate
+                    )
+
+                    firestore.collection("users")
+                        .document(firebaseAuth.currentUser!!.uid)
+                        .collection("kuripugal")
+                        .document(favourite.kurippuId)
+                        .set(favouriteCloud)
+                        .addOnSuccessListener { documentReference ->
+                            favourite.cloudStatus = cloudStatusSynced
+                            appExecutors.networkIO().execute {
+                                favouriteDao.update(favourite)
+                            }
+                            Timber.d(
+                                "Cloud favourite %s succesfully updated for %s",
+                                favourite.kurippuId,
+                                firebaseAuth.currentUser?.uid
+                            )
+                        }
+                        .addOnFailureListener { e ->
+                            Timber.w(
+                                e, "Firestore Error adding favourite %s for %s",
+                                favourite.kurippuId,
+                                firebaseAuth.currentUser?.uid
+                            )
+                        }
+
+                }
+            }
+        }
     }
 }

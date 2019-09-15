@@ -59,10 +59,11 @@ class FavouritesViewModel @Inject constructor(
                 favourites.value = result
             }
         }
+
     }
 
     private fun tobeSyncedItems(favourites: Resource<List<FavouriteKurippu>>): List<String>? {
-        return if (favourites.status == Status.SUCCESS) {
+        if (favourites.status == Status.SUCCESS) {
             val tobeSycedList = ArrayList<String>()
             for (fav: FavouriteKurippu in favourites.data!!) {
                 Timber.i("Check & Load details for favourite : %s - %s", fav.kurippuId, fav.title)

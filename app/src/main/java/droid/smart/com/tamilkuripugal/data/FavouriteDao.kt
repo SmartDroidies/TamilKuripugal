@@ -36,4 +36,7 @@ abstract class FavouriteDao {
     )
     abstract fun loadFavourites(): LiveData<List<FavouriteKurippu>>
 
+    @Query("SELECT * FROM favourite WHERE cloudStatus = :cloudStatus")
+    abstract fun loadFavouritesByStatus(cloudStatus: String): List<Favourite>
+
 }
