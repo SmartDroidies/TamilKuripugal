@@ -21,8 +21,11 @@
 * Library updates
 
 
-# Pending
+# V1.1.7 (XXX-2019)
  
 * Category on Scheduled Tips if Debug APK 
 * Mediation for Interstitial
+* Confirm on Exit
+* Favourite Tips
+
  

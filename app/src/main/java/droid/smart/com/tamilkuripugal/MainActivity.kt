@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.TargetApi
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.BitmapFactory
@@ -23,11 +24,11 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.preference.PreferenceManager
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.messaging.FirebaseMessaging
 import com.mopub.common.MoPub
@@ -38,30 +39,14 @@ import com.smart.droid.tamil.tips.databinding.MainActivityBinding
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import droid.smart.com.tamilkuripugal.extensions.*
+import droid.smart.com.tamilkuripugal.repo.CategoryRepository
 import droid.smart.com.tamilkuripugal.ui.AppExitDialogFragment
 import droid.smart.com.tamilkuripugal.ui.main.MainFragmentDirections
-import droid.smart.com.tamilkuripugal.ui.main.MainViewModel
 import droid.smart.com.tamilkuripugal.util.RateLimiter
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-const val PERMISSION_EXTERNAL_WRITE = 0
-const val PERMISSION_EXTERNAL_WRITE_KURIPPU = 5
-const val PREFKEY_UPDATE_VERSION = "pref_update_version"
-
-/**
- * FIXME - Functionalities Planned
- *  Velanmai Icon Needs to be changed
- *  Icon for Notification
- *  Share Icon Background
- *  Alert on Exit using back
- *  Featured kurippu listing
- *  Favourite kurippu listing
- *  Scheduled kuripugal for test device
- *  Banner ad between recycle view
- *  Google Sign in  https://developers.google.com/identity/sign-in/android/sign-in?authuser=0
- */
 class MainActivity : BaseActivity(), HasSupportFragmentInjector {
 
     private val RC_SIGN_IN: Int = 75
@@ -73,6 +58,9 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
     private lateinit var interstitialAd: InterstitialAd
 
     @Inject
+    lateinit var googleSignInOptions: GoogleSignInOptions
+
+    @Inject
     lateinit var adRequest: AdRequest
 
     @Inject
@@ -81,9 +69,8 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
-    //private lateinit var auth: FirebaseAuth
-
-    //private lateinit var googleSignInClient: GoogleSignInClient
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,6 +94,7 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
         //Init pref on first start
         initOnFirstStart()
 
+        //FIXME - Drive this from Main Fragment
         if (intent.extras != null && !intent.extras.isEmpty && intent.extras.containsKey("id")) {
             Timber.d("Extras : %s ", intent!!.extras.get("id"))
             val kurippuId = intent!!.extras.get("id") as String
@@ -126,10 +114,10 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
         interstitialAd = InterstitialAd(this)
         interstitialAd.adUnitId = "ca-app-pub-8439744074965483/5473553264"
         interstitialAd.loadAd(adRequest)
+        interstitialRateLimit.shouldFetch("interstitial_ad", 60, TimeUnit.SECONDS)
         interstitialAd.adListener = object : AdListener() {
             override fun onAdLoaded() {
                 // Code to be executed when an ad finishes loading.
-                //FIXME - Report it on Firebase Analytics Event
             }
 
             override fun onAdFailedToLoad(errorCode: Int) {
@@ -150,21 +138,8 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
             }
         }
 
-        // Configure sign-in to request the user's ID, email address, and basic profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-/*
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail()
-            .build()
-*/
-
-        // Build a GoogleSignInClient with the options specified by gso.
-        //googleSignInClient = GoogleSignIn.getClient(this, gso);
-
-        //signIn()
-
-        // Initialize Firebase Auth
-        //auth = FirebaseAuth.getInstance()
     }
+
 
     override fun onSupportNavigateUp(): Boolean {
         showInterstitial(false)
@@ -188,25 +163,22 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
         }
     }
 
-
-/*
-    fun signIn() {
-        val signInIntent = googleSignInClient.getSignInIntent()
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-*/
-
-    /* override fun onStart() {
-         super.onStart()
-         // Check if user is signed in (non-null) and update UI accordingly.
-
-     }*/
-
     override fun supportFragmentInjector() = dispatchingAndroidInjector
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
             R.id.action_exit -> {
+                /*
+                FirebaseAuth.getInstance().signOut()
+
+                val googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
+                googleSignInClient.signOut()
+                googleSignInClient.revokeAccess()
+
+                sharedPreferences.edit()
+                    .remove(PREFKEY_GSIGN_CHOICE)
+                    .apply()
+                */
                 finish()
                 return true
             }
@@ -331,10 +303,8 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
 
 
     private fun initOnFirstStart() {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         if (!sharedPreferences.contains(PREFKEY_UPDATE_VERSION)) {
-            //FIXME - Collect this from categoryRepository
-            val categories = MainViewModel.CATEGORY_DATA
+            val categories = CategoryRepository.CATEGORY_DATA
             for (category in categories) {
                 Timber.d("Initialize preference for category : %s", category)
                 FirebaseMessaging.getInstance().subscribeToTopic(category.topic)
@@ -351,6 +321,7 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
             sharedPreferences.edit().putInt(PREFKEY_UPDATE_VERSION, BuildConfig.VERSION_CODE).apply()
         }
     }
+
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
@@ -380,6 +351,23 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
     fun setActionBarTitle(title: String) {
         supportActionBar!!.title = title
     }
+
+    /*
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                Timber.i("User succesfully logged into to google - MainActivity")
+                // Google Sign In was successful, authenticate with Firebase
+                //val account = task.getResult(ApiException::class.java)
+                //firebaseAuthWithGoogle(account!!)
+            } catch (e: ApiException) {
+                Timber.e(e)
+            }
+        }
+    }
+    */
 
 }
 

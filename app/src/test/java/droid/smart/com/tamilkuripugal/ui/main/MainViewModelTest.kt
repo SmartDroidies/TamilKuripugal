@@ -41,7 +41,7 @@ class MainViewModelTest {
         verifyNoMoreInteractions(categoryRepository)
     }
 
-    //TODO - Do later when you get change
+// Do later when you get change
 //     Send Results to UI
 //     Retry
 //     Null Category List

@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.FirebaseAuth
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.FavouritesFragmentBinding
 import droid.smart.com.tamilkuripugal.AppExecutors
@@ -39,14 +39,8 @@ class FavouritesFragment : Fragment(), Injectable {
     var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
     var binding by autoCleared<FavouritesFragmentBinding>()
 
-//    @Inject
-//    lateinit var googleSignInOptions: GoogleSignInOptions
-//
-//    lateinit var googleSignInClient: GoogleSignInClient
-//    private val RC_SIGN_IN = 9001
-//
-//    @Inject
-//    lateinit var firebaseAuth: FirebaseAuth
+    @Inject
+    lateinit var auth: FirebaseAuth
 
     private var adapter by autoCleared<FavouritesAdapter>()
 
@@ -72,38 +66,12 @@ class FavouritesFragment : Fragment(), Injectable {
         favouritesViewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(FavouritesViewModel::class.java)
 
-        val firebaseUserId = "dummy" //FIXME - Collect the firebase user id
-        Timber.i("Display Kurippu details for : %s ", firebaseUserId)
+        val firebaseUserId = auth.currentUser?.uid
+        Timber.i("Display favourite kuripugal for : %s ", firebaseUserId)
+        //firebaseUserId?.let { favouritesViewModel.setUserId(it) }
         favouritesViewModel.setUserId(firebaseUserId)
-        binding.setLifecycleOwner(viewLifecycleOwner)
-        binding.kurippugal = favouritesViewModel.kuripugal
-
-
-/*
-        val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail()
-            .build()
-*/
-/*
-        googleSignInClient = GoogleSignIn.getClient(this.context!!, googleSignInOptions)
-
-        //val params = KurippuFragmentArgs.fromBundle(arguments!!)
-        binding.setLifecycleOwner(viewLifecycleOwner)
-
-        //val currentUser = auth.currentUser
-        // if (currentUser != null) Timber.i("User logged in : %s", currentUser.email)
-
-        binding.signInButton.setOnClickListener {
-            val signInIntent = googleSignInClient.getSignInIntent()
-            startActivityForResult(signInIntent, RC_SIGN_IN)
-        }
-*/
-
-        //mAdView = binding.adView
-        //mAdView.loadAd(adRequest)
-
-        //firebaseAnalytics.setCurrentScreen(activity!!, this.javaClass.simpleName, this.javaClass.simpleName)
-
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.favourites = favouritesViewModel.favourites
 
         val adapter = FavouritesAdapter(
             dataBindingComponent,
@@ -128,8 +96,8 @@ class FavouritesFragment : Fragment(), Injectable {
     }
 
     private fun initKuripugalList(favouritesViewModel: FavouritesViewModel) {
-        favouritesViewModel.kuripugal.observe(viewLifecycleOwner, Observer { listResource ->
-            //Timber.i("Favourite list resource : %s", listResource)
+        favouritesViewModel.favourites.observe(viewLifecycleOwner, Observer { listResource ->
+            Timber.i("Favourite list resource : %s", listResource)
             if (listResource?.data != null) {
                 adapter.submitList(listResource.data)
             } else {
@@ -137,74 +105,6 @@ class FavouritesFragment : Fragment(), Injectable {
             }
         })
     }
-
-
-/*
-    override fun onStart() {
-        super.onStart()
-        //val account = GoogleSignIn.getLastSignedInAccount(this.context)
-        //updateUI(account)
-
-//        val currentUser = firebaseAuth.currentUser
-//        updateUI(currentUser)
-    }
-*/
-
-
-    private fun updateUI(account: FirebaseUser?) {
-        if (account != null) {
-            Timber.d("Favourites Screen - User Identified : %s, %s ", account.displayName, account.email);
-            binding.signinContent.visibility = View.GONE
-            binding.kuripugalList.visibility = View.VISIBLE
-
-            //FIXME - Display favourites for user
-
-        } else {
-            Timber.d("Favourites Screen - Display User Signin Button");
-            binding.signinContent.visibility = View.VISIBLE
-            binding.kuripugalList.visibility = View.GONE
-        }
-    }
-
-/*    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RC_SIGN_IN) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            handleSignInResult(task)
-        }
-    }*/
-
-    /*private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
-        try {
-            val account = completedTask.getResult(ApiException::class.java)
-            firebaseAuthWithGoogle(account!!)
-            // Signed in successfully, show authenticated UI.
-            //updateUI(account)
-        } catch (e: ApiException) {
-            Timber.w("signInResult:failed code - %s , %s ", e.statusCode, e.statusMessage)
-            updateUI(null)
-        }
-    }*/
-
-    /*private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
-        Timber.d("firebaseAuthWithGoogle: %s", acct.id!!)
-
-        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
-        firebaseAuth.signInWithCredential(credential)
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    Timber.d("signInWithCredential:success")
-                    val user = firebaseAuth.currentUser
-                    updateUI(user)
-                } else {
-                    Timber.w("signInWithCredential:failure - %s", it.exception)
-                    Snackbar.make(main_layout, "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
-                    updateUI(null)
-                }
-            }
-
-    }*/
-
 
     /**
      * Created to be able to override in tests

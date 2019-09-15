@@ -8,7 +8,6 @@
         android:orientation="vertical"
         android:theme="@style/ThemeOverlay.MaterialComponents.Dark">
 
-    <!-- TODO: add actual logo once available -->
     <ImageView
             android:layout_width="match_parent"
             android:layout_height="@dimen/navigation_drawer_image_height"

@@ -8,7 +8,6 @@ import javax.inject.Singleton
 @Singleton
 class CategoryRepository @Inject constructor() {
 
-    //FIXME - This needs to be removed
     companion object {
         val CATEGORY_DATA = listOf(
             Category("CTGRY01", "HEALTH", "Health Tips", 1, 5, null, R.drawable.arokiyam, "native-health"),
@@ -26,12 +25,6 @@ class CategoryRepository @Inject constructor() {
     fun loadCategories(): List<Category>? {
         return CATEGORY_DATA
     }
-
-    fun findCategory(categoryId: Int): Category {
-        return CATEGORY_DATA.get(0)
-    }
-
-
 
     /*
     fun loadCategories(): LiveData<Resource<List<Category>>> {
