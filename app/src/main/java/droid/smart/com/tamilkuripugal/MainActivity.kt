@@ -28,10 +28,8 @@ import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
 import com.mopub.common.MoPub
 import com.mopub.common.SdkConfiguration
@@ -44,7 +42,6 @@ import droid.smart.com.tamilkuripugal.extensions.*
 import droid.smart.com.tamilkuripugal.repo.CategoryRepository
 import droid.smart.com.tamilkuripugal.ui.AppExitDialogFragment
 import droid.smart.com.tamilkuripugal.ui.main.MainFragmentDirections
-import droid.smart.com.tamilkuripugal.util.PREFKEY_GSIGN_CHOICE
 import droid.smart.com.tamilkuripugal.util.RateLimiter
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
@@ -171,8 +168,7 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
             R.id.action_exit -> {
-
-                //FIXME - Test code starts
+                /*
                 FirebaseAuth.getInstance().signOut()
 
                 val googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
@@ -182,9 +178,7 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
                 sharedPreferences.edit()
                     .remove(PREFKEY_GSIGN_CHOICE)
                     .apply()
-
-                //FIXME - Test code ends
-
+                */
                 finish()
                 return true
             }

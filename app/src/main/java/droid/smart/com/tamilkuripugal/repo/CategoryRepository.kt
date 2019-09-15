@@ -8,7 +8,6 @@ import javax.inject.Singleton
 @Singleton
 class CategoryRepository @Inject constructor() {
 
-    //FIXME - This needs to be removed
     companion object {
         val CATEGORY_DATA = listOf(
             Category("CTGRY01", "HEALTH", "Health Tips", 1, 5, null, R.drawable.arokiyam, "native-health"),
