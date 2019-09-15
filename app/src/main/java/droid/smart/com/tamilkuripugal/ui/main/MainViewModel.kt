@@ -3,37 +3,28 @@ package droid.smart.com.tamilkuripugal.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import droid.smart.com.tamilkuripugal.repo.CategoryRepository
+import droid.smart.com.tamilkuripugal.repo.FavouriteRepository
 import droid.smart.com.tamilkuripugal.vo.Category
 import droid.smart.com.tamilkuripugal.vo.Resource
 import timber.log.Timber
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(categoryRepository: CategoryRepository) : ViewModel() {
+class MainViewModel @Inject constructor(
+    categoryRepository: CategoryRepository,
+    favouriteRepository: FavouriteRepository,
+    firebaseAuth: FirebaseAuth,
+    firebaseFirestore: FirebaseFirestore
+) : ViewModel() {
 
-    /*companion object {
-        val CATEGORY_DATA = listOf(
-            Category("CTGRY01", "HEALTH", "Health Tips", 1, 5, null, R.drawable.arokiyam, "native-health"),
-            Category("CTGRY02", "BEAUTY", "Beauty Tips", 2, 6, null, R.drawable.azagu, "native-beauty"),
-            Category("CTGRY03", "TREATMENT", "Home Remedies", 3, 10, null, R.drawable.naattu, "native-home-remedies"),
-            Category("CTGRY04", "COOKING", "Cooking Tips", 4, 3, null, R.drawable.samayal, "native-cooking"),
-            Category("CTGRY05", "VETTU", "House Tips", 5, 1096, null, R.drawable.vettu, "native-house-keeping"),
-            Category("CTGRY06", "MARUTHUVAM", "Medical Tips", 6, 1095, null, R.drawable.maruthuvam, "native-medicine"),
-            Category("CTGRY07", "AANMEEGAM", "Divine Tips", 7, 7236, null, R.drawable.aanmeega, "native-aanmeegam"),
-            Category("CTGRY08", "GENERAL", "General Tips", 8, 2920, null, R.drawable.general, "native-general-tip"),
-            Category(
-                "CTGRY09",
-                "AGRICULTURE",
-                "Agricultrue Tips",
-                9,
-                9479,
-                null,
-                R.drawable.agriculture,
-                "native-agriculture"
-            )
-        )
-    }
-*/
+    private val favouriteRepository = favouriteRepository
+
+    private val firebaseAuth = firebaseAuth
+
+    private val firebaseFirestore = firebaseFirestore
+
     private val _user = MutableLiveData<String>()
     private val _categories = MutableLiveData<Resource<List<Category>>>()
 
@@ -45,13 +36,19 @@ class MainViewModel @Inject constructor(categoryRepository: CategoryRepository) 
 
     init {
         _categories.value = Resource.success(categoryRepository.loadCategories())
+
     }
 
     fun setUser(user: String?) {
         if (_user.value != user) {
             _user.value = user
             Timber.i("User Logged in : %s", _user.value)
+            syncLocalToCloud()
         }
+    }
+
+    private fun syncLocalToCloud() {
+        favouriteRepository.syncLocalWithCloud(firebaseAuth, firebaseFirestore)
     }
 
     fun retry() {
