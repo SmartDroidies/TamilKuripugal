@@ -98,8 +98,9 @@ class MainFragment : Fragment(), Injectable {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-        mainViewModel.setUser(auth.currentUser!!.displayName)
-
+        auth.currentUser.let {
+            mainViewModel.setUser(auth.currentUser?.displayName)
+        }
         binding.categories = mainViewModel.categories
         binding.lifecycleOwner = viewLifecycleOwner
         val rvAdapter = CategoryListAdapter(
