@@ -89,9 +89,10 @@ class SigninFragment : Fragment(), Injectable {
             val account = task.getResult(ApiException::class.java)
             Timber.i("Logged in user - %s", account!!.id)
             auth.googleAuth(account, firestore)
-            val popped = navController().popBackStack()
+            navController().popBackStack()
         } catch (e: ApiException) {
             Timber.e(e)
+            navController().popBackStack()
         }
     }
 
