@@ -17,7 +17,7 @@ object AdUtil {
     val TEST_DEVICE_ID = "DC14F1DAAD21C69EF0EE884173C21F66"
     val ADMOB_BANNER_ID = "ca-app-pub-5575552359884924/7606098699"
     //Smartdroidies //ca-app-pub-3940256099942544/6300978111  - Test ID
-    val ADMOB_INTER_ID = "ca-app-pub-3940256099942544/1033173712"
+    val ADMOB_INTER_ID = "ca-app-pub-5575552359884924/2657961097"
     //Smartdroidies //ca-app-pub-3940256099942544/1033173712 - Test ID
 
     val interstitialAdRequest: AdRequest
