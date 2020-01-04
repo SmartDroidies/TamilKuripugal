@@ -14,7 +14,6 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.MenuItem
 import android.view.View
-import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
@@ -159,19 +158,15 @@ class MainActivity : BaseActivity(), HasAndroidInjector {
     }
 
     override fun onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START)
+        Timber.i(
+            "Nav Controller : %s vs %s",
+            navController.currentDestination!!.id,
+            navController.graph.startDestination
+        )
+        if (navController.graph.startDestination == navController.currentDestination!!.id) {
+            AppExitDialogFragment().show(supportFragmentManager, "ExitDialogFragment")
         } else {
-            Timber.i(
-                "Nav Controller : %s vs %s",
-                navController.currentDestination!!.id,
-                navController.graph.startDestination
-            )
-            if (navController.graph.startDestination == navController.currentDestination!!.id) {
-                AppExitDialogFragment().show(supportFragmentManager, "ExitDialogFragment")
-            } else {
-                super.onBackPressed()
-            }
+            super.onBackPressed()
         }
     }
 
@@ -180,17 +175,6 @@ class MainActivity : BaseActivity(), HasAndroidInjector {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
             R.id.action_exit -> {
-                /*
-                FirebaseAuth.getInstance().signOut()
-
-                val googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
-                googleSignInClient.signOut()
-                googleSignInClient.revokeAccess()
-
-                sharedPreferences.edit()
-                    .remove(PREFKEY_GSIGN_CHOICE)
-                    .apply()
-                */
                 finish()
                 return true
             }

@@ -10,6 +10,7 @@ buildscript {
         firebaseCrash = '2.10.1'
         firebaseMessaging = '20.1.0'
         glideVersion = '4.10.0'
+        inmobi = '7.3.0.0'
         jsoupVersion = '1.12.1'
         junitVersion = '4.13'
         kotlinVersion = '1.3.61'
