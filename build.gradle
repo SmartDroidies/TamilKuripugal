@@ -20,8 +20,8 @@ buildscript {
         timberVersion = '4.7.1'
         uiAutomatorVersion = '2.2.0-alpha4'
 
-        versionCode = 10107
-        versionName = "1.1.7"
+        versionCode = 10108
+        versionName = '1.1.8'
     }
     repositories {
         google()
