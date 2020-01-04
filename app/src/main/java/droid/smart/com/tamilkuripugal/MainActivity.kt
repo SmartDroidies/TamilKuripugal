@@ -23,6 +23,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
@@ -108,11 +109,10 @@ class MainActivity : BaseActivity(), HasAndroidInjector {
         // Kuripugal Ad initialization
         MobileAds.initialize(this, AdUtil.ADMOB_APP_ID)
 
-/*
         //Initialize interstitial
         interstitialAd = InterstitialAd(this)
-        interstitialAd.adUnitId = "ca-app-pub-8439744074965483/5473553264"
-        interstitialAd.loadAd(adRequest)
+        interstitialAd.adUnitId = AdUtil.ADMOB_INTER_ID
+        interstitialAd.loadAd(AdUtil.interstitialAdRequest)
         interstitialRateLimit.shouldFetch("interstitial_ad", 60, TimeUnit.SECONDS)
         interstitialAd.adListener = object : AdListener() {
             override fun onAdLoaded() {
@@ -136,7 +136,6 @@ class MainActivity : BaseActivity(), HasAndroidInjector {
                 // Code to be executed when when the interstitial ad is closed.
             }
         }
-*/
     }
 
     private fun showHideBottomNavigation(navigation: BottomNavigationView) {
