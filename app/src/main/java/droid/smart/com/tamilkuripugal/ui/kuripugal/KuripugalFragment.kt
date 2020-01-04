@@ -12,10 +12,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.smart.droid.tamil.tips.databinding.KuripugalFragmentBinding
+import com.smart.droid.thalaivargal.ads.AdUtil
 import droid.smart.com.tamilkuripugal.AppExecutors
 import droid.smart.com.tamilkuripugal.MainActivity
 import droid.smart.com.tamilkuripugal.binding.FragmentDataBindingComponent
@@ -43,11 +42,6 @@ class KuripugalFragment : Fragment(), Injectable {
     var binding by autoCleared<KuripugalFragmentBinding>()
 
     private var adapter by autoCleared<KuripugalAdapter>()
-
-    @Inject
-    lateinit var adRequest: AdRequest
-
-    lateinit var mAdView: AdView
 
     @Inject
     lateinit var firebaseAnalytics: FirebaseAnalytics
@@ -107,10 +101,10 @@ class KuripugalFragment : Fragment(), Injectable {
         initKuripugalList(kuripugalViewModel)
 
 
-        mAdView = binding.adView
-        mAdView.loadAd(adRequest)
-
         firebaseAnalytics.setCurrentScreen(activity!!, this.javaClass.simpleName, this.javaClass.simpleName)
+
+        //Displaying Banner Ad
+        AdUtil.displayBannerAd(view, context!!)
 
     }
 
