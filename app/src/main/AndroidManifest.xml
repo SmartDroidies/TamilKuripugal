@@ -43,21 +43,6 @@
 
         <activity android:name="droid.smart.com.tamilkuripugal.BaseActivity"/>
 
-        <activity android:name="com.mopub.mobileads.MoPubActivity"
-                  android:configChanges="keyboardHidden|orientation|screenSize"/>
-
-        <activity android:name="com.mopub.mobileads.MraidActivity"
-                  android:configChanges="keyboardHidden|orientation|screenSize"/>
-
-        <activity android:name="com.mopub.common.MoPubBrowser"
-                  android:configChanges="keyboardHidden|orientation|screenSize"/>
-
-        <activity android:name="com.mopub.mobileads.MraidVideoPlayerActivity"
-                  android:configChanges="keyboardHidden|orientation|screenSize"/>
-
-        <activity android:name="com.mopub.mobileads.RewardedMraidActivity"
-                  android:configChanges="keyboardHidden|orientation|screenSize"/>
-
         <service android:name="droid.smart.com.tamilkuripugal.firebase.KuripugalMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>

@@ -20,7 +20,7 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <application tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="droid.smart.com.tamilkuripugal.testing.SingleFragmentActivity"></activity>
+        <activity android:name="droid.smart.com.tamilkuripugal.testing.SingleFragmentActivity" />
     </application>
 
 </manifest>

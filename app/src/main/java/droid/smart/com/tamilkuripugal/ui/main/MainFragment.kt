@@ -48,13 +48,6 @@ class MainFragment : Fragment(), Injectable {
     @Inject
     lateinit var sharedPreferences: SharedPreferences
 
-/*
-    @Inject
-    lateinit var adRequest: AdRequest
-
-    private lateinit var mAdView: AdView
-*/
-
     private lateinit var menuScheduled: MenuItem
 
     @Inject
@@ -193,9 +186,9 @@ class MainFragment : Fragment(), Injectable {
             Timber.d("Google sign in readily available : %s", googleSignInAccount.displayName)
             checkFirebaseAuth(googleSignInAccount)
         } else {
-            task.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val googleSignInAccount = task.result!!
+            task.addOnCompleteListener { signinTask ->
+                if (signinTask.isSuccessful) {
+                    val googleSignInAccount = signinTask.result!!
                     Timber.d(
                         "Google sign in completed silently : %s",
                         googleSignInAccount.displayName

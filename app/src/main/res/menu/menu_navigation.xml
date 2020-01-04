@@ -3,16 +3,24 @@
 
     <item
             android:id="@+id/main_fragment"
+            android:icon="@drawable/ic_category"
             android:title="@string/title_categories" />
     <item
             android:id="@+id/newKuripugalFragment"
+            android:icon="@drawable/ic_new"
             android:title="@string/title_new_kuripugal" />
     <!--item
             android:id="@+id/featured_fragment"
             android:title="@string/title_featured_kuripugal"/-->
     <item
             android:id="@+id/favouriteKuripugalFragment"
+            android:icon="@drawable/ic_action_favourite"
             android:title="@string/title_favourite_kuripugal" />
+
+    <item
+            android:id="@+id/profile"
+            android:icon="@drawable/ic_profile"
+            android:title="@string/title_profile" />
 
     <!--group android:id="@+id/privacy">
         <item

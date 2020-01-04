@@ -142,14 +142,11 @@ class MainActivity : BaseActivity(), HasAndroidInjector {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             Timber.i("Destination : %s", destination.id)
             when (destination.id) {
-/*
-                R.id.leaders -> showBottomNavigation(navigation)
-                */
-/* R.id.daily -> showBottomNavigation(navigation) *//*
-
-                R.id.profile -> showBottomNavigat¬ion(navigation)
+                R.id.main_fragment -> showBottomNavigation(navigation)
+                R.id.newKuripugalFragment -> showBottomNavigation(navigation)
+                R.id.favouriteKuripugalFragment -> showBottomNavigation(navigation)
+                R.id.profile -> showBottomNavigation(navigation)
                 else -> hideBottomNavigation(navigation)
-*/
             }
         }
 
@@ -409,6 +406,27 @@ class MainActivity : BaseActivity(), HasAndroidInjector {
         }
     }
     */
+
+    private fun hideBottomNavigation(navigation: BottomNavigationView) {
+        // bottom_navigation is BottomNavigationView
+        with(navigation) {
+            if (visibility == View.VISIBLE && alpha == 1f) {
+                animate()
+                    .alpha(0f)
+                    .withEndAction { visibility = View.GONE }
+                    .duration = 5
+            }
+        }
+    }
+
+    private fun showBottomNavigation(navigation: BottomNavigationView) {
+        // bottom_navigation is BottomNavigationView
+        with(navigation) {
+            visibility = View.VISIBLE
+            animate().alpha(1f).duration = 5
+        }
+    }
+
 
 }
 
