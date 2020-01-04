@@ -17,7 +17,6 @@ import android.view.View
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
@@ -29,15 +28,15 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.messaging.FirebaseMessaging
-import com.mopub.common.MoPub
-import com.mopub.common.SdkConfiguration
 import com.smart.droid.tamil.tips.BuildConfig
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.MainActivityBinding
+import com.smart.droid.thalaivargal.ads.AdUtil
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
+import dagger.android.HasAndroidInjector
 import droid.smart.com.tamilkuripugal.extensions.*
 import droid.smart.com.tamilkuripugal.repo.CategoryRepository
 import droid.smart.com.tamilkuripugal.ui.AppExitDialogFragment
@@ -47,7 +46,7 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class MainActivity : BaseActivity(), HasSupportFragmentInjector {
+class MainActivity : BaseActivity(), HasAndroidInjector {
 
     private val RC_SIGN_IN: Int = 75
     private lateinit var drawerLayout: DrawerLayout
@@ -67,7 +66,7 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
     lateinit var interstitialRateLimit: RateLimiter
 
     @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 
     @Inject
     lateinit var sharedPreferences: SharedPreferences
@@ -75,21 +74,20 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding: MainActivityBinding = DataBindingUtil.setContentView(this, R.layout.main_activity)
-
-        drawerLayout = binding.drawerLayout
+        val binding: MainActivityBinding =
+            DataBindingUtil.setContentView(this, R.layout.main_activity)
 
         navController = Navigation.findNavController(this, R.id.kuripugal_nav_fragment)
-        appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
+        appBarConfiguration = AppBarConfiguration(navController.graph)
 
-        layout = binding.mainLayout
+        layout = binding.container
 
         // Set up ActionBar
         setSupportActionBar(binding.toolbar)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         // Set up navigation menu
-        binding.navigationView.setupWithNavController(navController)
+        binding.navigation.setupWithNavController(navController)
 
         //Init pref on first start
         initOnFirstStart()
@@ -102,18 +100,19 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
             navController.navigate(R.id.kurippu_fragment, bundle)
         }
 
+        showHideBottomNavigation(binding.navigation)
 
+        initializeAd()
+    }
+
+    private fun initializeAd() {
         // Kuripugal Ad initialization
-        MobileAds.initialize(this, "ca-app-pub-8439744074965483~7727700457")
-
-        //MoPub Ad initialization
-        val sdkConfiguration = SdkConfiguration.Builder("c1ac415d0bae4c088f7ed79f72f71628").build()
-        MoPub.initializeSdk(this, sdkConfiguration, null)
+        MobileAds.initialize(this, AdUtil.ADMOB_APP_ID)
 
         //Initialize interstitial
         interstitialAd = InterstitialAd(this)
-        interstitialAd.adUnitId = "ca-app-pub-8439744074965483/5473553264"
-        interstitialAd.loadAd(adRequest)
+        interstitialAd.adUnitId = AdUtil.ADMOB_INTER_ID
+        interstitialAd.loadAd(AdUtil.interstitialAdRequest)
         interstitialRateLimit.shouldFetch("interstitial_ad", 60, TimeUnit.SECONDS)
         interstitialAd.adListener = object : AdListener() {
             override fun onAdLoaded() {
@@ -135,6 +134,22 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
             override fun onAdClosed() {
                 interstitialAd.loadAd(adRequest)
                 // Code to be executed when when the interstitial ad is closed.
+            }
+        }
+    }
+
+    private fun showHideBottomNavigation(navigation: BottomNavigationView) {
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            Timber.i("Destination : %s", destination.id)
+            when (destination.id) {
+/*
+                R.id.leaders -> showBottomNavigation(navigation)
+                */
+/* R.id.daily -> showBottomNavigation(navigation) *//*
+
+                R.id.profile -> showBottomNavigat¬ion(navigation)
+                else -> hideBottomNavigation(navigation)
+*/
             }
         }
 
@@ -163,7 +178,7 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
         }
     }
 
-    override fun supportFragmentInjector() = dispatchingAndroidInjector
+    override fun androidInjector() = dispatchingAndroidInjector
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
@@ -186,7 +201,10 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
                 Timber.d("Android Version : %s", Build.VERSION.SDK_INT)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (checkSelfPermissionCompat(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                        layout.showSnackbar(R.string.write_storage_permission_available, Snackbar.LENGTH_SHORT)
+                        layout.showSnackbar(
+                            R.string.write_storage_permission_available,
+                            Snackbar.LENGTH_SHORT
+                        )
                         shareApp(true)
                     } else {
                         requestExternalWritePermission()
@@ -216,8 +234,12 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
             }
             R.id.action_feedback -> {
                 val intent = Intent(Intent.ACTION_SENDTO)
-                intent.data = Uri.parse("mailto:careerwrap@gmail.com") // only email apps should handle this
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback on Tamil Kuripugal - " + BuildConfig.VERSION_NAME)
+                intent.data =
+                    Uri.parse("mailto:careerwrap@gmail.com") // only email apps should handle this
+                intent.putExtra(
+                    Intent.EXTRA_SUBJECT,
+                    "Feedback on Tamil Kuripugal - " + BuildConfig.VERSION_NAME
+                )
                 if (intent.resolveActivity(this.packageManager) != null) {
                     startActivity(intent)
                 }
@@ -230,7 +252,11 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         if (requestCode == PERMISSION_EXTERNAL_WRITE) {
             if (grantResults.size == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 shareApp(true)
@@ -261,7 +287,10 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
             }
         } else {
             layout.showSnackbar(R.string.storage_permission_not_available, Snackbar.LENGTH_SHORT)
-            requestPermissionsCompat(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_EXTERNAL_WRITE)
+            requestPermissionsCompat(
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                PERMISSION_EXTERNAL_WRITE
+            )
         }
     }
 
@@ -310,15 +339,22 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
                 FirebaseMessaging.getInstance().subscribeToTopic(category.topic)
                     .addOnCompleteListener { task ->
                         if (!task.isSuccessful) {
-                            Timber.w("InitOnFirstStart - Subscription failed for topic : %s", category.topic)
+                            Timber.w(
+                                "InitOnFirstStart - Subscription failed for topic : %s",
+                                category.topic
+                            )
                             Timber.e(task.exception)
                         } else {
-                            Timber.d("InitOnFirstStart - Subscription success for topic : %s", category.topic)
+                            Timber.d(
+                                "InitOnFirstStart - Subscription success for topic : %s",
+                                category.topic
+                            )
                             sharedPreferences.edit().putBoolean(category.topic, true).apply()
                         }
                     }
             }
-            sharedPreferences.edit().putInt(PREFKEY_UPDATE_VERSION, BuildConfig.VERSION_CODE).apply()
+            sharedPreferences.edit().putInt(PREFKEY_UPDATE_VERSION, BuildConfig.VERSION_CODE)
+                .apply()
         }
     }
 
@@ -334,7 +370,12 @@ class MainActivity : BaseActivity(), HasSupportFragmentInjector {
      */
     fun showInterstitial(bForce: Boolean) {
         if (interstitialAd.isLoaded) {
-            if (interstitialRateLimit.shouldFetch("interstitial_ad", 60, TimeUnit.SECONDS) || bForce) {
+            if (interstitialRateLimit.shouldFetch(
+                    "interstitial_ad",
+                    60,
+                    TimeUnit.SECONDS
+                ) || bForce
+            ) {
                 interstitialAd.show()
             } else {
                 Timber.i(

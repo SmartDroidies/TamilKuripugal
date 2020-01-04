@@ -7,8 +7,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import dagger.android.AndroidInjection
+import dagger.android.HasAndroidInjector
 import dagger.android.support.AndroidSupportInjection
-import dagger.android.support.HasSupportFragmentInjector
 import droid.smart.com.tamilkuripugal.KuripugalApp
 
 /**
@@ -22,7 +22,8 @@ object AppInjector {
         DaggerAppComponent.builder().application(kuripugalApp)
             .build().inject(kuripugalApp)
 
-        kuripugalApp.registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
+        kuripugalApp.registerActivityLifecycleCallbacks(object :
+            Application.ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
                 handleActivity(activity)
             }
@@ -55,7 +56,7 @@ object AppInjector {
     }
 
     private fun handleActivity(activity: Activity) {
-        if (activity is HasSupportFragmentInjector) {
+        if (activity is HasAndroidInjector) {
             AndroidInjection.inject(activity)
         }
         if (activity is FragmentActivity) {

@@ -10,20 +10,21 @@ import timber.log.Timber
  */
 class KuripugalMessagingService : FirebaseMessagingService() {
 
-    override fun onNewToken(p0: String?) {
+    override fun onNewToken(p0: String) {
         Timber.d("Refreshed token: $p0")
+        super.onNewToken(p0)
     }
 
-    override fun onMessageReceived(remoteMessage: RemoteMessage?) {
-        Timber.d("From: ${remoteMessage?.from}")
+    override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        Timber.d("From: ${remoteMessage.from}")
 
         // Check if message contains a data payload.
-        remoteMessage?.data?.isNotEmpty()?.let {
+        remoteMessage.data.isNotEmpty().let {
             Timber.d("Message data payload: %s ", remoteMessage.data)
         }
 
         // Check if message contains a notification payload.
-        remoteMessage?.notification?.let {
+        remoteMessage.notification?.let {
             Timber.d("Message Notification Body: ${it.body}")
         }
     }

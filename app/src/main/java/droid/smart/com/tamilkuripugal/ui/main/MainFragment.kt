@@ -10,8 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -20,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.smart.droid.tamil.tips.BuildConfig
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.MainFragmentBinding
+import com.smart.droid.thalaivargal.ads.AdUtil
 import droid.smart.com.tamilkuripugal.AppExecutors
 import droid.smart.com.tamilkuripugal.binding.FragmentDataBindingComponent
 import droid.smart.com.tamilkuripugal.di.Injectable
@@ -49,10 +48,12 @@ class MainFragment : Fragment(), Injectable {
     @Inject
     lateinit var sharedPreferences: SharedPreferences
 
+/*
     @Inject
     lateinit var adRequest: AdRequest
 
     private lateinit var mAdView: AdView
+*/
 
     private lateinit var menuScheduled: MenuItem
 
@@ -116,8 +117,8 @@ class MainFragment : Fragment(), Injectable {
         this.adapter = rvAdapter
         initCategories()
 
-        mAdView = binding.adView
-        mAdView.loadAd(adRequest)
+        //Displaying Banner Ad
+        AdUtil.displayBannerAd(view, context!!)
 
     }
 
@@ -195,7 +196,10 @@ class MainFragment : Fragment(), Injectable {
             task.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val googleSignInAccount = task.result!!
-                    Timber.d("Google sign in completed silently : %s", googleSignInAccount.displayName)
+                    Timber.d(
+                        "Google sign in completed silently : %s",
+                        googleSignInAccount.displayName
+                    )
                     checkFirebaseAuth(googleSignInAccount)
                 } else {
                     Timber.w("Google silent sign in failed")
@@ -208,7 +212,10 @@ class MainFragment : Fragment(), Injectable {
         val signInSkipTS = sharedPreferences.getLong(PREFKEY_GSIGN_SKIPTS, 0L)
         val currentMS = System.currentTimeMillis()
         val milliSecSinceSkipped = currentMS - signInSkipTS
-        Timber.i("Sign in skipped since %s seconds", TimeUnit.MILLISECONDS.toSeconds(milliSecSinceSkipped))
+        Timber.i(
+            "Sign in skipped since %s seconds",
+            TimeUnit.MILLISECONDS.toSeconds(milliSecSinceSkipped)
+        )
         if (TimeUnit.MILLISECONDS.toDays(milliSecSinceSkipped) > 7) {
             navController().navigate(R.id.signin)
         }

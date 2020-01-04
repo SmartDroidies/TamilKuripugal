@@ -34,7 +34,7 @@ class FragmentBindingAdapters @Inject constructor(val fragment: Fragment) {
 
     @BindingAdapter("webData")
     fun showWebData(webView: WebView, kurippu: Kurippu?) {
-        if (kurippu != null && !(kurippu!!.content.isNullOrEmpty())) {
+        if (kurippu != null && !(kurippu.content.isNullOrEmpty())) {
             webView.loadKurippu(kurippu)
         }
     }

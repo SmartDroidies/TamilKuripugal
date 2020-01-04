@@ -52,15 +52,15 @@ dependencies {
 
     implementation 'com.android.support:support-v4:28.0.0'
     implementation 'android.arch.lifecycle:extensions:1.1.1'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0-alpha03'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0-rc03'
     kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"
     kapt "androidx.lifecycle:lifecycle-compiler:$rootProject.lifecycleVersion"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.kotlinVersion"
-    implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
 
     implementation "androidx.lifecycle:lifecycle-runtime:$rootProject.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycleVersion"
@@ -93,29 +93,22 @@ dependencies {
     implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
-    implementation "androidx.preference:preference:1.0.0"
+    implementation "androidx.preference:preference:1.1.0"
 
     //Multidex
     implementation "com.android.support:multidex:$rootProject.multidexVersion" /*:*/
 
     //Firebase
-    implementation 'com.google.firebase:firebase-core:17.0.1'
-    implementation 'com.google.firebase:firebase-ads:18.1.1'
-    implementation 'com.google.firebase:firebase-messaging:19.0.1'
-    implementation 'com.google.firebase:firebase-auth:18.1.0'
-    implementation 'com.google.firebase:firebase-firestore:20.2.0'
+    implementation 'com.google.firebase:firebase-core:17.2.1'
+    implementation 'com.google.firebase:firebase-ads:18.3.0'
+    implementation 'com.google.firebase:firebase-messaging:20.1.0'
+    implementation 'com.google.firebase:firebase-auth:19.2.0'
+    implementation 'com.google.firebase:firebase-firestore:21.3.1'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
 
-    //implementation 'com.mopub.volley:mopub-volley:2.0.0'
-    implementation('com.mopub:mopub-sdk:5.5.0@aar') {
-        transitive = true
-        exclude module: 'moat-mobile-app-kit' // To exclude Moat
-    }
-    implementation 'com.google.ads.mediation:mopub:5.4.1.1'
-
     //crashlytics
-    implementation('com.crashlytics.sdk.android:crashlytics:2.9.8@aar') {
-        transitive = true;
+    implementation('com.crashlytics.sdk.android:crashlytics:2.10.1@aar') {
+        transitive = true
     }
 
     //JSoup

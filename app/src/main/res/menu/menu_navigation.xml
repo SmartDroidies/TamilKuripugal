@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:id="@+id/screens">
-        <item
-                android:id="@+id/main_fragment"
-                android:title="@string/title_categories"/>
-        <item
-                android:id="@+id/newKuripugalFragment"
-                android:title="@string/title_new_kuripugal"/>
-        <!--item
-                android:id="@+id/featured_fragment"
-                android:title="@string/title_featured_kuripugal"/-->
-        <item
-                android:id="@+id/favouriteKuripugalFragment"
-                android:title="@string/title_favourite_kuripugal"/>
+    <item
+            android:id="@+id/main_fragment"
+            android:title="@string/title_categories" />
+    <item
+            android:id="@+id/newKuripugalFragment"
+            android:title="@string/title_new_kuripugal" />
+    <!--item
+            android:id="@+id/featured_fragment"
+            android:title="@string/title_featured_kuripugal"/-->
+    <item
+            android:id="@+id/favouriteKuripugalFragment"
+            android:title="@string/title_favourite_kuripugal" />
 
-    </group>
-
-    <group android:id="@+id/privacy">
+    <!--group android:id="@+id/privacy">
         <item
                 android:id="@+id/privacy_fragment"
                 android:title="@string/title_privacy"/>
-    </group>
+    </group-->
 </menu>
