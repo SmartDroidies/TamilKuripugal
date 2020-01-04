@@ -38,7 +38,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import timber.log.Timber
 import javax.inject.Singleton
 
 @Module(includes = [ViewModelModule::class])
@@ -47,7 +46,7 @@ class AppModule {
     @Singleton
     @Provides
     fun provideOkhttpClient(): OkHttpClient {
-        val interceptor = HttpLoggingInterceptor { message -> Timber.d(message) }
+        val interceptor = HttpLoggingInterceptor() /* { message -> Timber.d(message) } */
         interceptor.level = HttpLoggingInterceptor.Level.BODY
         return OkHttpClient.Builder()
             .addInterceptor(interceptor)

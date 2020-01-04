@@ -7,8 +7,8 @@ import timber.log.Timber
 class Helper {
 
     companion object Formatter {
-        fun localeText(ctx: Context, prmString: String?): String? {
-            var prmString = prmString
+        fun localeText(ctx: Context, paramString: String?): String? {
+            var prmString = paramString
             var retValue = prmString
             if (prmString != null && !prmString.equals("", ignoreCase = true)) {
                 retValue = prmString.trim { it <= ' ' }

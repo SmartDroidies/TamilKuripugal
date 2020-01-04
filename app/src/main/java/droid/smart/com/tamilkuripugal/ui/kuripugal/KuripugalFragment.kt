@@ -76,12 +76,17 @@ class KuripugalFragment : Fragment(), Injectable {
             .get(KuripugalViewModel::class.java)
         val params = KuripugalFragmentArgs.fromBundle(arguments!!)
         kuripugalViewModel.setCategoryId(params.category)
-        binding.setLifecycleOwner(viewLifecycleOwner)
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.kurippugal = kuripugalViewModel.kuripugal
 
         kuripugalViewModel.category.observe(viewLifecycleOwner, Observer {
             Timber.d("Category : %s", it.code)
-            (activity as MainActivity).setActionBarTitle(Helper.localeText(this!!.context!!, it.code)!!)
+            (activity as MainActivity).setActionBarTitle(
+                Helper.localeText(
+                    this.context!!,
+                    it.code
+                )!!
+            )
         })
 
         val adapter = KuripugalAdapter(
