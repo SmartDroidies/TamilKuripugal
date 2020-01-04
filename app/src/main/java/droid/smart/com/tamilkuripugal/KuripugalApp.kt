@@ -52,6 +52,10 @@ class KuripugalApp : Application(), HasAndroidInjector {
                 return
             }
 
+            if (BuildConfig.DEBUG) {
+                return
+            }
+
             Crashlytics.setInt(CRASHLYTICS_KEY_PRIORITY, priority)
             Crashlytics.setString(CRASHLYTICS_KEY_TAG, tag)
             Crashlytics.setString(CRASHLYTICS_KEY_MESSAGE, message)
