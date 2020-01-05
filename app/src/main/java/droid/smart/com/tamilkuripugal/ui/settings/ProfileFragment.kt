@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -68,6 +69,10 @@ class ProfileFragment : Fragment(), Injectable {
             feedback()
         }
 
+        dataBinding.textPrivacy.setOnClickListener {
+            showPrivacy()
+        }
+
         dataBinding.logout.setOnClickListener {
             //userLogout()
         }
@@ -79,6 +84,11 @@ class ProfileFragment : Fragment(), Injectable {
         binding = dataBinding
         return dataBinding.root
 
+    }
+
+    private fun showPrivacy() {
+        findNavController().navigate(ProfileFragmentDirections.privacy())
+        //findNavController().navigate(ProfileFragmentDirections.)
     }
 
     private fun feedback() {

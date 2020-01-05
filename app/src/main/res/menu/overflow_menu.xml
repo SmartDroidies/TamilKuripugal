@@ -7,25 +7,27 @@
             app:showAsAction="ifRoom"
             android:title="@string/settings"/>
 
-    <item
-            android:id="@+id/action_feedback"
-            android:menuCategory="secondary"
-            android:title="@string/action_feedback"/>
+    <!--
+        <item
+                android:id="@+id/action_feedback"
+                android:menuCategory="secondary"
+                android:title="@string/action_feedback"/>
 
-    <item
-            android:id="@+id/action_rateme"
-            android:menuCategory="secondary"
-            android:title="@string/action_rateme"/>
+        <item
+                android:id="@+id/action_rateme"
+                android:menuCategory="secondary"
+                android:title="@string/action_rateme"/>
 
-    <item
-            android:id="@+id/action_share"
-            android:menuCategory="secondary"
-            android:title="@string/action_share"/>
+        <item
+                android:id="@+id/action_share"
+                android:menuCategory="secondary"
+                android:title="@string/action_share"/>
 
-    <item
-            android:id="@+id/action_exit"
-            android:menuCategory="secondary"
-            android:title="@string/action_exit"/>
+        <item
+                android:id="@+id/action_exit"
+                android:menuCategory="secondary"
+                android:title="@string/action_exit"/>
+    -->
 
     <item
             android:id="@+id/action_scheduled"

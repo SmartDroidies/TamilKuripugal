@@ -2,7 +2,6 @@ package droid.smart.com.tamilkuripugal
 
 import android.Manifest
 import android.annotation.TargetApi
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -36,7 +35,10 @@ import com.smart.droid.tamil.tips.databinding.MainActivityBinding
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import droid.smart.com.tamilkuripugal.ads.AdConstant
-import droid.smart.com.tamilkuripugal.extensions.*
+import droid.smart.com.tamilkuripugal.extensions.requestPermissionsCompat
+import droid.smart.com.tamilkuripugal.extensions.setDefaultLocale
+import droid.smart.com.tamilkuripugal.extensions.shouldShowRequestPermissionRationaleCompat
+import droid.smart.com.tamilkuripugal.extensions.showSnackbar
 import droid.smart.com.tamilkuripugal.repo.CategoryRepository
 import droid.smart.com.tamilkuripugal.ui.AppExitDialogFragment
 import droid.smart.com.tamilkuripugal.ui.main.MainFragmentDirections
@@ -168,58 +170,6 @@ class MainActivity : BaseActivity(), HasAndroidInjector {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
-            R.id.action_exit -> {
-                finish()
-                return true
-            }
-            R.id.action_share -> {
-                Timber.d("Android Version : %s", Build.VERSION.SDK_INT)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (checkSelfPermissionCompat(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                        layout.showSnackbar(
-                            R.string.write_storage_permission_available,
-                            Snackbar.LENGTH_SHORT
-                        )
-                        shareApp(true)
-                    } else {
-                        requestExternalWritePermission()
-                    }
-                } else {
-                    shareApp(true)
-                }
-                return true
-            }
-            R.id.action_rateme -> {
-                try {
-                    startActivity(
-                        Intent(
-                            Intent.ACTION_VIEW,
-                            Uri.parse("market://details?id=" + this.packageName)
-                        )
-                    )
-                } catch (e: ActivityNotFoundException) {
-                    startActivity(
-                        Intent(
-                            Intent.ACTION_VIEW,
-                            Uri.parse("http://play.google.com/store/apps/details?id=" + this.packageName)
-                        )
-                    )
-                }
-                return true
-            }
-            R.id.action_feedback -> {
-                val intent = Intent(Intent.ACTION_SENDTO)
-                intent.data =
-                    Uri.parse("mailto:careerwrap@gmail.com") // only email apps should handle this
-                intent.putExtra(
-                    Intent.EXTRA_SUBJECT,
-                    "Feedback on Tamil Kuripugal - " + BuildConfig.VERSION_NAME
-                )
-                if (intent.resolveActivity(this.packageManager) != null) {
-                    startActivity(intent)
-                }
-                return true
-            }
             R.id.action_settings -> {
                 navController.navigate(MainFragmentDirections.settings())
             }
