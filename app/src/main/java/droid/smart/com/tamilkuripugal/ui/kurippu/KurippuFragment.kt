@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.*
+import android.widget.FrameLayout
 import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.core.view.GestureDetectorCompat
 import androidx.databinding.DataBindingComponent
@@ -17,8 +18,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.smart.droid.tamil.tips.R
@@ -52,10 +51,7 @@ class KurippuFragment : Fragment(), Injectable {
     var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
     var binding by autoCleared<KurippuFragmentBinding>()
 
-    @Inject
-    lateinit var adRequest: AdRequest
-
-    lateinit var mAdView: AdView
+    lateinit var adFrame: FrameLayout
 
     @Inject
     lateinit var firebaseAnalytics: FirebaseAnalytics
@@ -135,8 +131,9 @@ class KurippuFragment : Fragment(), Injectable {
             }
         }
 
-        mAdView = binding.adView
-        mAdView.loadAd(adRequest)
+        adFrame = binding.adContainer
+        adFrame.loadAd()
+
 
         firebaseAnalytics.setCurrentScreen(activity!!, this.javaClass.simpleName, this.javaClass.simpleName)
     }
@@ -161,12 +158,20 @@ class KurippuFragment : Fragment(), Injectable {
             R.id.action_favourite -> {
                 kurippuViewModel.favourite()
                 firebaseAnalytics.favourite(kurippuViewModel.getKurippuId())
-                Snackbar.make(binding.adView, "Added Kurippu to favourites", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(
+                    binding.adContainer,
+                    "Added Kurippu to favourites",
+                    Snackbar.LENGTH_SHORT
+                ).show()
             }
             R.id.action_unfavourite -> {
                 kurippuViewModel.unfavourite()
                 firebaseAnalytics.unfavourite(kurippuViewModel.getKurippuId())
-                Snackbar.make(binding.adView, "Removed Kurippu from favourites", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(
+                    binding.adContainer,
+                    "Removed Kurippu from favourites",
+                    Snackbar.LENGTH_SHORT
+                ).show()
             }
         }
         return super.onOptionsItemSelected(item)

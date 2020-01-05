@@ -58,7 +58,7 @@ class FavouriteRepository @Inject constructor(
 
     fun loadFavourite(kurippuId: String): LiveData<Resource<Favourite>> {
         return object : NetworkBoundResource<Favourite, Favourite>(appExecutors) {
-            override fun saveCallResult(favourite: Favourite) {
+            override fun saveCallResult(item: Favourite) {
                 // favouriteDao.insert(favourite)
             }
 
@@ -78,7 +78,7 @@ class FavouriteRepository @Inject constructor(
     //When user skips signin then return favourites only from device
     fun loadFavouriteKuripugal(): LiveData<Resource<List<FavouriteKurippu>>> {
         return object : NetworkBoundResource<List<FavouriteKurippu>, Favourite>(appExecutors) {
-            override fun saveCallResult(favourite: Favourite) {
+            override fun saveCallResult(item: Favourite) {
                 //No Action required
             }
 
@@ -96,8 +96,8 @@ class FavouriteRepository @Inject constructor(
 
     fun loadFavouriteKuripugal(userid: String): LiveData<Resource<List<FavouriteKurippu>>> {
         return object : NetworkBoundResource<List<FavouriteKurippu>, QuerySnapshot>(appExecutors) {
-            override fun saveCallResult(querySnapshot: QuerySnapshot) {
-                for (document in querySnapshot) {
+            override fun saveCallResult(item: QuerySnapshot) {
+                for (document in item) {
                     Timber.i("Sync Firestore favourite Kurippu : %s - %s", document.id, document.data)
                     var dbfavourite = favouriteDao.loadById(document.id)
                     Timber.i("Locale favourite Kurippu : %s", dbfavourite)
