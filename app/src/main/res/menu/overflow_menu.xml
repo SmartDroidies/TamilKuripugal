@@ -29,10 +29,10 @@
                 android:title="@string/action_exit"/>
     -->
 
-    <item
+    <!--item
             android:id="@+id/action_scheduled"
             android:menuCategory="secondary"
             android:title="@string/action_scheduled"
-            android:visible="false"/>
+            android:visible="false"/-->
 
 </menu>

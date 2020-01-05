@@ -29,8 +29,8 @@
 
         <!--
                 <meta-data
-                        android:name="io.fabric.ApiKey"
-                        android:value="151d7874104688b7476fc57ffb92146201a2fb5a"/>
+                        android:name="com.google.firebase.messaging.default_notification_channel_id"
+                        android:value="@string/default_notification_channel_id" />
         -->
 
         <activity android:name="droid.smart.com.tamilkuripugal.MainActivity"

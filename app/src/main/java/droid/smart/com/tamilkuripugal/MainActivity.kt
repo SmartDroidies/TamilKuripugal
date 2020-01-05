@@ -95,6 +95,7 @@ class MainActivity : BaseActivity(), HasAndroidInjector {
         //Init pref on first start
         initOnFirstStart()
 
+
         //FIXME - Drive this from Main Fragment
         if (intent.extras != null && !intent.extras.isEmpty && intent.extras.containsKey("id")) {
             Timber.d("Extras : %s ", intent!!.extras.get("id"))

@@ -17,7 +17,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.smart.droid.tamil.tips.BuildConfig
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.MainFragmentBinding
 import droid.smart.com.tamilkuripugal.AppExecutors
@@ -50,7 +49,7 @@ class MainFragment : Fragment(), Injectable {
     @Inject
     lateinit var sharedPreferences: SharedPreferences
 
-    private lateinit var menuScheduled: MenuItem
+    //private lateinit var menuScheduled: MenuItem
 
     @Inject
     lateinit var googleSignInOptions: GoogleSignInOptions
@@ -140,6 +139,8 @@ class MainFragment : Fragment(), Injectable {
         menuInflater.inflate(R.menu.overflow_menu, menu)
     }
 
+    //FIXME - Later display from profile fragment
+    /*
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_scheduled -> {
@@ -160,6 +161,7 @@ class MainFragment : Fragment(), Injectable {
             Timber.i("Test Device - Display test device controls")
         }
     }
+    */
 
     /**
      * Created to be able to override in tests
