@@ -128,6 +128,7 @@ class MainActivity : BaseActivity(), HasAndroidInjector {
                 }
             })
         }
+        interstitialAd.loadAd(adRequest)
     }
 
     private fun showHideBottomNavigation(navigation: BottomNavigationView) {

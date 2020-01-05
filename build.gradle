@@ -20,6 +20,7 @@ buildscript {
         multidexVersion = '2.0.1'
         navigationVersion = '1.0.0'
         okhttpLoggingVersion = '4.3.0'
+        playAdService = '18.3.0'
         retrofitVersion = '2.7.1'
         roomVersion = '2.2.3'
         timberVersion = '4.7.1'

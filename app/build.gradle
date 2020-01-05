@@ -101,13 +101,14 @@ dependencies {
     //Firebase
     //implementation "com.google.firebase:firebase-analytics:$rootProject.firebaseCore"
     implementation "com.google.firebase:firebase-core:$rootProject.firebaseCore"
-    implementation "com.google.firebase:firebase-ads:$rootProject.firebaseAds"
+    //implementation "com.google.firebase:firebase-ads:$rootProject.firebaseAds"
     implementation "com.google.firebase:firebase-messaging:$rootProject.firebaseMessaging"
     implementation "com.crashlytics.sdk.android:crashlytics:$rootProject.firebaseCrash"
     implementation 'com.google.firebase:firebase-auth:19.2.0'
     implementation 'com.google.firebase:firebase-firestore:21.3.1'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
 
+    implementation "com.google.android.gms:play-services-ads:$rootProject.playAdService"
     implementation "com.google.ads.mediation:inmobi:$rootProject.inmobi"
 
     //JSoup
