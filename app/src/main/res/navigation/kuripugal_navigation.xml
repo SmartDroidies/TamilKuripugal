@@ -134,5 +134,20 @@
               android:name="droid.smart.com.tamilkuripugal.ui.main.SigninFragment"
               android:label="@string/app_name"/>
 
+    <fragment
+            android:id="@+id/profile"
+            android:name="droid.smart.com.tamilkuripugal.ui.settings.ProfileFragment"
+            android:label="@string/title_profile"
+            tools:layout="@layout/profile_fragment">
+        <action
+                android:id="@+id/privacy"
+                app:destination="@id/privacy_fragment"
+                app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right" />
+
+    </fragment>
+
 
 </navigation>

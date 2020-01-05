@@ -25,11 +25,13 @@
 
         <meta-data
                 android:name="com.google.android.gms.ads.APPLICATION_ID"
-                android:value="ca-app-pub-8439744074965483~7727700457"/>
+                android:value="ca-app-pub-5575552359884924~6805519895" />
 
-        <meta-data
-                android:name="io.fabric.ApiKey"
-                android:value="151d7874104688b7476fc57ffb92146201a2fb5a"/>
+        <!--
+                <meta-data
+                        android:name="com.google.firebase.messaging.default_notification_channel_id"
+                        android:value="@string/default_notification_channel_id" />
+        -->
 
         <activity android:name="droid.smart.com.tamilkuripugal.MainActivity"
                   android:configChanges="orientation|screenSize"
@@ -42,21 +44,6 @@
         </activity>
 
         <activity android:name="droid.smart.com.tamilkuripugal.BaseActivity"/>
-
-        <activity android:name="com.mopub.mobileads.MoPubActivity"
-                  android:configChanges="keyboardHidden|orientation|screenSize"/>
-
-        <activity android:name="com.mopub.mobileads.MraidActivity"
-                  android:configChanges="keyboardHidden|orientation|screenSize"/>
-
-        <activity android:name="com.mopub.common.MoPubBrowser"
-                  android:configChanges="keyboardHidden|orientation|screenSize"/>
-
-        <activity android:name="com.mopub.mobileads.MraidVideoPlayerActivity"
-                  android:configChanges="keyboardHidden|orientation|screenSize"/>
-
-        <activity android:name="com.mopub.mobileads.RewardedMraidActivity"
-                  android:configChanges="keyboardHidden|orientation|screenSize"/>
 
         <service android:name="droid.smart.com.tamilkuripugal.firebase.KuripugalMessagingService">
             <intent-filter>

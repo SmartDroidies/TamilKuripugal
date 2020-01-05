@@ -9,6 +9,7 @@
     <string name="title_favourite_kuripugal">\u0BAA\u0BBF\u0B9F\u0BBF\u0BA4\u0BCD\u0BA4\u0BB5\u0BC8</string>
     <string name="title_privacy">\u0BAA\u0BC6\u0BBE\u0BB1\u0BC1\u0BAA\u0BCD\u0BAA\u0BBE\u0B95\u0BBE\u0BAE\u0BC8</string>
     <string name="title_draft_kuripugal">Draft Kuripugal</string>
+    <string name="title_profile">\u0B9A\u0BC1\u0BAF\u0BB5\u0BBF\u0BB5\u0BB0\u0BAE\u0BCD</string>
 
     <string name="action_share">\u0BAA\u0B95\u0BBF\u0BB0\u0BCD\u0B95</string>
     <string name="action_feedback">\u0B95\u0BB0\u0BC1\u0BA4\u0BCD\u0BA4\u0BC1</string>
@@ -58,5 +59,9 @@
     <string name="desc_signin">Signin to manage favourites</string>
     <string name="signin_desc">Signin to manage favourites</string>
     <string name="signin_skip">Skip Now</string>
+    <string name="account">\u0BAA\u0BAF\u0BA9\u0BB0\u0BCD</string>
+    <string name="content_desc_user">Google User</string>
+    <string name="support">\u0B86\u0BA4\u0BB0\u0BB5\u0BC1</string>
+    <string name="logout">\u0BB5\u0BC6\u0BB3\u0BBF\u0BAF\u0BC7\u0BB1\u0BC1</string>
 
 </resources>

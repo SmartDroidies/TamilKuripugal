@@ -2,7 +2,6 @@ package droid.smart.com.tamilkuripugal
 
 import android.Manifest
 import android.annotation.TargetApi
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -14,9 +13,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.MenuItem
 import android.view.View
-import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
@@ -30,14 +27,18 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.messaging.FirebaseMessaging
 import com.smart.droid.tamil.tips.BuildConfig
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.MainActivityBinding
-import com.smart.droid.thalaivargal.ads.AdUtil
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
-import droid.smart.com.tamilkuripugal.extensions.*
+import droid.smart.com.tamilkuripugal.ads.AdConstant
+import droid.smart.com.tamilkuripugal.extensions.requestPermissionsCompat
+import droid.smart.com.tamilkuripugal.extensions.setDefaultLocale
+import droid.smart.com.tamilkuripugal.extensions.shouldShowRequestPermissionRationaleCompat
+import droid.smart.com.tamilkuripugal.extensions.showSnackbar
 import droid.smart.com.tamilkuripugal.repo.CategoryRepository
 import droid.smart.com.tamilkuripugal.ui.AppExitDialogFragment
 import droid.smart.com.tamilkuripugal.ui.main.MainFragmentDirections
@@ -49,7 +50,6 @@ import javax.inject.Inject
 class MainActivity : BaseActivity(), HasAndroidInjector {
 
     private val RC_SIGN_IN: Int = 75
-    private lateinit var drawerLayout: DrawerLayout
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
     private lateinit var layout: View
@@ -70,6 +70,9 @@ class MainActivity : BaseActivity(), HasAndroidInjector {
 
     @Inject
     lateinit var sharedPreferences: SharedPreferences
+
+    @Inject
+    lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,6 +95,7 @@ class MainActivity : BaseActivity(), HasAndroidInjector {
         //Init pref on first start
         initOnFirstStart()
 
+
         //FIXME - Drive this from Main Fragment
         if (intent.extras != null && !intent.extras.isEmpty && intent.extras.containsKey("id")) {
             Timber.d("Extras : %s ", intent!!.extras.get("id"))
@@ -103,53 +107,42 @@ class MainActivity : BaseActivity(), HasAndroidInjector {
         showHideBottomNavigation(binding.navigation)
 
         initializeAd()
+
     }
 
     private fun initializeAd() {
         // Kuripugal Ad initialization
-        MobileAds.initialize(this, AdUtil.ADMOB_APP_ID)
+        MobileAds.initialize(this, AdConstant.ADMOB_APP_ID)
 
-        //Initialize interstitial
-        interstitialAd = InterstitialAd(this)
-        interstitialAd.adUnitId = AdUtil.ADMOB_INTER_ID
-        interstitialAd.loadAd(AdUtil.interstitialAdRequest)
         interstitialRateLimit.shouldFetch("interstitial_ad", 60, TimeUnit.SECONDS)
-        interstitialAd.adListener = object : AdListener() {
-            override fun onAdLoaded() {
-                // Code to be executed when an ad finishes loading.
-            }
+        interstitialAd = InterstitialAd(this).apply {
+            adUnitId = AdConstant.adUnitInterstitial
+            adListener = (object : AdListener() {
+                override fun onAdLoaded() {
+                    Timber.i("Admob Interstitial - Ad Loaded")
+                }
 
-            override fun onAdFailedToLoad(errorCode: Int) {
-                // Code to be executed when an ad request fails.
-            }
+                override fun onAdFailedToLoad(errorCode: Int) {
+                    Timber.i("Admob Interstitial - Ad failed to load - %s", errorCode)
+                }
 
-            override fun onAdOpened() {
-                // Code to be executed when the ad is displayed.
-            }
-
-            override fun onAdLeftApplication() {
-                // Code to be executed when the user has left the app.
-            }
-
-            override fun onAdClosed() {
-                interstitialAd.loadAd(adRequest)
-                // Code to be executed when when the interstitial ad is closed.
-            }
+                override fun onAdClosed() {
+                    interstitialAd.loadAd(adRequest)
+                }
+            })
         }
+        interstitialAd.loadAd(adRequest)
     }
 
     private fun showHideBottomNavigation(navigation: BottomNavigationView) {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             Timber.i("Destination : %s", destination.id)
             when (destination.id) {
-/*
-                R.id.leaders -> showBottomNavigation(navigation)
-                */
-/* R.id.daily -> showBottomNavigation(navigation) *//*
-
-                R.id.profile -> showBottomNavigat¬ion(navigation)
+                R.id.main_fragment -> showBottomNavigation(navigation)
+                R.id.newKuripugalFragment -> showBottomNavigation(navigation)
+                R.id.favouriteKuripugalFragment -> showBottomNavigation(navigation)
+                R.id.profile -> showBottomNavigation(navigation)
                 else -> hideBottomNavigation(navigation)
-*/
             }
         }
 
@@ -162,19 +155,15 @@ class MainActivity : BaseActivity(), HasAndroidInjector {
     }
 
     override fun onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START)
+        Timber.i(
+            "Nav Controller : %s vs %s",
+            navController.currentDestination!!.id,
+            navController.graph.startDestination
+        )
+        if (navController.graph.startDestination == navController.currentDestination!!.id) {
+            AppExitDialogFragment().show(supportFragmentManager, "ExitDialogFragment")
         } else {
-            Timber.i(
-                "Nav Controller : %s vs %s",
-                navController.currentDestination!!.id,
-                navController.graph.startDestination
-            )
-            if (navController.graph.startDestination == navController.currentDestination!!.id) {
-                AppExitDialogFragment().show(supportFragmentManager, "ExitDialogFragment")
-            } else {
-                super.onBackPressed()
-            }
+            super.onBackPressed()
         }
     }
 
@@ -182,69 +171,6 @@ class MainActivity : BaseActivity(), HasAndroidInjector {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
-            R.id.action_exit -> {
-                /*
-                FirebaseAuth.getInstance().signOut()
-
-                val googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
-                googleSignInClient.signOut()
-                googleSignInClient.revokeAccess()
-
-                sharedPreferences.edit()
-                    .remove(PREFKEY_GSIGN_CHOICE)
-                    .apply()
-                */
-                finish()
-                return true
-            }
-            R.id.action_share -> {
-                Timber.d("Android Version : %s", Build.VERSION.SDK_INT)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (checkSelfPermissionCompat(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                        layout.showSnackbar(
-                            R.string.write_storage_permission_available,
-                            Snackbar.LENGTH_SHORT
-                        )
-                        shareApp(true)
-                    } else {
-                        requestExternalWritePermission()
-                    }
-                } else {
-                    shareApp(true)
-                }
-                return true
-            }
-            R.id.action_rateme -> {
-                try {
-                    startActivity(
-                        Intent(
-                            Intent.ACTION_VIEW,
-                            Uri.parse("market://details?id=" + this.packageName)
-                        )
-                    )
-                } catch (e: ActivityNotFoundException) {
-                    startActivity(
-                        Intent(
-                            Intent.ACTION_VIEW,
-                            Uri.parse("http://play.google.com/store/apps/details?id=" + this.packageName)
-                        )
-                    )
-                }
-                return true
-            }
-            R.id.action_feedback -> {
-                val intent = Intent(Intent.ACTION_SENDTO)
-                intent.data =
-                    Uri.parse("mailto:careerwrap@gmail.com") // only email apps should handle this
-                intent.putExtra(
-                    Intent.EXTRA_SUBJECT,
-                    "Feedback on Tamil Kuripugal - " + BuildConfig.VERSION_NAME
-                )
-                if (intent.resolveActivity(this.packageManager) != null) {
-                    startActivity(intent)
-                }
-                return true
-            }
             R.id.action_settings -> {
                 navController.navigate(MainFragmentDirections.settings())
             }
@@ -355,6 +281,9 @@ class MainActivity : BaseActivity(), HasAndroidInjector {
             }
             sharedPreferences.edit().putInt(PREFKEY_UPDATE_VERSION, BuildConfig.VERSION_CODE)
                 .apply()
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.GROUP_ID, "notify_subscribe")
+            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.JOIN_GROUP, bundle)
         }
     }
 
@@ -409,6 +338,27 @@ class MainActivity : BaseActivity(), HasAndroidInjector {
         }
     }
     */
+
+    private fun hideBottomNavigation(navigation: BottomNavigationView) {
+        // bottom_navigation is BottomNavigationView
+        with(navigation) {
+            if (visibility == View.VISIBLE && alpha == 1f) {
+                animate()
+                    .alpha(0f)
+                    .withEndAction { visibility = View.GONE }
+                    .duration = 5
+            }
+        }
+    }
+
+    private fun showBottomNavigation(navigation: BottomNavigationView) {
+        // bottom_navigation is BottomNavigationView
+        with(navigation) {
+            visibility = View.VISIBLE
+            animate().alpha(1f).duration = 5
+        }
+    }
+
 
 }
 

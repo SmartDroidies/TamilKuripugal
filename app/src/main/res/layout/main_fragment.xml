@@ -62,6 +62,17 @@
                 tools:listitem="@layout/category_item"
                 app:visibleGone="@{categories.data.size() > 0}"/>
 
+        <LinearLayout
+                android:id="@+id/adminContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+        </LinearLayout>
+
         <Button android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/btnDraftKuripugal"

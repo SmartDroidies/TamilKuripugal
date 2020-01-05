@@ -2,21 +2,33 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-            android:id="@+id/main_fragment"
-            android:title="@string/title_categories" />
+            android:id="@+id/profile"
+            android:icon="@drawable/ic_profile"
+            android:orderInCategory="100"
+            android:title="@string/title_profile" />
+
+
     <item
+            android:orderInCategory="300"
             android:id="@+id/newKuripugalFragment"
+            android:icon="@drawable/ic_new"
             android:title="@string/title_new_kuripugal" />
+
+    <item
+            android:orderInCategory="200"
+            android:id="@+id/favouriteKuripugalFragment"
+            android:icon="@drawable/ic_favorite"
+            android:title="@string/title_favourite_kuripugal" />
+
     <!--item
             android:id="@+id/featured_fragment"
             android:title="@string/title_featured_kuripugal"/-->
-    <item
-            android:id="@+id/favouriteKuripugalFragment"
-            android:title="@string/title_favourite_kuripugal" />
 
-    <!--group android:id="@+id/privacy">
-        <item
-                android:id="@+id/privacy_fragment"
-                android:title="@string/title_privacy"/>
-    </group-->
+
+    <item
+            android:id="@+id/main_fragment"
+            android:icon="@drawable/ic_category"
+            android:orderInCategory="500"
+            android:title="@string/title_categories" />
+
 </menu>

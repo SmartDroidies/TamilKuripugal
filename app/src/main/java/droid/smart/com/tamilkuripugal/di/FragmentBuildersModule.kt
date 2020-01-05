@@ -26,6 +26,7 @@ import droid.smart.com.tamilkuripugal.ui.main.MainFragment
 import droid.smart.com.tamilkuripugal.ui.main.SigninFragment
 import droid.smart.com.tamilkuripugal.ui.newkuripugal.NewKuripugalFragment
 import droid.smart.com.tamilkuripugal.ui.policy.PrivacyFragment
+import droid.smart.com.tamilkuripugal.ui.settings.ProfileFragment
 
 @Suppress("unused")
 @Module
@@ -53,5 +54,8 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeSigninFragment(): SigninFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeProfileFragment(): ProfileFragment
 
 }

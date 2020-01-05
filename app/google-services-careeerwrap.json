@@ -1,0 +1,50 @@
+{
+  "project_info": {
+    "project_number": "781897556091",
+    "firebase_url": "https://admob-app-id-7727700457.firebaseio.com",
+    "project_id": "admob-app-id-7727700457",
+    "storage_bucket": "admob-app-id-7727700457.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:781897556091:android:6695c9cf44fc07de",
+        "android_client_info": {
+          "package_name": "com.smart.droid.tamil.tips"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "781897556091-i673se7q6mu8upah7pgrp4gai3lfqllf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.smart.droid.tamil.tips",
+            "certificate_hash": "15718732bbd6cf536b22e1214715c6142581d60f"
+          }
+        },
+        {
+          "client_id": "781897556091-5a1kh9qra1021rdr5h2btcp1a595s4tu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuoPVVSF4RbMR70x85TRqFqK_CHLU0vNA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

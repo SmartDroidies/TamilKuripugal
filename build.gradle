@@ -5,16 +5,22 @@ buildscript {
         coreTestingVersion = '2.1.0'
         daggerVersion = '2.25.4'
         espressoVersion = '3.3.0-alpha03'
+        firebaseAds = '18.3.0'
+        firebaseCore = '17.2.1'
+        firebaseCrash = '2.10.1'
+        firebaseMessaging = '20.1.0'
         glideVersion = '4.10.0'
+        inmobi = '7.3.0.0'
         jsoupVersion = '1.12.1'
         junitVersion = '4.13'
         kotlinVersion = '1.3.61'
         lifecycleVersion = '2.1.0'
         mockitoVersion = '2.7.19'
         mockitoAndroidVersion = '2.22.0'
-        multidexVersion = '1.0.3'
+        multidexVersion = '2.0.1'
         navigationVersion = '1.0.0'
         okhttpLoggingVersion = '4.3.0'
+        playAdService = '18.3.0'
         retrofitVersion = '2.7.1'
         roomVersion = '2.2.3'
         timberVersion = '4.7.1'
@@ -27,7 +33,6 @@ buildscript {
         google()
         jcenter()
         maven { url 'https://maven.fabric.io/public' }
-        maven { url "https://s3.amazonaws.com/moat-sdk-builds" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.3'
@@ -35,14 +40,8 @@ buildscript {
 
         classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlinVersion"
         classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
-        classpath 'com.google.gms:google-services:4.3.2'
-
-        // We recommend changing it to the latest version from our changelog:
-        // https://docs.fabric.io/android/changelog.html#fabric-gradle-plugin
-        classpath 'io.fabric.tools:gradle:1.30.0'
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath 'com.google.gms:google-services:4.3.3'
+        classpath 'io.fabric.tools:gradle:1.31.2'
     }
 }
 

@@ -18,15 +18,15 @@ class AppExitDialogFragment : DialogFragment() {
         val builder = AlertDialog.Builder(activity!!)
         builder.setMessage(R.string.exit_message)
             .setTitle(R.string.exit_title)
-            .setPositiveButton(R.string.action_exit) { dialog, id ->
+            .setPositiveButton(R.string.action_exit) { _, _ ->
                 // User confirmed to exit
                 appExitDialogListener.onExitConfirm(this@AppExitDialogFragment)
             }
-            .setNegativeButton(R.string.action_cancel) { dialog, id ->
+            .setNegativeButton(R.string.action_cancel) { _, _ ->
                 // User cancelled the dialog
                 appExitDialogListener.onExitCancel(this@AppExitDialogFragment)
             }
-            .setNeutralButton(R.string.action_rateme) { dialog, id ->
+            .setNeutralButton(R.string.action_rateme) { _, _ ->
                 // User choose to rate app
                 appExitDialogListener.onExitRateme(this@AppExitDialogFragment)
             }

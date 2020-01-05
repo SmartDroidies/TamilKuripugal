@@ -25,9 +25,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.smart.droid.thalaivargal.ads.AdUtil
 import dagger.Module
 import dagger.Provides
+import droid.smart.com.tamilkuripugal.ads.AdConstant
 import droid.smart.com.tamilkuripugal.api.KuripugalService
 import droid.smart.com.tamilkuripugal.data.CategoryDao
 import droid.smart.com.tamilkuripugal.data.FavouriteDao
@@ -71,7 +71,7 @@ class AppModule {
     @Provides
     fun provideAdRequest(/*app: Application*/): AdRequest {
         return AdRequest.Builder()
-            .addTestDevice(AdUtil.TEST_DEVICE_ID)
+            .addTestDevice(AdConstant.testDeviceId)
             .build()
     }
 

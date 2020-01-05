@@ -31,7 +31,7 @@ fun FirebaseAuth.checkCreateUserModule(firestore: FirebaseFirestore, firebaseUse
     firestore.collection("users")
         .document(firebaseUser.uid)
         .set(user)
-        .addOnSuccessListener { documentReference ->
+        .addOnSuccessListener { _ ->
             Timber.d("User document succesfully updated for %s", firebaseUser.uid)
         }
         .addOnFailureListener { e ->

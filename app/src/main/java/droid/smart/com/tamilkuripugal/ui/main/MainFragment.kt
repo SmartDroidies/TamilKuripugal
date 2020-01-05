@@ -3,6 +3,7 @@ package droid.smart.com.tamilkuripugal.ui.main
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
+import android.widget.FrameLayout
 import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -13,16 +14,16 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.smart.droid.tamil.tips.BuildConfig
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.MainFragmentBinding
-import com.smart.droid.thalaivargal.ads.AdUtil
 import droid.smart.com.tamilkuripugal.AppExecutors
 import droid.smart.com.tamilkuripugal.binding.FragmentDataBindingComponent
 import droid.smart.com.tamilkuripugal.di.Injectable
 import droid.smart.com.tamilkuripugal.extensions.googleAuth
+import droid.smart.com.tamilkuripugal.extensions.loadAd
 import droid.smart.com.tamilkuripugal.ui.common.CategoryListAdapter
 import droid.smart.com.tamilkuripugal.ui.common.RetryCallback
 import droid.smart.com.tamilkuripugal.util.*
@@ -48,14 +49,7 @@ class MainFragment : Fragment(), Injectable {
     @Inject
     lateinit var sharedPreferences: SharedPreferences
 
-/*
-    @Inject
-    lateinit var adRequest: AdRequest
-
-    private lateinit var mAdView: AdView
-*/
-
-    private lateinit var menuScheduled: MenuItem
+    //private lateinit var menuScheduled: MenuItem
 
     @Inject
     lateinit var googleSignInOptions: GoogleSignInOptions
@@ -65,6 +59,11 @@ class MainFragment : Fragment(), Injectable {
 
     @Inject
     lateinit var firestore: FirebaseFirestore
+
+    lateinit var adFrame: FrameLayout
+
+    @Inject
+    lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -117,8 +116,14 @@ class MainFragment : Fragment(), Injectable {
         this.adapter = rvAdapter
         initCategories()
 
-        //Displaying Banner Ad
-        AdUtil.displayBannerAd(view, context!!)
+        adFrame = binding.adContainer
+        adFrame.loadAd()
+
+        firebaseAnalytics.setCurrentScreen(
+            activity!!,
+            this.javaClass.simpleName,
+            this.javaClass.simpleName
+        )
 
     }
 
@@ -134,6 +139,8 @@ class MainFragment : Fragment(), Injectable {
         menuInflater.inflate(R.menu.overflow_menu, menu)
     }
 
+    //FIXME - Later display from profile fragment
+    /*
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_scheduled -> {
@@ -154,6 +161,7 @@ class MainFragment : Fragment(), Injectable {
             Timber.i("Test Device - Display test device controls")
         }
     }
+    */
 
     /**
      * Created to be able to override in tests
@@ -193,9 +201,9 @@ class MainFragment : Fragment(), Injectable {
             Timber.d("Google sign in readily available : %s", googleSignInAccount.displayName)
             checkFirebaseAuth(googleSignInAccount)
         } else {
-            task.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val googleSignInAccount = task.result!!
+            task.addOnCompleteListener { signinTask ->
+                if (signinTask.isSuccessful) {
+                    val googleSignInAccount = signinTask.result!!
                     Timber.d(
                         "Google sign in completed silently : %s",
                         googleSignInAccount.displayName
