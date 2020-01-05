@@ -98,8 +98,6 @@ class KuripugalFragment : Fragment(), Injectable {
         binding.kuripugalList.addItemDecoration(itemDecor)
 
         initKuripugalList(kuripugalViewModel)
-
-
         firebaseAnalytics.setCurrentScreen(activity!!, this.javaClass.simpleName, this.javaClass.simpleName)
     }
 
