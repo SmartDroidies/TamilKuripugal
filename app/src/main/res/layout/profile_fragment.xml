@@ -126,8 +126,8 @@
                         android:layout_marginTop="@dimen/default_margin"
                         android:layout_marginRight="@dimen/long_margin"
                         android:layout_marginBottom="@dimen/default_margin"
-                        android:drawableEnd="@drawable/ic_share"
-                        android:drawableRight="@drawable/ic_share"
+                        android:drawableEnd="@drawable/ic_share_black"
+                        android:drawableRight="@drawable/ic_share_black"
                         android:gravity="center_vertical"
                         android:text="@string/action_share"
                         tools:text="Share App" />
@@ -209,6 +209,18 @@
                 android:text="@string/title_privacy"
                 app:layout_constraintTop_toBottomOf="@id/head_legal"
                 tools:text="Privacy Policy" />
+
+        <Button
+                android:id="@+id/logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/long_margin"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginRight="@dimen/long_margin"
+                android:layout_marginBottom="@dimen/default_margin"
+                android:text="@string/logout"
+                app:layout_constraintBottom_toTopOf="@id/app_version"
+                app:visibleGone="@{signInAccount != null}" />
 
         <TextView
                 android:id="@+id/app_version"

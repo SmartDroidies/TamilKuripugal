@@ -29,7 +29,7 @@ open class BaseActivity : AppCompatActivity(), AppExitDialogFragment.AppExitDial
         super.onBackPressed()
     }
 
-    private fun rateApp() {
+    fun rateApp() {
         try {
             startActivity(
                 Intent(
