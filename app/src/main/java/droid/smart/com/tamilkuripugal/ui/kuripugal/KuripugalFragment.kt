@@ -14,7 +14,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.smart.droid.tamil.tips.databinding.KuripugalFragmentBinding
-import com.smart.droid.thalaivargal.ads.AdUtil
 import droid.smart.com.tamilkuripugal.AppExecutors
 import droid.smart.com.tamilkuripugal.MainActivity
 import droid.smart.com.tamilkuripugal.binding.FragmentDataBindingComponent
@@ -102,10 +101,6 @@ class KuripugalFragment : Fragment(), Injectable {
 
 
         firebaseAnalytics.setCurrentScreen(activity!!, this.javaClass.simpleName, this.javaClass.simpleName)
-
-        //Displaying Banner Ad
-        AdUtil.displayBannerAd(view, context!!)
-
     }
 
     private fun initKuripugalList(viewModel: KuripugalViewModel) {

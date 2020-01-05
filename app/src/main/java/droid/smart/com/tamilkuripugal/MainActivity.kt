@@ -15,7 +15,6 @@ import android.provider.MediaStore
 import android.view.MenuItem
 import android.view.View
 import androidx.databinding.DataBindingUtil
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
@@ -29,13 +28,14 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.messaging.FirebaseMessaging
 import com.smart.droid.tamil.tips.BuildConfig
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.MainActivityBinding
-import com.smart.droid.thalaivargal.ads.AdUtil
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
+import droid.smart.com.tamilkuripugal.ads.AdConstant
 import droid.smart.com.tamilkuripugal.extensions.*
 import droid.smart.com.tamilkuripugal.repo.CategoryRepository
 import droid.smart.com.tamilkuripugal.ui.AppExitDialogFragment
@@ -48,7 +48,6 @@ import javax.inject.Inject
 class MainActivity : BaseActivity(), HasAndroidInjector {
 
     private val RC_SIGN_IN: Int = 75
-    private lateinit var drawerLayout: DrawerLayout
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
     private lateinit var layout: View
@@ -69,6 +68,9 @@ class MainActivity : BaseActivity(), HasAndroidInjector {
 
     @Inject
     lateinit var sharedPreferences: SharedPreferences
+
+    @Inject
+    lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,38 +104,29 @@ class MainActivity : BaseActivity(), HasAndroidInjector {
         showHideBottomNavigation(binding.navigation)
 
         initializeAd()
+
     }
 
     private fun initializeAd() {
         // Kuripugal Ad initialization
-        MobileAds.initialize(this, AdUtil.ADMOB_APP_ID)
+        MobileAds.initialize(this, AdConstant.ADMOB_APP_ID)
 
-        //Initialize interstitial
-        interstitialAd = InterstitialAd(this)
-        interstitialAd.adUnitId = AdUtil.ADMOB_INTER_ID
-        interstitialAd.loadAd(AdUtil.interstitialAdRequest)
         interstitialRateLimit.shouldFetch("interstitial_ad", 60, TimeUnit.SECONDS)
-        interstitialAd.adListener = object : AdListener() {
-            override fun onAdLoaded() {
-                // Code to be executed when an ad finishes loading.
-            }
+        interstitialAd = InterstitialAd(this).apply {
+            adUnitId = AdConstant.adUnitInterstitial
+            adListener = (object : AdListener() {
+                override fun onAdLoaded() {
+                    Timber.i("Admob Interstitial - Ad Loaded")
+                }
 
-            override fun onAdFailedToLoad(errorCode: Int) {
-                // Code to be executed when an ad request fails.
-            }
+                override fun onAdFailedToLoad(errorCode: Int) {
+                    Timber.i("Admob Interstitial - Ad failed to load - %s", errorCode)
+                }
 
-            override fun onAdOpened() {
-                // Code to be executed when the ad is displayed.
-            }
-
-            override fun onAdLeftApplication() {
-                // Code to be executed when the user has left the app.
-            }
-
-            override fun onAdClosed() {
-                interstitialAd.loadAd(adRequest)
-                // Code to be executed when when the interstitial ad is closed.
-            }
+                override fun onAdClosed() {
+                    interstitialAd.loadAd(adRequest)
+                }
+            })
         }
     }
 
@@ -336,6 +329,9 @@ class MainActivity : BaseActivity(), HasAndroidInjector {
             }
             sharedPreferences.edit().putInt(PREFKEY_UPDATE_VERSION, BuildConfig.VERSION_CODE)
                 .apply()
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.GROUP_ID, "notify_subscribe")
+            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.JOIN_GROUP, bundle)
         }
     }
 

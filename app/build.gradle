@@ -19,7 +19,7 @@ android {
     }
     defaultConfig {
         applicationId "com.smart.droid.tamil.tips"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode rootProject.versionCode
         versionName rootProject.versionName
@@ -50,9 +50,9 @@ android {
 dependencies {
     //implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:support-v4:28.0.0'
-    implementation 'android.arch.lifecycle:extensions:1.1.1'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0-rc03'
+    //implementation 'com.android.support:support-v4:28.0.0'
+    //implementation 'android.arch.lifecycle:extensions:1.1.1'
+    //implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0-rc03'
     kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"
@@ -96,9 +96,10 @@ dependencies {
     implementation "androidx.preference:preference:1.1.0"
 
     //Multidex
-    implementation "com.android.support:multidex:$rootProject.multidexVersion" /*:*/
+    implementation "androidx.multidex:multidex:$rootProject.multidexVersion"
 
     //Firebase
+    //implementation "com.google.firebase:firebase-analytics:$rootProject.firebaseCore"
     implementation "com.google.firebase:firebase-core:$rootProject.firebaseCore"
     implementation "com.google.firebase:firebase-ads:$rootProject.firebaseAds"
     implementation "com.google.firebase:firebase-messaging:$rootProject.firebaseMessaging"
