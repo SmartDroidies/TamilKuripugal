@@ -25,20 +25,27 @@ import java.util.concurrent.TimeUnit
 /**
  * Utility class that decides whether we should fetch some data or not.
  */
-class RateLimiter() {
+class RateLimiter {
     private val timestamps = ArrayMap<String, Long>()
 
     @Synchronized
     fun shouldFetch(key: String,timeout: Int, timeUnit: TimeUnit ): Boolean {
-        val timeout = timeUnit.toMillis(timeout.toLong())
+        val timeoutLong = timeUnit.toMillis(timeout.toLong())
         val lastFetched = timestamps[key]
         val now = now()
         if (lastFetched == null) {
             timestamps[key] = now
             return true
         }
-        if (now - lastFetched > timeout) {
-            Timber.d("ReteLimiter Time Comparision for %s : %s - %s  = %s vs %s", key, now, lastFetched,  now-lastFetched, timeout )
+        if (now - lastFetched > timeoutLong) {
+            Timber.d(
+                "ReteLimiter Time Comparision for %s : %s - %s  = %s vs %s",
+                key,
+                now,
+                lastFetched,
+                now - lastFetched,
+                timeoutLong
+            )
             timestamps[key] = now
             return true
         }

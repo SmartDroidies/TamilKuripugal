@@ -1,7 +1,236 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
-</LinearLayout>
+    <data>
+
+        <import type="androidx.lifecycle.LiveData" />
+
+        <import type="com.google.android.gms.auth.api.signin.GoogleSignInAccount" />
+
+        <variable
+                name="signInAccount"
+                type="LiveData&lt;GoogleSignInAccount>" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <TextView
+                android:id="@+id/head_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:text="@string/account"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Account" />
+
+        <com.google.android.gms.common.SignInButton
+                android:id="@+id/sign_in_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/head_account"
+                app:visibleGone="@{signInAccount == null}" />
+
+
+        <androidx.cardview.widget.CardView
+                android:id="@+id/img_holder"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="@dimen/margin16"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginRight="@dimen/margin16"
+                android:layout_marginBottom="@dimen/default_margin"
+                app:cardCornerRadius="30dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/head_account"
+                app:visibleGone="@{signInAccount != null}">
+
+            <ImageView
+                    android:id="@+id/signin_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/content_desc_user" />
+            <!--app:imageUrl="@{signInAccount.photoUrl}" />-->
+
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+                android:id="@+id/signin_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:text="@{signInAccount.displayName}"
+                app:layout_constraintLeft_toRightOf="@id/img_holder"
+                app:layout_constraintTop_toBottomOf="@id/head_account"
+                app:visibleGone="@{signInAccount != null}"
+                tools:text="Google User" />
+
+        <TextView
+                android:id="@+id/signin_mail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:text="@{signInAccount.email}"
+                app:layout_constraintLeft_toRightOf="@id/img_holder"
+                app:layout_constraintTop_toBottomOf="@id/signin_user"
+                app:visibleGone="@{signInAccount != null}"
+                tools:text="someuser@gmail.com" />
+
+        <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin16"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="sign_in_button,img_holder" />
+
+        <TextView
+                android:id="@+id/head_communicate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:text="@string/support"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/barrier_account"
+                tools:text="Communicate" />
+
+        <androidx.cardview.widget.CardView
+                android:id="@+id/card_communicate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                app:layout_constraintTop_toBottomOf="@id/head_communicate">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:id="@+id/textShareApp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/long_margin"
+                        android:layout_marginTop="@dimen/default_margin"
+                        android:layout_marginRight="@dimen/long_margin"
+                        android:layout_marginBottom="@dimen/default_margin"
+                        android:drawableEnd="@drawable/ic_share"
+                        android:drawableRight="@drawable/ic_share"
+                        android:gravity="center_vertical"
+                        android:text="@string/action_share"
+                        tools:text="Share App" />
+
+                <View
+                        android:id="@+id/divider_share"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?android:attr/listDivider"
+                        app:layout_constraintTop_toBottomOf="@id/textShareApp" />
+
+                <TextView
+                        android:id="@+id/textRateApp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/long_margin"
+                        android:layout_marginTop="@dimen/default_margin"
+                        android:layout_marginRight="@dimen/long_margin"
+                        android:layout_marginBottom="@dimen/default_margin"
+                        android:drawableEnd="@drawable/ic_star"
+                        android:drawableRight="@drawable/ic_star"
+                        android:gravity="center_vertical"
+                        android:text="@string/action_rateme"
+                        app:layout_constraintTop_toBottomOf="@id/divider_share"
+                        tools:text="Rate App" />
+
+                <View
+                        android:id="@+id/divider_rateapp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?android:attr/listDivider"
+                        app:layout_constraintTop_toBottomOf="@id/textRateApp" />
+
+
+                <TextView
+                        android:id="@+id/textFeedback"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/long_margin"
+                        android:layout_marginTop="@dimen/default_margin"
+                        android:layout_marginRight="@dimen/long_margin"
+                        android:layout_marginBottom="@dimen/default_margin"
+                        android:drawableEnd="@drawable/ic_mail"
+                        android:drawableRight="@drawable/ic_mail"
+                        android:gravity="center_vertical"
+                        android:text="@string/action_feedback"
+                        app:layout_constraintTop_toBottomOf="@id/divider_rateapp"
+                        tools:text="Feedback" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <View
+                android:id="@+id/divider_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="16dp"
+                android:background="?android:attr/listDivider" />
+
+        <TextView
+                android:id="@+id/head_legal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin16"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/card_communicate"
+                tools:text="Legal" />
+
+        <TextView
+                android:id="@+id/textPrivacy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin16"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginRight="@dimen/margin16"
+                android:layout_marginBottom="@dimen/default_margin"
+                android:gravity="center_vertical"
+                android:text="@string/title_privacy"
+                app:layout_constraintTop_toBottomOf="@id/head_legal"
+                tools:text="Privacy Policy" />
+
+        <TextView
+                android:id="@+id/app_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:gravity="bottom"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:text="App Version" />
+
+        <View
+                android:id="@+id/divider_version"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="16dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintBottom_toTopOf="@id/app_version" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

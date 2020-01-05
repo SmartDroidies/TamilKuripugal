@@ -190,7 +190,7 @@ class FavouriteRepository @Inject constructor(
                         .collection("kuripugal")
                         .document(favourite.kurippuId)
                         .set(favouriteCloud)
-                        .addOnSuccessListener { documentReference ->
+                        .addOnSuccessListener { _ ->
                             favourite.cloudStatus = cloudStatusSynced
                             appExecutors.networkIO().execute {
                                 favouriteDao.update(favourite)

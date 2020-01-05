@@ -59,6 +59,8 @@
     <string name="desc_signin">Signin to manage favourites</string>
     <string name="signin_desc">Signin to manage favourites</string>
     <string name="signin_skip">Skip Now</string>
-
+    <string name="account">\u0BAA\u0BAF\u0BA9\u0BB0\u0BCD</string>
+    <string name="content_desc_user">Google User</string>
+    <string name="support">\u0B86\u0BA4\u0BB0\u0BB5\u0BC1</string>
 
 </resources>

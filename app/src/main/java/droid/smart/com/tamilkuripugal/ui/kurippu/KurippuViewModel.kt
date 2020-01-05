@@ -80,7 +80,7 @@ class KurippuViewModel @Inject constructor(kurippuRepository: KurippuRepository,
                 .collection("kuripugal")
                 .document(_kurippuId.value!!)
                 .set(favourite)
-                .addOnSuccessListener { documentReference ->
+                .addOnSuccessListener { _ ->
                     favouriteRepository.insertFavourite(_kurippuId.value!!, cloudStatusSynced)
                     Timber.d(
                         "Cloud favourite %s succesfully updated for %s",
@@ -114,7 +114,7 @@ class KurippuViewModel @Inject constructor(kurippuRepository: KurippuRepository,
                 .collection("kuripugal")
                 .document(_kurippuId.value!!)
                 .set(favourite)
-                .addOnSuccessListener { documentReference ->
+                .addOnSuccessListener { _ ->
                     favouriteRepository.removeFavourite(_kurippuId.value!!, cloudStatusSynced)
                     Timber.d(
                         "Cloud unfavourite %s succesfully updated for %s",
