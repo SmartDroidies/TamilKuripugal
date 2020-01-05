@@ -16,6 +16,8 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.smart.droid.tamil.tips.BuildConfig
 import com.smart.droid.tamil.tips.R
@@ -32,6 +34,9 @@ class ProfileFragment : Fragment(), Injectable {
     var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
 
     @Inject
+    lateinit var profileViewModel: ProfileViewModel
+
+    @Inject
     lateinit var firebaseAnalytics: FirebaseAnalytics
 
     var binding by autoCleared<ProfileFragmentBinding>()
@@ -40,6 +45,8 @@ class ProfileFragment : Fragment(), Injectable {
     lateinit var googleSignInOptions: GoogleSignInOptions
 
     private lateinit var googleSignInClient: GoogleSignInClient
+
+    private val RC_SIGN_IN: Int = 75
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -78,12 +85,17 @@ class ProfileFragment : Fragment(), Injectable {
         }
 
         dataBinding.signInButton.setOnClickListener {
-            //signIn()
+            signIn()
         }
 
         binding = dataBinding
         return dataBinding.root
 
+    }
+
+    private fun signIn() {
+        val signInIntent = googleSignInClient.signInIntent
+        startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
     private fun showPrivacy() {
@@ -152,6 +164,23 @@ class ProfileFragment : Fragment(), Injectable {
             this.javaClass.simpleName
         )
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Timber.d("User succesfully logged into to google")
+        val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+        try {
+            val account = task.getResult(ApiException::class.java)
+            Timber.d("Logged in user - %s", account!!.id)
+            Snackbar.make(view!!, "Login completed", Snackbar.LENGTH_SHORT).show()
+            profileViewModel.setSignInAccount(account)
+            //(activity as MainActivity).updateUI(account)
+        } catch (e: ApiException) {
+            Snackbar.make(view!!, "Login failed", Snackbar.LENGTH_LONG).show()
+            Timber.e(e)
+        }
+    }
+
 
     // initialize String
     private val appVersion: String

@@ -27,6 +27,7 @@ import droid.smart.com.tamilkuripugal.ui.kurippu.KurippuViewModel
 import droid.smart.com.tamilkuripugal.ui.kuripugal.KuripugalViewModel
 import droid.smart.com.tamilkuripugal.ui.main.MainViewModel
 import droid.smart.com.tamilkuripugal.ui.newkuripugal.NewKuripugalViewModel
+import droid.smart.com.tamilkuripugal.ui.settings.ProfileViewModel
 import droid.smart.com.tamilkuripugal.viewmodel.KuripugalViewModelFactory
 
 @Suppress("unused")
@@ -62,6 +63,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(FavouritesViewModel::class)
     abstract fun bindFavouritesViewModel(favouritesViewModel: FavouritesViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ProfileViewModel::class)
+    abstract fun bindProfileViewModel(profileViewModel: ProfileViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: KuripugalViewModelFactory): ViewModelProvider.Factory
