@@ -29,6 +29,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.messaging.FirebaseMessaging
+import com.inmobi.sdk.InMobiSdk
 import com.smart.droid.tamil.tips.BuildConfig
 import com.smart.droid.tamil.tips.R
 import com.smart.droid.tamil.tips.databinding.MainActivityBinding
@@ -114,12 +115,17 @@ class MainActivity : BaseActivity(), HasAndroidInjector {
         // Kuripugal Ad initialization
         MobileAds.initialize(this, AdConstant.ADMOB_APP_ID)
 
+        if (BuildConfig.DEBUG) {
+            InMobiSdk.setLogLevel(InMobiSdk.LogLevel.DEBUG)
+        }
+
         interstitialRateLimit.shouldFetch("interstitial_ad", 60, TimeUnit.SECONDS)
         interstitialAd = InterstitialAd(this).apply {
             adUnitId = AdConstant.adUnitInterstitial
             adListener = (object : AdListener() {
                 override fun onAdLoaded() {
                     Timber.i("Admob Interstitial - Ad Loaded")
+                    //interstitialAd.show()
                 }
 
                 override fun onAdFailedToLoad(errorCode: Int) {

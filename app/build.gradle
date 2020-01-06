@@ -102,7 +102,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
 
     implementation "com.google.android.gms:play-services-ads:$rootProject.playAdService"
-    implementation "com.google.ads.mediation:inmobi:$rootProject.inmobi"
+    implementation "com.google.ads.mediation:inmobi:$rootProject.inmobiMediation"
+    implementation "com.inmobi.monetization:inmobi-ads:$rootProject.inmobi"
 
     //JSoup
     implementation "org.jsoup:jsoup:$rootProject.jsoupVersion"
